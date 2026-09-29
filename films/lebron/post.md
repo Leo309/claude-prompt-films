@@ -1,6 +1,6 @@
-# Posting kit — LeBron (92 s, 16:9)
+# Posting kit — LeBron (92 s)
 
-File: `out/lebron.mp4` · Watermark: haoli.ai · **Tick the platform's AI-content label.**
+Files: `out/lebron-16x9.mp4` (YouTube, Bilibili, X, Douyin) · `out/lebron-9x16.mp4` (Shorts, TikTok, Reels, 小红书) · Watermark: haoli.ai · **Tick the platform's AI-content label.**
 
 ## Titles
 

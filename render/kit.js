@@ -636,7 +636,210 @@ export function drawSprite(ctx, rows, palette, x, y, px, reveal = 1, seed = 0) {
       const c = palette[row[i]];
       if (!c || (reveal < 1 && hash(j * 131 + i, seed) >= reveal)) continue;
       ctx.fillStyle = c;
-      ctx.fillRect(Math.round(x + i * px), Math.round(y + j * px), Math.ceil(px), Math.ceil(px));
+      // +1 px overlap so no hairline seams show when the sprite is scaled or rotated
+      ctx.fillRect(Math.round(x + i * px), Math.round(y + j * px), Math.ceil(px) + 1, Math.ceil(px) + 1);
     }
+  }
+}
+
+// ---------------------------------------------------------------- pixel figures (a tiny rig)
+// Describe a pose with joints on a small grid and a "look", get sprite rows back for drawSprite.
+// Every athlete in the series reuses this: change the look (hair, beard, kit colours, number) and the pose.
+
+const DIGITS = {
+  0: ["nnn", "n.n", "n.n", "n.n", "nnn"], 1: [".n.", "nn.", ".n.", ".n.", "nnn"], 2: ["nnn", "..n", "nnn", "n..", "nnn"],
+  3: ["nnn", "..n", "nnn", "..n", "nnn"], 4: ["n.n", "n.n", "nnn", "..n", "..n"], 5: ["nnn", "n..", "nnn", "..n", "nnn"],
+  6: ["nnn", "n..", "nnn", "n.n", "nnn"], 7: ["nnn", "..n", ".n.", ".n.", ".n."], 8: ["nnn", "n.n", "nnn", "n.n", "nnn"],
+  9: ["nnn", "n.n", "nnn", "..n", "nnn"],
+};
+
+// pose: { head:[x,y], neck, hip, lElbow, lHand, rElbow, rHand, lKnee, lFoot, rKnee, rFoot, back? }  (grid coords)
+// look: { hair: "short"|"quiff"|"bald", beard, headband, number }  — colours come from the palette keys below.
+// Palette keys used: h hair · s skin · S skin shadow · k eyes · m mouth · w headband · j jersey · J jersey shade
+//                    n number · p shorts · v socks · b boots
+export function figure(pose, look = {}, w = 24, h = 32) {
+  const g = Array.from({ length: h }, () => Array(w).fill("."));
+  const set = (x, y, c) => {
+    x = Math.round(x);
+    y = Math.round(y);
+    if (x >= 0 && y >= 0 && x < w && y < h) g[y][x] = c;
+  };
+  const rect = (x0, y0, x1, y1, c) => {
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) set(x, y, c);
+  };
+  // Thick line between two joints; colour can change along the limb (fn of 0..1).
+  const limb = (a, b, color, thick = 2) => {
+    const n = Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1]), 1) * 2;
+    for (let i = 0; i <= n; i++) {
+      const u = i / n, x = a[0] + (b[0] - a[0]) * u, y = a[1] + (b[1] - a[1]) * u;
+      for (let dx = 0; dx < thick; dx++) set(x + dx - (thick - 1) / 2, y, typeof color === "function" ? color(u) : color);
+    }
+  };
+  const { head, neck, hip } = pose;
+  const back = !!pose.back;
+  // legs: shorts → skin → socks, boots at the foot
+  for (const [knee, foot, side] of [[pose.lKnee, pose.lFoot, -1], [pose.rKnee, pose.rFoot, 1]]) {
+    const top = [hip[0] + side * 2, hip[1] + 1];
+    limb(top, knee, (u) => (u < 0.5 ? "p" : "s"), 3);
+    limb(knee, foot, (u) => (u < 0.35 ? "s" : "v"), 2);
+    rect(Math.round(foot[0]) - 1, Math.round(foot[1]), Math.round(foot[0]) + 1, Math.round(foot[1]), "b");
+  }
+  rect(hip[0] - 3, hip[1] - 1, hip[0] + 3, hip[1] + 2, "p"); // shorts
+  // torso: shoulders 9 wide tapering to 7 at the waist, shaded on one side
+  for (let y = neck[1] + 1; y <= hip[1] - 1; y++) {
+    const u = (y - neck[1]) / Math.max(1, hip[1] - neck[1]);
+    const half = Math.round(4.5 - u * 1.2);
+    const cx = Math.round(neck[0] + (hip[0] - neck[0]) * u);
+    rect(cx - half, y, cx + half, y, "j");
+    set(cx + half, y, "J");
+  }
+  // number (big on the back, small-ish on the front)
+  if (look.number != null) {
+    const digits = String(look.number).split("");
+    const cx = Math.round((neck[0] + hip[0]) / 2), top = neck[1] + (back ? 3 : 3);
+    const width = digits.length * 4 - 1;
+    digits.forEach((d, k) => DIGITS[d].forEach((row, j) => [...row].forEach((c, i) => c === "n" && set(cx - Math.floor(width / 2) + k * 4 + i, top + j, "n"))));
+  }
+  // arms: sleeve → skin
+  for (const [elbow, hand, side] of [[pose.lElbow, pose.lHand, -1], [pose.rElbow, pose.rHand, 1]]) {
+    const shoulder = [neck[0] + side * 4, neck[1] + 2];
+    limb(shoulder, elbow, (u) => (u < 0.4 ? "j" : "s"), 2);
+    limb(elbow, hand, "s", 2);
+  }
+  // head: 6×7 block
+  const hx = Math.round(head[0]) - 3, hy = Math.round(head[1]);
+  rect(hx, hy, hx + 5, hy + 6, "s");
+  rect(neck[0] - 1, hy + 7, neck[0] + 1, neck[1], "S");
+  if (back) rect(hx, hy, hx + 5, hy + 5, "h");
+  else {
+    if (look.hair !== "bald") rect(hx, hy, hx + 5, hy + 1, "h");
+    if (look.hair === "quiff") rect(hx + 1, hy - 1, hx + 4, hy - 1, "h");
+    set(hx + 1, hy + 3, "k");
+    set(hx + 4, hy + 3, "k");
+    set(hx + 5, hy + 2, "S");
+    set(hx + 5, hy + 3, "S");
+    if (look.beard) rect(hx, hy + 4, hx + 5, hy + 6, "h");
+    set(hx + 2, hy + 5, "m");
+    set(hx + 3, hy + 5, "m");
+  }
+  if (look.headband) rect(hx, hy + 1, hx + 5, hy + 1, "w");
+  return g.map((r) => r.join(""));
+}
+
+// A football: white ball, dark pentagon patches that turn with `spin`.
+export function football(ctx, x, y, r, spin = 0, ink = "#15151A") {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(spin);
+  const g = ctx.createRadialGradient(-r * 0.35, -r * 0.4, r * 0.1, 0, 0, r);
+  g.addColorStop(0, "#FFFFFF");
+  g.addColorStop(1, "#BDB8AE");
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(0, 0, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.clip();
+  ctx.fillStyle = ink;
+  const pent = (cx, cy, s, rot) => {
+    ctx.beginPath();
+    for (let k = 0; k < 5; k++) {
+      const a = rot + (k * Math.PI * 2) / 5 - Math.PI / 2;
+      k ? ctx.lineTo(cx + Math.cos(a) * s, cy + Math.sin(a) * s) : ctx.moveTo(cx + Math.cos(a) * s, cy + Math.sin(a) * s);
+    }
+    ctx.closePath();
+    ctx.fill();
+  };
+  pent(0, 0, r * 0.32, 0);
+  for (let k = 0; k < 5; k++) {
+    const a = (k * Math.PI * 2) / 5 - Math.PI / 2;
+    pent(Math.cos(a) * r * 0.86, Math.sin(a) * r * 0.86, r * 0.3, Math.PI + a);
+  }
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------- more instruments (football night)
+
+// Referee's whistle: a pea-whistle trill around 2.9 kHz.
+export function whistle(m, out, t, dur = 0.6, gain = 0.2) {
+  const { ac } = m;
+  const o = osc(ac, "sine", t, dur + 0.05);
+  o.frequency.value = 2900;
+  const lfo = osc(ac, "square", t, dur + 0.05);
+  lfo.frequency.value = 28;
+  const d = ac.createGain();
+  d.gain.value = 180;
+  lfo.connect(d).connect(o.frequency);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(gain, t + 0.02);
+  g.gain.setValueAtTime(gain, t + dur - 0.05);
+  g.gain.linearRampToValueAtTime(0, t + dur);
+  o.connect(g).connect(out);
+}
+
+// A stadium chanting a vowel: many detuned voices through two formant filters that glide
+// from one vowel to another ("ee" → "oo" = SIUUU). Synthesised — no recorded voice.
+export function chant(m, out, t, dur, gain = 0.3, { root = 147, from = [300, 2300], to = [320, 800], hiss = 0.12 } = {}) {
+  const { ac } = m;
+  if (hiss) noiseSrc(m, t, hiss + 0.05).connect(filter(ac, "highpass", 4500)).connect(env(ac, t, { a: 0.02, peak: gain * 0.8, d: hiss })).connect(out);
+  const t0 = t + hiss * 0.8;
+  const f1 = filter(ac, "bandpass", from[0], 4), f2 = filter(ac, "bandpass", from[1], 6);
+  f1.frequency.setValueAtTime(from[0], t0 + 0.1);
+  f1.frequency.linearRampToValueAtTime(to[0], t0 + dur * 0.5);
+  f2.frequency.setValueAtTime(from[1], t0 + 0.1);
+  f2.frequency.exponentialRampToValueAtTime(to[1], t0 + dur * 0.5);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0, t0);
+  g.gain.linearRampToValueAtTime(gain, t0 + 0.08);
+  g.gain.setValueAtTime(gain, t0 + dur * 0.7);
+  g.gain.linearRampToValueAtTime(0, t0 + dur);
+  f1.connect(g);
+  f2.connect(g);
+  g.connect(out);
+  for (let k = 0; k < 14; k++) {
+    const o = osc(ac, "sawtooth", t0, dur + 0.1);
+    const f = root * [1, 1, 2, 1.5, 2, 1, 0.5][k % 7] * (1 + (hash(k, 71) - 0.5) * 0.03);
+    o.frequency.setValueAtTime(f, t0);
+    o.frequency.linearRampToValueAtTime(f * 0.97, t0 + dur); // crowds sag a little at the end
+    o.connect(f1);
+    o.connect(f2);
+  }
+  noiseSrc(m, t0, dur, true, 5).connect(filter(ac, "bandpass", 1200, 0.8)).connect(env(ac, t0, { a: 0.1, peak: gain * 0.25, hold: dur * 0.5, d: dur * 0.4 })).connect(out);
+}
+
+// Oud-like pluck: bright triangle with a tiny downward bend at the attack.
+export function oud(m, out, t, freq, gain = 0.3, dur = 0.5) {
+  const { ac } = m;
+  const o = osc(ac, "triangle", t, dur + 0.05);
+  o.frequency.setValueAtTime(freq * 1.03, t);
+  o.frequency.exponentialRampToValueAtTime(freq, t + 0.03);
+  const o2 = osc(ac, "sawtooth", t, dur + 0.05);
+  o2.frequency.value = freq;
+  const lp = filter(ac, "lowpass", 2600, 3);
+  lp.frequency.setValueAtTime(3200, t);
+  lp.frequency.exponentialRampToValueAtTime(700, t + dur);
+  const g = env(ac, t, { a: 0.002, peak: gain, d: dur });
+  o.connect(g);
+  o2.connect(lp).connect(g);
+  g.connect(out);
+}
+
+// Mandolin / fado-guitar tremolo: the same note picked fast.
+export function tremolo(m, out, t, freq, dur = 0.45, gain = 0.2, rate = 16) {
+  for (let k = 0; k * (1 / rate) < dur; k++) pluck(m, out, t + k / rate, freq, gain * (k ? 0.7 : 1), 0.12);
+}
+
+// Flamenco-style strum: chord tones picked a few milliseconds apart, plus a percussive "rasgueado" tick.
+export function strum(m, out, t, freqs, gain = 0.2, down = true) {
+  (down ? freqs : [...freqs].reverse()).forEach((f, k) => pluck(m, out, t + k * 0.012, f, gain, 0.35));
+  snap(m, out, t, gain * 0.6);
+}
+
+// Sidechain-style ducking: dip a bus on every hit time and let it swell back (the EDM "pump").
+export function duck(bus, times, depth = 0.35, release = 0.3) {
+  const p = bus.gain, base = p.value;
+  for (const t of times) {
+    p.setValueAtTime(base * depth, t);
+    p.linearRampToValueAtTime(base, t + release);
   }
 }

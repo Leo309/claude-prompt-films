@@ -3,11 +3,13 @@
  * Offline renderer for code-rendered films.
  *
  *   bun render/render.ts serve [--port 5173]               preview server → http://localhost:5173/films/<name>/
- *   bun render/render.ts video  films/lebron               full MP4 → out/lebron.mp4
+ *   bun render/render.ts video  films/lebron               MP4s → out/lebron-16x9.mp4 + out/lebron-9x16.mp4
+ *   bun render/render.ts video  films/lebron --format 9x16  just one format (16x9 | 9x16 | all, default all)
  *   bun render/render.ts video  films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
  *   bun render/render.ts stills films/lebron --at 3,12.5,40   PNGs → out/lebron/stills/
  *   bun render/render.ts sheet  films/lebron [--count 24]   contact sheet → out/lebron/sheet.png
- *   add --no-watermark to any of them to leave out the watermark (render/brand.js)
+ *   add --no-watermark to any of them to leave out the watermark (render/brand.js);
+ *   stills and sheet take --format 9x16 to preview the vertical frame
  *
  * Frames never touch the disk: headless Chrome draws each frame, sends raw RGBA
  * over a WebSocket, and we pipe it straight into ffmpeg's stdin.
@@ -114,15 +116,15 @@ function ffmpegArgs(v: { width: number; height: number; fps: number; frames: num
   ];
 }
 
-async function renderVideo() {
+async function renderVideo(format: string) {
   const name = basename(filmDir);
   const fps = Number(opt("fps", "60"));
   const from = Number(opt("from", "0"));
   const to = opt("to") ? Number(opt("to")) : undefined;
-  const out = resolve(opt("out", join(ROOT, "out", `${name}.mp4`))!);
+  const out = resolve(opt("out", join(ROOT, "out", `${name}-${format}.mp4`))!);
   const work = join(ROOT, "out", name);
   mkdirSync(work, { recursive: true });
-  const wav = join(work, "score.wav");
+  const wav = join(work, `score-${format}.wav`);
 
   let ff: ChildProcessWithoutNullStreams | null = null;
   let expectAudio: { sampleRate: number; channels: number } | null = null;
@@ -164,7 +166,7 @@ async function renderVideo() {
   };
 
   const server = startServer();
-  const { browser, page } = await openFilm(server, "mode=render");
+  const { browser, page } = await openFilm(server, `mode=render&format=${format}`);
   const result = await page.evaluate((o) => (window as any).__player.streamRender(o), { from, to, fps });
   await browser.close();
   server.stop(true);
@@ -197,7 +199,7 @@ async function renderStills() {
   const times = (opt("at") ?? "").split(",").filter(Boolean).map(Number);
   if (!times.length) throw new Error("Pass times with --at 3,12.5,40");
   const server = startServer();
-  const { browser, page } = await openFilm(server, "mode=still");
+  const { browser, page } = await openFilm(server, `mode=still&format=${opt("format", "16x9")}`);
   const dir = join(ROOT, "out", basename(filmDir), "stills");
   const files = await grabStills(page, times, dir);
   await browser.close();
@@ -209,7 +211,7 @@ async function renderSheet() {
   const count = Number(opt("count", "24"));
   const cols = Number(opt("cols", "6"));
   const server = startServer();
-  const { browser, page } = await openFilm(server, "mode=still&label");
+  const { browser, page } = await openFilm(server, `mode=still&label&format=${opt("format", "16x9")}`);
   const duration: number = await page.evaluate(() => (window as any).__player.film.duration);
   const from = Number(opt("from", "0.25")), to = Number(opt("to", String(duration - 0.25)));
   const times = Array.from({ length: count }, (_, i) => +(from + ((to - from) * i) / Math.max(1, count - 1)).toFixed(2));
@@ -221,7 +223,7 @@ async function renderSheet() {
   const rows = Math.ceil(count / cols);
   const ff = spawn("ffmpeg", [
     "-y", "-hide_banner", "-loglevel", "error", "-pattern_type", "glob", "-i", join(dir, "*.png"),
-    "-vf", `scale=480:-1,tile=${cols}x${rows}:padding=6:margin=6:color=0x333333`, "-frames:v", "1", out,
+    "-vf", `scale=${opt("format") === "9x16" ? 270 : 480}:-1,tile=${cols}x${rows}:padding=6:margin=6:color=0x333333`, "-frames:v", "1", out,
   ]);
   const [code] = await once(ff, "exit");
   if (code !== 0) throw new Error("ffmpeg tile failed");
@@ -233,7 +235,10 @@ async function renderSheet() {
 if (mode === "serve") {
   const server = startServer(Number(opt("port", "5173")));
   console.log(`Preview server: http://localhost:${server.port}/films/<name>/`);
-} else if (mode === "video") await renderVideo();
+} else if (mode === "video") {
+  const format = opt("format", "all")!;
+  for (const f of format === "all" ? ["16x9", "9x16"] : [format]) await renderVideo(f);
+}
 else if (mode === "stills") await renderStills();
 else if (mode === "sheet") await renderSheet();
 else {

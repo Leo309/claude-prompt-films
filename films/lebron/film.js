@@ -1284,10 +1284,20 @@ function arp(m, out, a, b, gain = 0.12) {
 }
 
 export default {
+  title: "LeBron James",
+  episode: 1,
   width: W,
   height: H,
   duration: DURATION,
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"'],
+  // Used by the 9:16 frame (render/vertical.js): a hook above the film, the current chapter below it.
+  vertical: { hook: ["23 SEASONS.", "92 SECONDS."], sub: "THE MUSIC IS MADE FROM HIS STATS" },
+  chapters: [
+    [0, "AKRON, 1984"], [8, "THE CHOSEN ONE"], [12, "#1 PICK"], [16, "THE CLIMB"], [28, "CHASING KAREEM"],
+    [32, "ALL-TIME"], [42, "4 RINGS"], [48, "DOWN 3–1"], [55, "THE BLOCK"], [60, "23 SEASONS"],
+    [64, "1,622 GAMES"], [68, "FATHER & SON"], [72, "3 OLYMPIC GOLDS"], [76, "EVERYTHING"],
+    [79, "THE CHALK TOSS"], [80, "43,440"], [86, "SEASON 24"], [88.5, ""],
+  ],
   draw,
   score,
 };

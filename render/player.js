@@ -3,9 +3,13 @@
 //   still             — render.ts asks for single frames (contact sheets, stills)
 //   render            — frames and audio are streamed to render.ts over a WebSocket, straight into ffmpeg
 //
-// A film module exports { width, height, duration, fonts, draw(ctx, t), score(ac) }.
+// ?format=9x16 wraps the 16:9 film in a phone-first vertical frame (see vertical.js).
+//
+// A film module exports { width, height, duration, fonts, draw(ctx, t), score(ac) },
+// plus optional { title, episode, vertical, chapters } used by the vertical frame.
 // draw() must be a pure function of t — that is what makes preview and export identical.
 import { WATERMARK } from "./brand.js";
+import { PORTRAIT, drawVertical } from "./vertical.js";
 
 // The watermark is drawn into the frame itself, so a re-upload carries it and it can't be stripped from the file.
 function drawWatermark(ctx, label, w, h) {
@@ -28,25 +32,34 @@ function drawWatermark(ctx, label, w, h) {
 export async function run(film) {
   const params = new URLSearchParams(location.search);
   const mode = params.get("mode") ?? "preview";
+  const portrait = params.get("format") === "9x16";
 
+  // The output canvas. In portrait mode the film draws into its own 16:9 canvas, which is then composed.
   const canvas = document.createElement("canvas");
-  canvas.width = film.width;
-  canvas.height = film.height;
+  canvas.width = portrait ? PORTRAIT.width : film.width;
+  canvas.height = portrait ? PORTRAIT.height : film.height;
   document.body.append(canvas);
   // willReadFrequently keeps the canvas on the CPU, which makes the per-frame getImageData cheap.
   const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: mode !== "preview" });
+  const filmCanvas = portrait ? Object.assign(document.createElement("canvas"), { width: film.width, height: film.height }) : canvas;
+  const filmCtx = portrait ? filmCanvas.getContext("2d", { alpha: false }) : ctx;
 
   await Promise.all((film.fonts ?? []).map((f) => document.fonts.load(f)));
   await document.fonts.ready;
 
   const showLabel = params.has("label");
   const watermark = params.has("nowm") || film.watermark === false ? null : film.watermark ?? WATERMARK;
+  const reset = (c) => {
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.globalAlpha = 1;
+    c.globalCompositeOperation = "source-over";
+  };
   function drawFrame(t) {
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "source-over";
-    film.draw(ctx, t);
-    if (watermark) drawWatermark(ctx, watermark, canvas.width, canvas.height);
+    reset(filmCtx);
+    film.draw(filmCtx, t);
+    reset(ctx);
+    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark); // the watermark becomes the series tag up top
+    else if (watermark) drawWatermark(ctx, watermark, canvas.width, canvas.height);
     if (showLabel) {
       ctx.fillStyle = "rgba(0,0,0,0.7)";
       ctx.fillRect(0, 0, 230, 64);
