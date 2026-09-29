@@ -1,0 +1,119 @@
+# claude-prompt-films
+
+**One prompt → a finished film.** Every frame is drawn in code and every note is synthesized.
+There are no video models, no stock footage and no samples.
+
+![LeBron: the chalk toss becomes 43,440](docs/preview.gif)
+
+> *Make a promo film about LeBron James. 90 seconds. Rich in content, not abstract: real numbers, dates
+> and moments. Show why it is great. The visuals should hit hard.*
+
+That prompt, given to [Claude Code](https://claude.com/claude-code) running Claude Opus 5.5, produced
+[`films/lebron`](films/lebron): 92 seconds at 1080p60. Claude researched and sourced every stat,
+designed the film, wrote the canvas animation and a soundtrack built from his numbers, and reviewed its
+own contact sheets until the frames were clean.
+
+![Contact sheet of the LeBron film](docs/sheet.jpg)
+
+## What's in the LeBron film
+
+| Time | Chapter |
+|---|---|
+| 0–8 s | Akron, 1984: a ball dribbling faster and faster, then launching into the lens |
+| 8–16 s | THE CHOSEN ONE → #1 pick, 2003 → an "AGE 18" stamp |
+| 16–42 s | 23 seasons rise one per beat; the scoring line creeps up to Kareem's 38,387, ties it, and breaks it on the downbeat |
+| 42–60 s | The line curls into four rings → 2016, down 3–1 → Game 7 on a top-down court → THE BLOCK |
+| 60–76 s | 23 tally marks, 1,622 squares, father and son jerseys, three Olympic golds |
+| 76–92 s | Every number at once → a pixel chalk toss explodes into 43,440 → LEBRON JAMES → SEASON 24. PHILADELPHIA. |
+
+### The soundtrack is his too
+
+- **Career melody**: each season's points become a note, played the moment its column grows.
+  Better seasons sing higher. The record season repeats one note until the record falls.
+- **Cities**: the instruments follow his teams. Cleveland is industrial (FM bells, anvil), Miami is bright
+  (saw lead, shaker, congas), Los Angeles is a G-funk whistle, and Philadelphia gets a bar of Philly soul.
+- **"23" motif**: scale degrees 2 and 3 (his number), then 6 (his other number), then home. It returns in every chapter:
+  solo keys, synth lead, gold bells, full brass, and 8-bit over the closing pixel portrait.
+
+## How it works
+
+```
+Chrome (headless)                          Bun (render/render.ts)
+ film.draw(ctx, t) ─► getImageData ─WS─►  ffmpeg stdin (rawvideo RGBA) ─► out/<slug>.mp4
+ film.score(ac)    ─► Float32 PCM  ─WS─►  score.wav ───────────────────┘
+```
+
+- A frame is a **pure function of time**, so the browser preview and the export are identical, and any
+  frame can be rendered on its own.
+- Frames stream straight into ffmpeg and never touch the disk.
+- **Exact**: numbers and type are real text, and hits land on the beat to the millisecond.
+- **Editable**: changing a stat or a colour is a one-line diff, not a re-roll.
+
+Stack: Canvas 2D + Web Audio (`OfflineAudioContext`), [Bun](https://bun.sh), `playwright-core` driving the
+installed Google Chrome, ffmpeg (libx264, BT.709). Fonts: Anton and IBM Plex Mono (SIL OFL) via `@fontsource`.
+
+## Quick start
+
+Needs Bun, Google Chrome and ffmpeg.
+
+```bash
+bun install
+bun render/render.ts serve                          # preview → http://localhost:5173/films/lebron/
+bun render/render.ts video films/lebron             # → out/lebron.mp4 (1080p60, ~7 min on an M1 Pro)
+bun render/render.ts sheet films/lebron --count 36  # contact sheet → out/lebron/sheet.png
+bun render/render.ts stills films/lebron --at 12,32,55
+bun render/render.ts video films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
+```
+
+Add `--no-watermark` to any render. Preview keys: `space` play/pause · `←/→` ±1 s (shift ±5 s) ·
+`,`/`.` one frame · `h` hide the HUD.
+
+## Make your own
+
+Open this folder in Claude Code and say:
+
+```
+Follow PROMO_PROMPT.md to make a film about <anything>.
+```
+
+[`PROMO_PROMPT.md`](PROMO_PROMPT.md) is the whole recipe: research with sources, insider references, the concept,
+the music, the self-review loop, and a posting kit. For a one-word command, save this as `.claude/commands/promo.md`
+and run `/promo <keyword>`:
+
+```markdown
+---
+description: Make a code-rendered film from one keyword, plus a ready-to-post caption
+argument-hint: <keyword> [seconds]
+---
+Make a promo film about: $ARGUMENTS
+
+Follow PROMO_PROMPT.md in this repo from research to post.md, without stopping to ask unless
+something is genuinely ambiguous. Use films/lebron as the reference implementation.
+When done, report the MP4 path, its length and size, and the insider references you used.
+```
+
+## Layout
+
+```
+render/
+  kit.js        easing, typography, grain, camera shake, pixel sprites, synth instruments
+  player.js     one page, three modes: preview · still · render (streams frames over WebSocket)
+  player.css    fonts + preview layout
+  brand.js      the watermark (haoli.ai)
+  render.ts     CLI: serve / stills / sheet / video
+films/<slug>/
+  facts.md      every on-screen number with its source, plus insider references
+  film.js       the film: draw(ctx, t) + score(ac)
+  sprites.js    pixel-art sprites, drawn from scratch
+  post.md       titles, descriptions and hashtags for each platform
+  index.html    loads player + film
+PROMO_PROMPT.md the recipe
+```
+
+## Notes
+
+Films about real people are fan-made tributes. They use no footage, photos, broadcast audio or existing
+songs, every stat is sourced, and each ends with a card saying it is not affiliated with its subject.
+The LeBron film is not affiliated with the NBA or LeBron James.
+
+Made by [haoli.ai](https://haoli.ai) with Claude Code. Code under the [MIT License](LICENSE).

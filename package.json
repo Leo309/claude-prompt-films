@@ -1,0 +1,22 @@
+{
+  "name": "claude-prompt-films",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "serve": "bun render/render.ts serve",
+    "sheet": "bun render/render.ts sheet",
+    "stills": "bun render/render.ts stills",
+    "video": "bun render/render.ts video"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "playwright-core": "^1.63.0"
+  }
+}
