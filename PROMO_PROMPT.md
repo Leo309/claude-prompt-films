@@ -4,10 +4,13 @@ This is the brief behind `/promo <keyword>`. One keyword in, one finished MP4 (a
 
 ## The brief
 
-> Make a promo film about **{keyword}**. {seconds, default 90} seconds. Rich in content, not abstract:
+> Make a promo film about **{keyword}**. 90 seconds. Rich in content, not abstract:
 > real numbers, dates and moments. Show why it is great. The visuals should hit hard. You know what I mean.
 
 That's the whole creative direction. Everything below is how to deliver it.
+
+**The series is 90 SECONDS.** Every film is exactly 90 s: 45 bars at 120 BPM, 48 bars at 128 BPM. A countdown to
+00:00 and the series tag are added by the player, so land the last beat on 90.0 and keep the end card inside it.
 
 **Effect first.** The film is for the fans of the subject, and it has to feel made *by* one:
 - the moments they'd pick themselves;
@@ -58,7 +61,8 @@ in the caption, not in the film, so both audiences get something.
 8. **Render.** `bun render/render.ts video films/<slug>` → `out/<slug>-16x9.mp4` and `out/<slug>-9x16.mp4`.
    Check the vertical frame first with `sheet films/<slug> --format 9x16`.
 9. **Package.** Write `films/<slug>/post.md`:
-   - titles for YouTube, X and Bilibili/Douyin (EN + 中文) that lead with the subject, not the tech;
+   - titles for YouTube, X and Bilibili/Douyin (EN + 中文) that lead with the subject, not the tech, in the series
+     format: "{Subject} in 90 Seconds" / "90秒看完{主题}";
    - a description ending with "Made with one prompt in Claude Code · github.com/Leo309/claude-prompt-films";
    - hashtags;
    - a reminder to tick the platform's AI-content label.

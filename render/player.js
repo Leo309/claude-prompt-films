@@ -8,7 +8,7 @@
 // A film module exports { width, height, duration, fonts, draw(ctx, t), score(ac) },
 // plus optional { title, episode, vertical, chapters } used by the vertical frame.
 // draw() must be a pure function of t — that is what makes preview and export identical.
-import { WATERMARK } from "./brand.js";
+import { WATERMARK, countdown } from "./brand.js";
 import { PORTRAIT, drawVertical } from "./vertical.js";
 
 // The watermark is drawn into the frame itself, so a re-upload carries it and it can't be stripped from the file.
@@ -59,7 +59,7 @@ export async function run(film) {
     film.draw(filmCtx, t);
     reset(ctx);
     if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark); // the watermark becomes the series tag up top
-    else if (watermark) drawWatermark(ctx, watermark, canvas.width, canvas.height);
+    else if (watermark) drawWatermark(ctx, `${watermark}  ${countdown(t, film.duration)}`, canvas.width, canvas.height);
     if (showLabel) {
       ctx.fillStyle = "rgba(0,0,0,0.7)";
       ctx.fillRect(0, 0, 230, 64);

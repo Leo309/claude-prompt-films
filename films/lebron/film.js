@@ -1,4 +1,4 @@
-// LEBRON — a 92-second code-rendered tribute.
+// LEBRON — a 90-second code-rendered tribute, EP01 of the 90 SECONDS series.
 // Fan-made; not affiliated with the NBA or LeBron James. Every number on screen is sourced in facts.md.
 // Timing grid: 120 BPM → 1 beat = 0.5 s, 1 bar = 2 s. Cuts and hits land on beats;
 // IMPACTS drives both the camera shake/flash and the hit sounds, so picture and sound can't drift apart.
@@ -10,7 +10,7 @@ import {
 } from "../../render/kit.js";
 import { PAL, PORTRAIT, PORTRAIT_BLINK, CHALK } from "./sprites.js";
 
-const W = 1920, H = 1080, DURATION = 92;
+const W = 1920, H = 1080, DURATION = 90; // the 90 SECONDS series
 const C = {
   ink: "#0B0B0D", ink2: "#141416", bone: "#EFE9DE", ash: "#8C877F", graphite: "#2E2C29",
   orange: "#FF5A1F", ember: "#FFA24A", gold: "#E6B450",
@@ -1032,23 +1032,23 @@ function sceneFinale(ctx, t) {
   }
 
   // 86–88.5: season 24.
-  const words = [[86.0, 86.75, "SEASON 24.", C.bone, 170], [86.75, 87.5, "PHILADELPHIA.", C.orange, 190], [87.5, 88.5, "NOT FINISHED.", C.bone, 170]];
+  const words = [[86.0, 86.5, "SEASON 24.", C.bone, 170], [86.5, 87.0, "PHILADELPHIA.", C.orange, 190], [87.0, 88.0, "NOT FINISHED.", C.bone, 170]];
   words.forEach(([a, b, w, col, size], i) => {
     if (t < a || t >= b) return;
     const s = slam(t, a, 0.25, 1.3);
-    const out = i === words.length - 1 ? 1 - prog(t, 88.2, 88.5) : 1;
+    const out = i === words.length - 1 ? 1 - prog(t, 87.75, 88.0) : 1;
     scaled(ctx, 960, 560, s.s, () => disp(ctx, w, 960, 620, { size, align: "center", color: col, alpha: s.a * out, tracking: 4 }));
   });
 
-  // 88.6–92: he materialises as a pixel portrait and blinks once. End card.
-  if (t >= 88.6) {
-    const fade = 1 - prog(t, 91.3, 92.0);
-    const px = 10, blink = t >= 90.6 && t < 90.72;
+  // 88–90: he materialises as a pixel portrait and blinks once. End card.
+  if (t >= 88.0) {
+    const fade = 1 - prog(t, 89.5, 90.0);
+    const px = 10, blink = t >= 89.1 && t < 89.22;
     ctx.save();
     ctx.globalAlpha = fade;
-    drawSprite(ctx, blink ? PORTRAIT_BLINK : PORTRAIT, PAL, 960 - 16 * px, 285, px, prog(t, 88.6, 89.3), 7);
+    drawSprite(ctx, blink ? PORTRAIT_BLINK : PORTRAIT, PAL, 960 - 16 * px, 285, px, prog(t, 88.0, 88.5), 7);
     ctx.restore();
-    const ta = prog(t, 89.0, 89.5) * fade;
+    const ta = prog(t, 88.3, 88.6) * fade;
     [
       "A FAN-MADE TRIBUTE. NOT AFFILIATED WITH THE NBA OR LEBRON JAMES.",
       "STATS AS OF SEPTEMBER 2026 · NBA.COM · LANDOFBASKETBALL.COM",
@@ -1246,27 +1246,27 @@ async function score(ac) {
   poof(m, sfx, CHALK_TOSS, 0.5);
 
   // ---- PHILADELPHIA: a bar of Philly soul — four-on-the-floor, open hats, octave bass, strings
-  for (let t0 = 86; t0 < 88.49; t0 += 0.5) {
+  for (let t0 = 86; t0 < 87.99; t0 += 0.5) {
     kick(m, drums, t0, 0.85);
     hat(m, drums, t0 + 0.25, 0.16, true);
   }
-  for (let t0 = 86, i = 0; t0 < 88.49; t0 += 0.25, i++) {
-    const root = t0 < 87.5 ? 41 : 37; // F, then D♭
+  for (let t0 = 86, i = 0; t0 < 87.99; t0 += 0.25, i++) {
+    const root = t0 < 87.0 ? 41 : 37; // F, then D♭
     lead(m, low, t0, midi(i % 2 ? root + 12 : root), 0.18, 0.35, { cutoff: 900 });
   }
-  strings(m, pads, 86.0, [65, 68, 72, 75].map(midi), 1.5, 0.3); // Fm7
-  strings(m, pads, 87.5, [61, 65, 68, 72].map(midi), 1.0, 0.3); // D♭maj7
-  for (let k = 0; k < 8; k++) lead(m, keys, 86.25 + k * 0.0625, midi(scaleNote(65, k)), 0.06, 0.12, { cutoff: 5000 }); // run into "PHILADELPHIA."
-  for (const [t0, n] of [[86.0, 68], [86.75, 72], [87.5, 73]]) {
+  strings(m, pads, 86.0, [65, 68, 72, 75].map(midi), 1.0, 0.3); // Fm7
+  strings(m, pads, 87.0, [61, 65, 68, 72].map(midi), 1.0, 0.3); // D♭maj7
+  for (let k = 0; k < 8; k++) lead(m, keys, 86.0 + k * 0.0625, midi(scaleNote(65, k)), 0.06, 0.12, { cutoff: 5000 }); // run into "PHILADELPHIA."
+  for (const [t0, n] of [[86.0, 68], [86.5, 72], [87.0, 73]]) {
     brass(m, melody, t0, midi(n), 0.3, 0.2);
     brass(m, melody, t0, midi(77), 0.3, 0.12);
   }
 
   // ---- end card: the pixel portrait, and the motif once more in 8-bit
-  pad(m, pads, 88.4, [41, 53, 56, 60].map(midi), 3.6, 0.22, 700);
-  [77, 80, 84, 89].forEach((n, i) => chip(m, melody, 88.6 + i * 0.05, midi(n), 0.06, 0.07));
-  motif(88.9, (t0, f, dur) => chip(m, melody, t0, f * 2, dur * 0.9, 0.08), { stretch: 0.75 });
-  chip(m, sfx, 90.6, midi(96), 0.04, 0.04); // the blink
+  pad(m, pads, 87.9, [41, 53, 56, 60].map(midi), 2.1, 0.22, 700);
+  [77, 80, 84, 89].forEach((n, i) => chip(m, melody, 88.0 + i * 0.05, midi(n), 0.06, 0.07));
+  motif(88.25, (t0, f, dur) => chip(m, melody, t0, f * 2, dur * 0.9, 0.08), { stretch: 0.45 });
+  chip(m, sfx, 89.1, midi(96), 0.04, 0.04); // the blink
 
   // ---- hits, crowd, the opening dribbles
   for (const im of IMPACTS) impact(m, fx, im.t, im.hit * 0.8);
@@ -1291,12 +1291,12 @@ export default {
   duration: DURATION,
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"'],
   // Used by the 9:16 frame (render/vertical.js): a hook above the film, the current chapter below it.
-  vertical: { hook: ["23 SEASONS.", "92 SECONDS."], sub: "THE MUSIC IS MADE FROM HIS STATS" },
+  vertical: { hook: ["23 SEASONS.", "90 SECONDS."], sub: "THE MUSIC IS MADE FROM HIS STATS" },
   chapters: [
     [0, "AKRON, 1984"], [8, "THE CHOSEN ONE"], [12, "#1 PICK"], [16, "THE CLIMB"], [28, "CHASING KAREEM"],
     [32, "ALL-TIME"], [42, "4 RINGS"], [48, "DOWN 3–1"], [55, "THE BLOCK"], [60, "23 SEASONS"],
     [64, "1,622 GAMES"], [68, "FATHER & SON"], [72, "3 OLYMPIC GOLDS"], [76, "EVERYTHING"],
-    [79, "THE CHALK TOSS"], [80, "43,440"], [86, "SEASON 24"], [88.5, ""],
+    [79, "THE CHALK TOSS"], [80, "43,440"], [86, "SEASON 24"], [88, ""],
   ],
   draw,
   score,

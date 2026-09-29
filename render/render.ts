@@ -131,6 +131,8 @@ async function renderVideo(format: string) {
   const wav = join(work, `score-${format}.wav`);
 
   let ff: ChildProcessWithoutNullStreams | null = null;
+  let ffExit: Promise<unknown[]> | null = null;
+  let ffDone = false;
   let expectAudio: { sampleRate: number; channels: number } | null = null;
   let total = 0, done = 0;
   const t0 = performance.now();
@@ -151,13 +153,17 @@ async function renderVideo(format: string) {
       else if (m.type === "start") {
         total = m.frames;
         ff = spawn("ffmpeg", ffmpegArgs(m, wav, out)) as ChildProcessWithoutNullStreams;
+        // Listen for exit right away: with -shortest, ffmpeg can finish before the page says "done".
+        ffExit = once(ff, "exit");
+        ffExit.then(() => (ffDone = true));
+        ff.stdin.on("error", () => {}); // EPIPE once ffmpeg has stopped reading: expected, see below
         ff.stderr.on("data", (d) => process.stderr.write(d));
         ff.on("exit", (code) => code && console.error(`ffmpeg exited with code ${code}`));
         console.log(`Rendering ${total} frames (${(total / fps).toFixed(1)} s at ${fps} fps) → ${out}`);
         ws.send("ack");
       } else if (m.type === "done") {
-        ff!.stdin.end();
-        const [code] = await once(ff!, "exit");
+        if (!ffDone) ff!.stdin.end();
+        const [code] = await ffExit!;
         ws.send(code === 0 ? "finished" : "failed");
       }
       return;
@@ -168,7 +174,9 @@ async function renderVideo(format: string) {
       ws.send("ack");
       return;
     }
-    if (!ff!.stdin.write(msg)) await once(ff!.stdin, "drain");
+    // ffmpeg stops reading at 90 s (-t/-shortest) and can close its input before the last frame arrives.
+    // A write into a closed pipe never drains, so wait for "drain" OR ffmpeg's exit, and skip writes after it.
+    if (!ffDone && !ff!.stdin.write(msg)) await Promise.race([once(ff!.stdin, "drain"), ffExit!]);
     done++;
     if (done % 120 === 0 || done === total) {
       const sec = (performance.now() - t0) / 1000;

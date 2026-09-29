@@ -1,4 +1,4 @@
-# Posting kit — Cristiano Ronaldo (94 s)
+# Posting kit — Cristiano Ronaldo · 90 SECONDS EP02
 
 Files: `out/ronaldo-16x9.mp4` (YouTube, Bilibili, X, Douyin) · `out/ronaldo-9x16.mp4` (Shorts, TikTok, Reels, 小红书) ·
 Watermark: haoli.ai · **Tick the platform's AI-content label.**
@@ -8,10 +8,10 @@ Watermark: haoli.ai · **Tick the platform's AI-content label.**
 
 ## Titles
 
-- **YouTube:** Cristiano Ronaldo: 979 Goals, 21 to Go (Every Goal on One Wall)
+- **YouTube:** Cristiano Ronaldo in 90 Seconds: 979 Goals, 21 to Go
 - **X:** 979 goals. 21 to go. Nobody has ever scored 1,000. Every one of them on one wall, and yes, it ends in SIUUU.
-- **Bilibili:** C罗979球，还差21个｜一面墙装下他的每一个进球（BGM是用他每个赛季的进球数写的）
-- **Douyin / 小红书:** 979球，离人类第一个1000球只差21个｜看到最后有SIUUU
+- **Bilibili:** 90秒看完C罗的979球，还差21个｜一面墙装下他的每一个进球（BGM是用他每个赛季的进球数写的）
+- **Douyin / 小红书:** 90秒看完C罗｜979球，离人类第一个1000球只差21个，看到最后有SIUUU
 
 ## Description (EN)
 

@@ -13,6 +13,7 @@
 //
 // A film opts in to better copy with `vertical: { hook: [...lines], sub }` and `chapters: [[t, label], ...]`.
 import { text, prog, slam, scaled } from "./kit.js";
+import { SERIES, countdown } from "./brand.js";
 
 export const PORTRAIT = { width: 1080, height: 1920 };
 const VIDEO_Y = 660;
@@ -51,14 +52,15 @@ export function drawVertical(ctx, src, t, film, watermark) {
   // Series tag + hook
   const v = film.vertical ?? {};
   const hook = v.hook ?? [String(film.title ?? "").toUpperCase()];
-  const tag = [watermark, film.episode ? `EP${String(film.episode).padStart(2, "0")}` : null].filter(Boolean).join("  ·  ");
+  const tag = [watermark, SERIES, film.episode ? `EP${String(film.episode).padStart(2, "0")}` : null].filter(Boolean).join(" · ");
   if (tag) {
     ctx.fillStyle = ORANGE;
     ctx.beginPath();
     ctx.arc(66, 270, 6, 0, Math.PI * 2);
     ctx.fill();
-    text(ctx, tag, 84, 280, { family: MONO, weight: 500, size: 28, color: BONE, tracking: 4, alpha: 0.85 });
+    text(ctx, tag, 84, 280, { family: MONO, weight: 500, size: 28, color: BONE, tracking: 3, alpha: 0.85 });
   }
+  text(ctx, countdown(t, film.duration), 1020, 280, { family: MONO, weight: 500, size: 28, color: ORANGE, tracking: 3, align: "right" });
   // Hook lines stack down from y = 400; the sub line sits under the last one, clear of the film at 660.
   let y = 400;
   hook.slice(0, 2).forEach((line, i) => {

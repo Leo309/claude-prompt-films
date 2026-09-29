@@ -1,13 +1,13 @@
-# Posting kit — LeBron (92 s)
+# Posting kit — LeBron · 90 SECONDS EP01
 
 Files: `out/lebron-16x9.mp4` (YouTube, Bilibili, X, Douyin) · `out/lebron-9x16.mp4` (Shorts, TikTok, Reels, 小红书) · Watermark: haoli.ai · **Tick the platform's AI-content label.**
 
 ## Titles
 
-- **YouTube:** LeBron James: 23 Seasons in 92 Seconds (43,440)
+- **YouTube:** LeBron James in 90 Seconds: 23 Seasons, 43,440 Points
 - **X:** 23 seasons. 43,440 points. The chalk toss. The Block. Season 24 in Philly.
-- **Bilibili:** 92秒看完詹姆斯的23个赛季｜这段BGM是用他每个赛季的得分写的
-- **Douyin / 小红书:** 23个赛季、43440分、那一记追身大帽——BGM是用詹姆斯的得分写的
+- **Bilibili:** 90秒看完詹姆斯的23个赛季｜这段BGM是用他每个赛季的得分写的
+- **Douyin / 小红书:** 90秒看完詹姆斯｜23个赛季、43440分、那一记追身大帽——BGM是用他的得分写的
 
 ## Description (EN)
 

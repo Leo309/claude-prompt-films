@@ -9,7 +9,7 @@ There are no video models, no stock footage and no samples.
 > and moments. Show why it is great. The visuals should hit hard.*
 
 That prompt, given to [Claude Code](https://claude.com/claude-code) running Claude Opus 5.5, produced
-[`films/lebron`](films/lebron): 92 seconds at 1080p60. Claude researched and sourced every stat,
+[`films/lebron`](films/lebron): 90 seconds at 1080p60. Claude researched and sourced every stat,
 designed the film, wrote the canvas animation and a soundtrack built from his numbers, and reviewed its
 own contact sheets until the frames were clean.
 
@@ -17,13 +17,14 @@ own contact sheets until the frames were clean.
 
 ## Episodes
 
+The series is **90 SECONDS**: every film runs exactly 90 s, with a countdown to 00:00 in the corner.
 Every episode renders in two formats from the same code: 16:9 for YouTube, Bilibili and X, and 9:16 for
 Shorts, TikTok and Reels (a hook on top, the film in the middle, the current chapter underneath).
 
 | EP | Film | Length | The idea |
 |---|---|---|---|
-| 01 | [LeBron James: 43,440](films/lebron) | 92 s | The scoring line chases Kareem and breaks the record on the downbeat. The melody is his 23 seasons; a pixel chalk toss explodes into the drop. |
-| 02 | [Cristiano Ronaldo: 979](films/ronaldo) | 94 s | A wall of 1,000 squares, one per goal, coloured by club, with 21 still empty. City sounds from fado to oud, and a synthesized stadium chanting SIUUU. Built to re-render the day No. 1,000 goes in. |
+| 01 | [LeBron James: 43,440](films/lebron) | 90 s | The scoring line chases Kareem and breaks the record on the downbeat. The melody is his 23 seasons; a pixel chalk toss explodes into the drop. |
+| 02 | [Cristiano Ronaldo: 979](films/ronaldo) | 90 s | A wall of 1,000 squares, one per goal, coloured by club, with 21 still empty. City sounds from fado to oud, and a synthesized stadium chanting SIUUU. Built to re-render the day No. 1,000 goes in. |
 
 ## What's in the LeBron film
 
@@ -34,7 +35,7 @@ Shorts, TikTok and Reels (a hook on top, the film in the middle, the current cha
 | 16–42 s | 23 seasons rise one per beat; the scoring line creeps up to Kareem's 38,387, ties it, and breaks it on the downbeat |
 | 42–60 s | The line curls into four rings → 2016, down 3–1 → Game 7 on a top-down court → THE BLOCK |
 | 60–76 s | 23 tally marks, 1,622 squares, father and son jerseys, three Olympic golds |
-| 76–92 s | Every number at once → a pixel chalk toss explodes into 43,440 → LEBRON JAMES → SEASON 24. PHILADELPHIA. |
+| 76–90 s | Every number at once → a pixel chalk toss explodes into 43,440 → LEBRON JAMES → SEASON 24. PHILADELPHIA. |
 
 ### The soundtrack is his too
 
@@ -111,7 +112,7 @@ render/
   player.js     one page, three modes: preview · still · render (streams frames over WebSocket)
   vertical.js   the 9:16 frame around any 16:9 film (hook · film · chapter)
   player.css    fonts + preview layout
-  brand.js      the watermark (haoli.ai)
+  brand.js      the watermark (haoli.ai), the series name and the countdown
   render.ts     CLI: serve / stills / sheet / video
 films/<slug>/
   facts.md      every on-screen number with its source, plus insider references
