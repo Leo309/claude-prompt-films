@@ -752,6 +752,12 @@ export default {
     [bar(35), "PORTUGAL"], [bar(36.5), "6 WORLD CUPS"], [bar(38), "5 BALLON D'OR"], [bar(40), "EVERYTHING"],
     [bar(42), "…"], [bar(43), "SIUUU"], [bar(44), "CRISTIANO RONALDO"], [bar(46), `${TO_GO} TO GO`],
   ],
+  // Short clips for Reels / Shorts / TikTok, each pointing back to the full film (render/render.ts cuts).
+  cuts: [
+    { name: "wall", from: bar(11), to: bar(24), hook: [`${TOTAL} GOALS.`, "ONE SQUARE EACH."], sub: `CRISTIANO RONALDO · ${TO_GO} TO GO` },
+    { name: "agua", from: bar(24), to: bar(35), hook: ["MR. CHAMPIONS LEAGUE.", "THEN: ÁGUA."], sub: "CRISTIANO RONALDO" },
+    { name: "siuuu", from: bar(38), to: bar(48), hook: ["41 YEARS OLD.", `${TO_GO} GOALS FROM 1,000.`], sub: "CRISTIANO RONALDO · SIUUU" },
+  ],
   draw,
   score,
 };

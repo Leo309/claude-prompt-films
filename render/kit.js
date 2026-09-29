@@ -843,3 +843,92 @@ export function duck(bus, times, depth = 0.35, release = 0.3) {
     p.linearRampToValueAtTime(base, t + release);
   }
 }
+
+// ---------------------------------------------------------------- more instruments (tango night)
+
+// Bandoneón: reedy and a little nasal, with the octave-down reed it sounds in unison. `wet` swaps in three
+// reeds detuned against each other instead (the Paris musette accordion). `bellows` shakes the air (tremolo).
+export function bandoneon(m, out, t, freq, dur, gain = 0.2, o = {}) {
+  const { wet = false, attack = 0.04, release = 0.15, bellows = 0, cutoff = wet ? 4200 : 2600 } = o;
+  const { ac } = m;
+  const lp = filter(ac, "lowpass", cutoff, 1.4);
+  const g = ac.createGain();
+  const hold = Math.max(attack, dur);
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(gain, t + attack);
+  g.gain.setValueAtTime(gain, t + hold);
+  g.gain.linearRampToValueAtTime(0, t + hold + release);
+  if (bellows) {
+    const lfo = osc(ac, "sine", t, hold + release + 0.05);
+    lfo.frequency.value = 5.5;
+    const depth = ac.createGain();
+    depth.gain.value = gain * bellows;
+    lfo.connect(depth).connect(g.gain);
+  }
+  lp.connect(g).connect(out);
+  const voices = wet
+    ? [[1, -14, "sawtooth", 0.4], [1, 0, "sawtooth", 0.4], [1, 15, "sawtooth", 0.4]]
+    : [[1, -4, "square", 0.45], [1, 5, "sawtooth", 0.4], [0.5, 0, "square", 0.3]];
+  for (const [ratio, cents, type, level] of voices) {
+    const v = osc(ac, type, t, hold + release + 0.05);
+    v.frequency.value = freq * ratio;
+    v.detune.value = cents;
+    const vg = ac.createGain();
+    vg.gain.value = level;
+    v.connect(vg).connect(lp);
+  }
+}
+
+// Marimba: a wooden bar, a sine with the bar's 4th and ~10th overtones that die fast.
+export function marimba(m, out, t, freq, gain = 0.3) {
+  const { ac } = m;
+  [[1, 1, 0.7], [4, 0.28, 0.16], [9.9, 0.08, 0.06]].forEach(([ratio, amp, d]) => {
+    const o = osc(ac, "sine", t, d + 0.1);
+    o.frequency.value = freq * ratio;
+    o.connect(env(ac, t, { a: 0.002, peak: gain * amp, d })).connect(out);
+  });
+}
+
+// Bombo con platillo: the deep, loose Argentine stadium drum, with a cymbal mounted on top.
+export function bombo(m, out, t, gain = 0.8, platillo = false) {
+  const { ac } = m;
+  const o = osc(ac, "sine", t, 0.7);
+  o.frequency.setValueAtTime(95, t);
+  o.frequency.exponentialRampToValueAtTime(52, t + 0.18);
+  o.connect(env(ac, t, { a: 0.003, peak: gain, d: 0.55 })).connect(out);
+  noiseSrc(m, t, 0.08).connect(filter(ac, "bandpass", 420, 1.2)).connect(env(ac, t, { a: 0.001, peak: gain * 0.45, d: 0.07 })).connect(out);
+  if (platillo) noiseSrc(m, t, 0.5, false, 3).connect(filter(ac, "highpass", 5200)).connect(env(ac, t, { a: 0.002, peak: gain * 0.35, d: 0.42 })).connect(out);
+}
+
+// Chicharra: the tango violinist's "cicada", bowing behind the bridge. Band-passed noise chopped by a square wave.
+export function chicharra(m, out, t, dur = 0.2, gain = 0.2) {
+  const { ac } = m;
+  const chop = ac.createGain();
+  chop.gain.value = gain * 0.5;
+  const lfo = osc(ac, "square", t, dur + 0.05);
+  lfo.frequency.value = 48;
+  const depth = ac.createGain();
+  depth.gain.value = gain * 0.5; // 0.5 ± 0.5: the noise switches fully on and off
+  lfo.connect(depth).connect(chop.gain);
+  noiseSrc(m, t, dur).connect(filter(ac, "bandpass", 1700, 2.5)).connect(chop).connect(env(ac, t, { a: 0.01, peak: 1, hold: dur * 0.6, d: dur * 0.4 })).connect(out);
+}
+
+// Ballpoint on paper (or, higher and faster, a rustle): noise whose loudness wobbles with the stroke.
+export function scribble(m, out, t0, t1, gain = 0.1, freq = 3200, rate = 9) {
+  const { ac } = m;
+  const n = noiseSrc(m, t0, t1 - t0, true, 11);
+  n.stop(t1 + 0.05);
+  const wob = ac.createGain();
+  wob.gain.value = gain * 0.5;
+  const lfo = osc(ac, "triangle", t0, t1 - t0 + 0.05);
+  lfo.frequency.value = rate;
+  const depth = ac.createGain();
+  depth.gain.value = gain * 0.5;
+  lfo.connect(depth).connect(wob.gain);
+  const fade = ac.createGain();
+  fade.gain.setValueAtTime(0, t0);
+  fade.gain.linearRampToValueAtTime(1, t0 + 0.04);
+  fade.gain.setValueAtTime(1, Math.max(t0 + 0.04, t1 - 0.05));
+  fade.gain.linearRampToValueAtTime(0, t1);
+  n.connect(filter(ac, "bandpass", freq, 1.6)).connect(wob).connect(fade).connect(out);
+}

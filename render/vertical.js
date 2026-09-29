@@ -12,6 +12,8 @@
 //   └──────────────┘  1920
 //
 // A film opts in to better copy with `vertical: { hook: [...lines], sub }` and `chapters: [[t, label], ...]`.
+// A clip (`cuts` in the film, `?cut=<name>` here) swaps in its own hook, drops the countdown and, over its
+// last seconds, points viewers to the full film.
 import { text, prog, slam, scaled } from "./kit.js";
 import { SERIES, countdown } from "./brand.js";
 
@@ -19,6 +21,25 @@ export const PORTRAIT = { width: 1080, height: 1920 };
 const VIDEO_Y = 660;
 const INK = "#0B0B0D", BONE = "#EFE9DE", ASH = "#8C877F", ORANGE = "#FF5A1F";
 const DISPLAY = "Anton", MONO = '"IBM Plex Mono"';
+export const CLIP_CARD = 2.4; // seconds at the end of a clip that point to the full film
+
+// "FULL 90 SECONDS / ON MY PROFILE" on an orange plate, slammed in over the last seconds of a clip.
+// Returns true while it is showing.
+export function drawClipCard(ctx, t, cut, cx, cy) {
+  const t0 = cut.to - CLIP_CARD;
+  if (t < t0) return false;
+  const s = slam(t, t0, 0.3, 1.3);
+  scaled(ctx, cx, cy, s.s, () => {
+    ctx.save();
+    ctx.globalAlpha = s.a;
+    ctx.fillStyle = ORANGE;
+    ctx.fillRect(cx - 420, cy - 120, 840, 200);
+    ctx.restore();
+    text(ctx, "FULL 90 SECONDS", cx, cy, { family: DISPLAY, size: 96, color: INK, align: "center", tracking: 3, alpha: s.a });
+    text(ctx, "ON MY PROFILE", cx, cy + 56, { family: MONO, weight: 500, size: 30, color: INK, align: "center", tracking: 8, alpha: s.a });
+  });
+  return true;
+}
 
 let blurCanvas = null;
 
@@ -32,7 +53,7 @@ function fitSize(ctx, str, family, max, width, tracking = 0) {
   return w > width ? Math.floor((max * width) / w) : max;
 }
 
-export function drawVertical(ctx, src, t, film, watermark) {
+export function drawVertical(ctx, src, t, film, watermark, cut = null) {
   const W = PORTRAIT.width, H = PORTRAIT.height;
   const videoH = (W * src.height) / src.width;
 
@@ -49,8 +70,8 @@ export function drawVertical(ctx, src, t, film, watermark) {
   ctx.fillRect(0, 0, W, H);
   ctx.globalAlpha = 1;
 
-  // Series tag + hook
-  const v = film.vertical ?? {};
+  // Series tag + hook (a clip brings its own hook and has no countdown)
+  const v = cut ?? film.vertical ?? {};
   const hook = v.hook ?? [String(film.title ?? "").toUpperCase()];
   const tag = [watermark, SERIES, film.episode ? `EP${String(film.episode).padStart(2, "0")}` : null].filter(Boolean).join(" · ");
   if (tag) {
@@ -60,7 +81,7 @@ export function drawVertical(ctx, src, t, film, watermark) {
     ctx.fill();
     text(ctx, tag, 84, 280, { family: MONO, weight: 500, size: 28, color: BONE, tracking: 3, alpha: 0.85 });
   }
-  text(ctx, countdown(t, film.duration), 1020, 280, { family: MONO, weight: 500, size: 28, color: ORANGE, tracking: 3, align: "right" });
+  if (!cut) text(ctx, countdown(t, film.duration), 1020, 280, { family: MONO, weight: 500, size: 28, color: ORANGE, tracking: 3, align: "right" });
   // Hook lines stack down from y = 400; the sub line sits under the last one, clear of the film at 660.
   let y = 400;
   hook.slice(0, 2).forEach((line, i) => {
@@ -73,7 +94,10 @@ export function drawVertical(ctx, src, t, film, watermark) {
   // The film itself
   ctx.drawImage(src, 0, VIDEO_Y, W, videoH);
   ctx.fillStyle = ORANGE;
-  ctx.fillRect(0, VIDEO_Y + videoH, W * prog(t, 0, film.duration), 4); // progress along the bottom edge of the film
+  ctx.fillRect(0, VIDEO_Y + videoH, W * prog(t, cut ? cut.from : 0, cut ? cut.to : film.duration), 4); // progress along the bottom edge
+
+  // A clip ends by pointing to the full film, in place of the chapter
+  if (cut && drawClipCard(ctx, t, cut, W / 2, VIDEO_Y + videoH + 190)) return;
 
   // Current chapter, slammed in on each change
   const chapters = film.chapters ?? [];

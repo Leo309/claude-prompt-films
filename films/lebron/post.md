@@ -52,25 +52,24 @@ Is 43,440 ever getting broken? 👇
 
 ## X (16:9)
 
+Most of X is fans scrolling, not tech people. Post 1 is pure basketball; the "made by AI" line is a curiosity hook
+in plain words, not a tech story.
+
 **Post 1** (attach the video)
 ```
 23 seasons. 43,440 points. 90 seconds.
 
-Every frame and every note in this is code: no footage, no video model, no samples. The melody is his career: one note per season.
+Is anyone ever catching this? 👀 #NBA #LeBron
 ```
-**Post 2** (reply to your own post, the maker story)
+**Post 2** (reply to yourself)
 ```
-How it was made: one prompt in Claude Code.
-
-Claude researched and sourced every stat, wrote the canvas animation and a Web Audio score, then reviewed its own contact sheets until the frames were clean. No Remotion, no video model.
-
-Code + the prompt recipe: github.com/Leo309/claude-prompt-films
+Fun fact: there's no game footage in this. I gave an AI one sentence and it made the whole thing: the animation, the music, all of it. The melody is literally his points, one note per season.
 ```
-**Post 3** (optional, the detail people repost)
+**Post 3** (reply, for the curious)
 ```
-The chase for Kareem's 38,387: the line creeps up to a tie, the beat drops out, and it breaks the record on the downbeat. Same note pulsing 8 times, then it resolves.
+How it's made (and the prompt): github.com/Leo309/claude-prompt-films
 ```
-Keep the link out of post 1, because links in the first post tend to lower reach. Put it in the reply.
+Best moment to repost: NBA opening night, Tue Oct 20, LeBron's first game in Philadelphia.
 
 ## 中文平台（B 站 / 抖音 / 小红书，之后再发）
 

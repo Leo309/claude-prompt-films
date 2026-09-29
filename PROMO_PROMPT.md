@@ -45,6 +45,9 @@ in the caption, not in the film, so both audiences get something.
    - Also export `title`, `episode` (the next number in the Episodes table), `vertical: { hook: [2 short lines], sub }`
      and `chapters: [[t, "LABEL"], ...]`. The 9:16 version is built from these (`render/vertical.js`),
      so the hook has to work as a phone headline on its own.
+   - Export `cuts: [{ name, from, to, hook: [2 lines], sub }, ...]`: 3–4 clips of 18–25 s, each a complete moment
+     with its own headline. `bun render/render.ts cuts films/<slug>` renders them for Shorts, TikTok and Reels,
+     ending on a card that points to the full film.
 5. **Make the music theirs**, not a generic beat (see `films/lebron/film.js` → score):
    - **Data melody**: turn the subject's key series (points per season, goals per year…) into notes,
      and play each one the moment its data point appears on screen.
@@ -59,13 +62,14 @@ in the caption, not in the film, so both audiences get something.
    Fix overlaps, overflow, empty frames and unreadable text. Zoom in with `stills --at ...` on busy moments.
    Repeat until clean.
 8. **Render.** `bun render/render.ts video films/<slug>` → `out/<slug>-16x9.mp4` and `out/<slug>-9x16.mp4`.
-   Check the vertical frame first with `sheet films/<slug> --format 9x16`.
+   Check the vertical frame first with `sheet films/<slug> --format 9x16`. Then `cuts films/<slug>` for the clips.
 9. **Package.** Write `films/<slug>/post.md`:
    - titles for YouTube, X and Bilibili/Douyin (EN + 中文) that lead with the subject, not the tech, in the series
      format: "{Subject} in 90 Seconds" / "90秒看完{主题}";
    - a description ending with "Made with one prompt in Claude Code · github.com/Leo309/claude-prompt-films";
    - hashtags;
-   - a reminder to tick the platform's AI-content label.
+   - a reminder to tick the platform's AI-content label;
+   - a posting schedule: the full film first, then one clip a day, timed to the subject's next news peg.
 
    Add the film to the Episodes table in README.md. Report the MP4 paths, length and size.
 

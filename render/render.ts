@@ -8,8 +8,10 @@
  *   bun render/render.ts video  films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
  *   bun render/render.ts stills films/lebron --at 3,12.5,40   PNGs → out/lebron/stills/
  *   bun render/render.ts sheet  films/lebron [--count 24]   contact sheet → out/lebron/sheet.png
+ *   bun render/render.ts cuts   films/messi [--name rings] [--format 9x16|16x9|all]
+ *                                                           the film's short clips → out/messi-<cut>-9x16.mp4
  *   add --no-watermark to any of them to leave out the watermark (render/brand.js);
- *   stills and sheet take --format 9x16 to preview the vertical frame
+ *   stills and sheet take --format 9x16 to preview the vertical frame, and --cut <name> to preview a clip's framing
  *
  * Frames never touch the disk: headless Chrome draws each frame, sends raw RGBA
  * over a WebSocket, and we pipe it straight into ffmpeg's stdin.
@@ -80,7 +82,8 @@ async function openFilm(server: Server, query: string): Promise<{ browser: Brows
     process.exit(3);
   });
   const wm = args.includes("--no-watermark") ? "&nowm" : "";
-  await page.goto(`http://localhost:${server.port}/${filmDir}/?${query}${wm}`);
+  const cut = opt("cut") ? `&cut=${encodeURIComponent(opt("cut")!)}` : "";
+  await page.goto(`http://localhost:${server.port}/${filmDir}/?${query}${wm}${cut}`);
   await page.waitForFunction(() => (window as any).__player?.ready === true, null, { timeout: 60_000 });
   return { browser, page };
 }
@@ -115,6 +118,8 @@ function ffmpegArgs(v: { width: number; height: number; fps: number; frames: num
     "-vf", "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p",
     "-c:v", "libx264", "-preset", opt("preset", "slow")!, "-crf", opt("crf", "18")!,
     "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv",
+    // A clip starts and stops mid-song: fade the sound in and out so it doesn't click.
+    ...(opt("cut") ? ["-af", `afade=t=in:st=0:d=0.12,afade=t=out:st=${(v.frames / v.fps - 0.6).toFixed(3)}:d=0.6`] : []),
     "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", "-shortest",
     out,
   ];
@@ -252,6 +257,29 @@ async function renderSheet() {
   console.log(out);
 }
 
+// ---------------------------------------------------------------- clips
+
+// Render the film's `cuts` (short clips for Reels / Shorts / TikTok), one process per clip and format.
+async function renderCuts() {
+  const film = (await import(resolve(ROOT, filmDir, "film.js"))).default;
+  const names = opt("name")?.split(",");
+  const cuts = (film.cuts ?? []).filter((c: { name: string }) => !names || names.includes(c.name));
+  if (!cuts.length) throw new Error(names ? `no cut named ${names.join(", ")}` : "this film has no cuts");
+  const format = opt("format", "9x16")!;
+  const formats = format === "all" ? ["16x9", "9x16"] : [format];
+  const skip = new Set(["--name", "--format", "--from", "--to", "--out", "--cut"]);
+  const rest = args.slice(2).filter((a, i, all) => !skip.has(a) && !skip.has(all[i - 1]));
+  for (const c of cuts) {
+    for (const f of formats) {
+      const out = join(ROOT, "out", `${basename(filmDir)}-${c.name}-${f}.mp4`);
+      console.log(`\n${c.name} · ${f} · ${c.from.toFixed(2)}–${c.to.toFixed(2)} s`);
+      const p = Bun.spawnSync([process.execPath, import.meta.path, "video", filmDir, "--format", f,
+        "--from", String(c.from), "--to", String(c.to), "--cut", c.name, "--out", out, ...rest], { stdout: "inherit", stderr: "inherit" });
+      if (p.exitCode !== 0) process.exit(p.exitCode ?? 1);
+    }
+  }
+}
+
 // ---------------------------------------------------------------- main
 
 if (mode === "serve") {
@@ -271,7 +299,8 @@ if (mode === "serve") {
 }
 else if (mode === "stills") await renderStills();
 else if (mode === "sheet") await renderSheet();
+else if (mode === "cuts") await renderCuts();
 else {
-  console.log("Usage: bun render/render.ts <serve|video|stills|sheet> [films/<name>] [options]");
+  console.log("Usage: bun render/render.ts <serve|video|stills|sheet|cuts> [films/<name>] [options]");
   process.exit(1);
 }

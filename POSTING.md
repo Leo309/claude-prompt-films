@@ -10,7 +10,7 @@ Per-film copy lives in `films/<slug>/post.md`. This file is how to post it.
 | Instagram Reels | `<slug>-9x16.mp4` | the subject + "sound on" | last line of the caption |
 | YouTube Shorts | `<slug>-9x16.mp4` | the subject in the title | description + pinned comment |
 | YouTube (long-form) | `<slug>-16x9.mp4` | same title | description; add to the "90 SECONDS" playlist, link it from the Short's *related video* |
-| X | `<slug>-16x9.mp4` | the subject in post 1 | **the thread**: the maker story is the X hook |
+| X | `<slug>-16x9.mp4` | the subject + a debate question (most of X is fans, not tech) | a plain-words reply: "no footage, one sentence to an AI"; the repo link in a later reply |
 | LinkedIn | `<slug>-16x9.mp4` | the build | the whole post: this is the portfolio piece, not a traffic play |
 | Bilibili | `<slug>-16x9.mp4` | Chinese title from `post.md` | 简介 |
 | 小红书 | `<slug>-9x16.mp4` | Chinese title | the creator story ("我用 AI 做了一个系列") |

@@ -42,3 +42,9 @@ As of **2026-09-28**. Every number on screen must appear here with a source.
 - No team logos, crests or brand marks; cities instead of team names.
 - No invented quotes.
 - End card: fan-made, not affiliated with the NBA or LeBron James.
+
+## Clips
+
+- The `season24` clip's headline "SEASON 24: OCT 20.": the 2026–27 NBA season opens Tuesday 20 October 2026; opening
+  night includes Philadelphia at New York ([Fox Sports](https://www.foxsports.com/stories/nba/when-does-2026-27-nba-season-start-opening-night-schedule),
+  [FantasyNerds](https://www.fantasynerds.com/news/story/2026/08/12/nba-2026-27-schedule-key-dates-including-knicks-title-defense,-lebrons-philly-debut-1594459)). Checked 2026-09-29.

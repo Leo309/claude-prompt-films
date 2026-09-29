@@ -1298,6 +1298,12 @@ export default {
     [64, "1,622 GAMES"], [68, "FATHER & SON"], [72, "3 OLYMPIC GOLDS"], [76, "EVERYTHING"],
     [79, "THE CHALK TOSS"], [80, "43,440"], [86, "SEASON 24"], [88, ""],
   ],
+  // Short clips for Reels / Shorts / TikTok, each pointing back to the full film (render/render.ts cuts).
+  cuts: [
+    { name: "kareem", from: 16, to: 40, hook: ["HE CAUGHT KAREEM", "ON THE DOWNBEAT."], sub: "LEBRON JAMES · 23 SEASONS" },
+    { name: "block", from: 42, to: 62, hook: ["DOWN 3–1.", "THEN THE BLOCK."], sub: "2016 FINALS · LEBRON JAMES" },
+    { name: "season24", from: 72, to: 90, hook: ["43,440 POINTS.", "SEASON 24: OCT 20."], sub: "LEBRON JAMES · PHILADELPHIA" },
+  ],
   draw,
   score,
 };

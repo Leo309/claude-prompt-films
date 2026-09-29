@@ -4,12 +4,14 @@
 //   render            — frames and audio are streamed to render.ts over a WebSocket, straight into ffmpeg
 //
 // ?format=9x16 wraps the 16:9 film in a phone-first vertical frame (see vertical.js).
+// ?cut=<name> frames one of the film's `cuts` as a clip: its own hook, no countdown, and a
+// "full 90 seconds on my profile" card at the end (render.ts renders just that time range).
 //
 // A film module exports { width, height, duration, fonts, draw(ctx, t), score(ac) },
-// plus optional { title, episode, vertical, chapters } used by the vertical frame.
+// plus optional { title, episode, vertical, chapters, cuts } used by the vertical frame and clips.
 // draw() must be a pure function of t — that is what makes preview and export identical.
 import { WATERMARK, countdown } from "./brand.js";
-import { PORTRAIT, drawVertical } from "./vertical.js";
+import { PORTRAIT, drawVertical, drawClipCard } from "./vertical.js";
 
 // The watermark is drawn into the frame itself, so a re-upload carries it and it can't be stripped from the file.
 function drawWatermark(ctx, label, w, h) {
@@ -49,6 +51,8 @@ export async function run(film) {
 
   const showLabel = params.has("label");
   const watermark = params.has("nowm") || film.watermark === false ? null : film.watermark ?? WATERMARK;
+  const cut = params.has("cut") ? (film.cuts ?? []).find((c) => c.name === params.get("cut")) : null;
+  if (params.has("cut") && !cut) throw new Error(`no cut named "${params.get("cut")}" in this film`);
   const reset = (c) => {
     c.setTransform(1, 0, 0, 1, 0, 0);
     c.globalAlpha = 1;
@@ -58,8 +62,11 @@ export async function run(film) {
     reset(filmCtx);
     film.draw(filmCtx, t);
     reset(ctx);
-    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark); // the watermark becomes the series tag up top
-    else if (watermark) drawWatermark(ctx, `${watermark}  ${countdown(t, film.duration)}`, canvas.width, canvas.height);
+    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark, cut); // the watermark becomes the series tag up top
+    else {
+      if (watermark) drawWatermark(ctx, cut ? watermark : `${watermark}  ${countdown(t, film.duration)}`, canvas.width, canvas.height);
+      if (cut) drawClipCard(ctx, t, cut, canvas.width / 2, canvas.height - 200);
+    }
     if (showLabel) {
       ctx.fillStyle = "rgba(0,0,0,0.7)";
       ctx.fillRect(0, 0, 230, 64);

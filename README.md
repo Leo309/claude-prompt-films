@@ -25,6 +25,7 @@ Shorts, TikTok and Reels (a hook on top, the film in the middle, the current cha
 |---|---|---|---|
 | 01 | [LeBron James: 43,440](films/lebron) | 90 s | The scoring line chases Kareem and breaks the record on the downbeat. The melody is his 23 seasons; a pixel chalk toss explodes into the drop. |
 | 02 | [Cristiano Ronaldo: 979](films/ronaldo) | 90 s | A wall of 1,000 squares, one per goal, coloured by club, with 21 still empty. City sounds from fado to oud, and a synthesized stadium chanting SIUUU. Built to re-render the day No. 1,000 goes in. |
+| 03 | [Lionel Messi: Too Small](films/messi) | 90 s | Too small at 10, signed on a napkin at 13. His 931 goals grow like tree rings, one per season, inside a bark of 125 for Argentina, and 46 trophies stack up beside a 1.70 m man. An electrotango with a bandoneón, and a crowd chanting ME-SSI. Ends on his last game for Argentina, 6 October 2026. |
 
 ## What's in the LeBron film
 
@@ -75,7 +76,12 @@ bun render/render.ts video films/lebron --format 9x16   # just one format
 bun render/render.ts sheet films/lebron --count 36  # contact sheet → out/lebron/sheet.png
 bun render/render.ts stills films/lebron --at 12,32,55 [--format 9x16]
 bun render/render.ts video films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
+bun render/render.ts cuts films/messi               # the film's short clips → out/messi-<cut>-9x16.mp4
 ```
+
+**Clips.** A film can export `cuts`: 18–25 s ranges, each with its own phone headline. `cuts` renders them for
+Shorts, TikTok and Reels with no countdown and a "FULL 90 SECONDS / ON MY PROFILE" card over the last 2.4 s, so every
+clip sends viewers to the full film. Post the full film first, then the clips over the next few days.
 
 Add `--no-watermark` to any render. Preview keys: `space` play/pause · `←/→` ±1 s (shift ±5 s) ·
 `,`/`.` one frame · `h` hide the HUD.
