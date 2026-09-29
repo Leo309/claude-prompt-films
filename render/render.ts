@@ -75,6 +75,10 @@ async function openFilm(server: Server, query: string): Promise<{ browser: Brows
     if (m.type() === "error" || m.type() === "warning") console.log(`[page ${m.type()}] ${m.text()}`);
   });
   page.on("pageerror", (e) => console.error(`[page error] ${e.message}`));
+  page.on("crash", () => {
+    console.error("\n✗ the page crashed");
+    process.exit(3);
+  });
   const wm = args.includes("--no-watermark") ? "&nowm" : "";
   await page.goto(`http://localhost:${server.port}/${filmDir}/?${query}${wm}`);
   await page.waitForFunction(() => (window as any).__player?.ready === true, null, { timeout: 60_000 });
@@ -130,8 +134,17 @@ async function renderVideo(format: string) {
   let expectAudio: { sampleRate: number; channels: number } | null = null;
   let total = 0, done = 0;
   const t0 = performance.now();
+  // Watchdog: a render that stops receiving frames fails loudly instead of hanging forever.
+  let lastMessage = performance.now();
+  const watchdog = setInterval(() => {
+    if (performance.now() - lastMessage > 90_000) {
+      console.error("\n✗ render stalled: no frames for 90 s");
+      process.exit(2);
+    }
+  }, 5000);
 
   onMessage = async (ws, msg) => {
+    lastMessage = performance.now();
     if (typeof msg === "string") {
       const m = JSON.parse(msg);
       if (m.type === "audio") expectAudio = m;
@@ -168,6 +181,7 @@ async function renderVideo(format: string) {
   const server = startServer();
   const { browser, page } = await openFilm(server, `mode=render&format=${format}`);
   const result = await page.evaluate((o) => (window as any).__player.streamRender(o), { from, to, fps });
+  clearInterval(watchdog);
   await browser.close();
   server.stop(true);
   rmSync(wav, { force: true });
@@ -237,7 +251,15 @@ if (mode === "serve") {
   console.log(`Preview server: http://localhost:${server.port}/films/<name>/`);
 } else if (mode === "video") {
   const format = opt("format", "all")!;
-  for (const f of format === "all" ? ["16x9", "9x16"] : [format]) await renderVideo(f);
+  if (format !== "all") await renderVideo(format);
+  else {
+    // One process per format: a fresh browser and server for each (a second render in the same process once stalled).
+    const rest = args.slice(2).filter((a, i, all) => a !== "--format" && all[i - 1] !== "--format");
+    for (const f of ["16x9", "9x16"]) {
+      const p = Bun.spawnSync([process.execPath, import.meta.path, "video", filmDir, "--format", f, ...rest], { stdout: "inherit", stderr: "inherit" });
+      if (p.exitCode !== 0) process.exit(p.exitCode ?? 1);
+    }
+  }
 }
 else if (mode === "stills") await renderStills();
 else if (mode === "sheet") await renderSheet();
