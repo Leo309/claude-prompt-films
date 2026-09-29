@@ -15,6 +15,16 @@ own contact sheets until the frames were clean.
 
 ![Contact sheet of the LeBron film](docs/sheet.jpg)
 
+## Episodes
+
+Every episode renders in two formats from the same code: 16:9 for YouTube, Bilibili and X, and 9:16 for
+Shorts, TikTok and Reels (a hook on top, the film in the middle, the current chapter underneath).
+
+| EP | Film | Length | The idea |
+|---|---|---|---|
+| 01 | [LeBron James: 43,440](films/lebron) | 92 s | The scoring line chases Kareem and breaks the record on the downbeat. The melody is his 23 seasons; a pixel chalk toss explodes into the drop. |
+| 02 | [Cristiano Ronaldo: 979](films/ronaldo) | 94 s | A wall of 1,000 squares, one per goal, coloured by club, with 21 still empty. City sounds from fado to oud, and a synthesized stadium chanting SIUUU. Built to re-render the day No. 1,000 goes in. |
+
 ## What's in the LeBron film
 
 | Time | Chapter |
@@ -59,9 +69,10 @@ Needs Bun, Google Chrome and ffmpeg.
 ```bash
 bun install
 bun render/render.ts serve                          # preview → http://localhost:5173/films/lebron/
-bun render/render.ts video films/lebron             # → out/lebron.mp4 (1080p60, ~7 min on an M1 Pro)
+bun render/render.ts video films/lebron             # → out/lebron-16x9.mp4 + out/lebron-9x16.mp4 (~7 min each on an M1 Pro)
+bun render/render.ts video films/lebron --format 9x16   # just one format
 bun render/render.ts sheet films/lebron --count 36  # contact sheet → out/lebron/sheet.png
-bun render/render.ts stills films/lebron --at 12,32,55
+bun render/render.ts stills films/lebron --at 12,32,55 [--format 9x16]
 bun render/render.ts video films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
 ```
 
@@ -96,8 +107,9 @@ When done, report the MP4 path, its length and size, and the insider references 
 
 ```
 render/
-  kit.js        easing, typography, grain, camera shake, pixel sprites, synth instruments
+  kit.js        easing, typography, grain, camera shake, pixel sprites + figure rig, synth instruments
   player.js     one page, three modes: preview · still · render (streams frames over WebSocket)
+  vertical.js   the 9:16 frame around any 16:9 film (hook · film · chapter)
   player.css    fonts + preview layout
   brand.js      the watermark (haoli.ai)
   render.ts     CLI: serve / stills / sheet / video
