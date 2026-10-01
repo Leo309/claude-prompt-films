@@ -632,7 +632,7 @@ const motif = (t0, play, shift = 0) => MOTIF.forEach(([b, n, d]) => play(t0 + b 
 const GROOVES = [[4, 8], [8, 23], [24, 28], [30.5, 32], [35, 40], [43, 46]];
 
 async function score(ac) {
-  const m = makeMixer(ac);
+  const m = makeMixer(ac, { level: 0.85 }); // −1.4 dB: the stadium SIUUU and big impacts pushed decoded peaks past 0 dBFS
   const drums = m.bus(0.9, 0.05), low = m.bus(0.7), pads = m.bus(0.3, 0.6), keys = m.bus(0.22, 0.45);
   const melody = m.bus(0.42, 0.4), perc = m.bus(0.5, 0.2), fx = m.bus(0.85, 0.3), sfx = m.bus(0.9, 0.6), crowdBus = m.bus(0.8, 0.5);
   const kicks = [];
