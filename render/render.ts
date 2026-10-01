@@ -142,9 +142,11 @@ async function renderVideo(format: string) {
   let total = 0, done = 0;
   const t0 = performance.now();
   // Watchdog: a render that stops receiving frames fails loudly instead of hanging forever.
+  // Once the page says "done", ffmpeg may still be encoding a backlog of frames: that is not a stall.
   let lastMessage = performance.now();
+  let finishing = false;
   const watchdog = setInterval(() => {
-    if (performance.now() - lastMessage > 90_000) {
+    if (!finishing && performance.now() - lastMessage > 90_000) {
       console.error("\n✗ render stalled: no frames for 90 s");
       process.exit(2);
     }
@@ -167,6 +169,7 @@ async function renderVideo(format: string) {
         console.log(`Rendering ${total} frames (${(total / fps).toFixed(1)} s at ${fps} fps) → ${out}`);
         ws.send("ack");
       } else if (m.type === "done") {
+        finishing = true;
         if (!ffDone) ff!.stdin.end();
         const [code] = await ffExit!;
         ws.send(code === 0 ? "finished" : "failed");

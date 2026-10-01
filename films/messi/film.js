@@ -1011,7 +1011,7 @@ const MOTIF = [[0, 57, 1], [1, 72, 0.75], [1.75, 71, 0.25], [2, 69, 2]];
 const motif = (t0, play, shift = 0) => MOTIF.forEach(([b, n, d]) => play(t0 + b * BEAT, midi(n + shift), d * BEAT));
 
 async function score(ac) {
-  const m = makeMixer(ac);
+  const m = makeMixer(ac, { level: 0.8 }); // −1.9 dB: bombos, chants and 27 impacts make this score run hot
   const drums = m.bus(0.9, 0.05), low = m.bus(0.7), pads = m.bus(0.26, 0.6), keys = m.bus(0.26, 0.4);
   const melody = m.bus(0.42, 0.4), perc = m.bus(0.55, 0.2), fx = m.bus(0.85, 0.3), sfx = m.bus(0.9, 0.5), crowdBus = m.bus(0.8, 0.5);
   const kicks = [];

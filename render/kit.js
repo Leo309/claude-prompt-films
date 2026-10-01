@@ -242,8 +242,9 @@ function impulseResponse(ac, seconds, decay, seed) {
   return buf;
 }
 
-// Master chain: buses → reverb send → glue compressor → limiter → speakers.
-export function makeMixer(ac) {
+// Master chain: buses → reverb send → glue compressor → limiter → master trim → speakers.
+// `level` trims the final output after the limiter (1 = unchanged), for a busy score that runs hot.
+export function makeMixer(ac, { level = 1 } = {}) {
   const out = ac.createGain();
   out.gain.value = 0.8;
   const glue = ac.createDynamicsCompressor();
@@ -258,7 +259,9 @@ export function makeMixer(ac) {
   limit.ratio.value = 20;
   limit.attack.value = 0.001;
   limit.release.value = 0.08;
-  out.connect(glue).connect(limit).connect(ac.destination);
+  const master = ac.createGain();
+  master.gain.value = level;
+  out.connect(glue).connect(limit).connect(master).connect(ac.destination);
 
   const verb = ac.createConvolver();
   verb.buffer = impulseResponse(ac, 2.8, 2.2, 21);
