@@ -3,13 +3,15 @@
  * Offline renderer for code-rendered films.
  *
  *   bun render/render.ts serve [--port 5173]               preview server → http://localhost:5173/films/<name>/
- *   bun render/render.ts video  films/lebron               MP4s → out/lebron-16x9.mp4 + out/lebron-9x16.mp4
+ *   bun render/render.ts video  films/lebron               MP4s → out/lebron/full-16x9.mp4 + out/lebron/full-9x16.mp4
  *   bun render/render.ts video  films/lebron --format 9x16  just one format (16x9 | 9x16 | all, default all)
  *   bun render/render.ts video  films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
- *   bun render/render.ts stills films/lebron --at 3,12.5,40   PNGs → out/lebron/stills/
- *   bun render/render.ts sheet  films/lebron [--count 24]   contact sheet → out/lebron/sheet.png
+ *   bun render/render.ts stills films/lebron --at 3,12.5,40   PNGs → out/lebron/work/stills/
+ *   bun render/render.ts sheet  films/lebron [--count 24]   contact sheet → out/lebron/work/sheet.png
  *   bun render/render.ts cuts   films/messi [--name rings] [--format 9x16|16x9|all]
- *                                                           the film's short clips → out/messi-<cut>-9x16.mp4
+ *                                                           the film's short clips → out/messi/clip-<cut>-9x16.mp4
+ *
+ * out/<film>/ holds only what gets posted (full-*, clip-*); scratch files go to out/<film>/work/.
  *   add --no-watermark to any of them to leave out the watermark (render/brand.js);
  *   stills and sheet take --format 9x16 to preview the vertical frame, and --cut <name> to preview a clip's framing
  *
@@ -20,7 +22,7 @@ import { chromium, type Browser, type Page } from "playwright-core";
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { once } from "node:events";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import type { Server, ServerWebSocket } from "bun";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -130,9 +132,10 @@ async function renderVideo(format: string) {
   const fps = Number(opt("fps", "60"));
   const from = Number(opt("from", "0"));
   const to = opt("to") ? Number(opt("to")) : undefined;
-  const out = resolve(opt("out", join(ROOT, "out", `${name}-${format}.mp4`))!);
-  const work = join(ROOT, "out", name);
+  const out = resolve(opt("out", join(ROOT, "out", name, `full-${format}.mp4`))!);
+  const work = join(ROOT, "out", name, "work");
   mkdirSync(work, { recursive: true });
+  mkdirSync(dirname(out), { recursive: true });
   const wav = join(work, `score-${format}.wav`);
 
   let ff: ChildProcessWithoutNullStreams | null = null;
@@ -230,7 +233,7 @@ async function renderStills() {
   if (!times.length) throw new Error("Pass times with --at 3,12.5,40");
   const server = startServer();
   const { browser, page } = await openFilm(server, `mode=still&format=${opt("format", "16x9")}`);
-  const dir = join(ROOT, "out", basename(filmDir), "stills");
+  const dir = join(ROOT, "out", basename(filmDir), "work", "stills");
   const files = await grabStills(page, times, dir);
   await browser.close();
   server.stop(true);
@@ -245,11 +248,11 @@ async function renderSheet() {
   const duration: number = await page.evaluate(() => (window as any).__player.film.duration);
   const from = Number(opt("from", "0.25")), to = Number(opt("to", String(duration - 0.25)));
   const times = Array.from({ length: count }, (_, i) => +(from + ((to - from) * i) / Math.max(1, count - 1)).toFixed(2));
-  const dir = join(ROOT, "out", basename(filmDir), "sheet");
+  const dir = join(ROOT, "out", basename(filmDir), "work", "sheet");
   await grabStills(page, times, dir);
   await browser.close();
   server.stop(true);
-  const out = join(ROOT, "out", basename(filmDir), opt("name", "sheet.png")!);
+  const out = join(ROOT, "out", basename(filmDir), "work", opt("name", "sheet.png")!);
   const rows = Math.ceil(count / cols);
   const ff = spawn("ffmpeg", [
     "-y", "-hide_banner", "-loglevel", "error", "-pattern_type", "glob", "-i", join(dir, "*.png"),
@@ -274,7 +277,7 @@ async function renderCuts() {
   const rest = args.slice(2).filter((a, i, all) => !skip.has(a) && !skip.has(all[i - 1]));
   for (const c of cuts) {
     for (const f of formats) {
-      const out = join(ROOT, "out", `${basename(filmDir)}-${c.name}-${f}.mp4`);
+      const out = join(ROOT, "out", basename(filmDir), `clip-${c.name}-${f}.mp4`);
       console.log(`\n${c.name} · ${f} · ${c.from.toFixed(2)}–${c.to.toFixed(2)} s`);
       const p = Bun.spawnSync([process.execPath, import.meta.path, "video", filmDir, "--format", f,
         "--from", String(c.from), "--to", String(c.to), "--cut", c.name, "--out", out, ...rest], { stdout: "inherit", stderr: "inherit" });
