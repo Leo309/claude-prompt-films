@@ -30,8 +30,7 @@ I Asked AI to Sum Up Lionel Messi in 90 Seconds 🐐
 ```
 **Description**
 ```
-Too small at 10, signed on a paper napkin at 13. 931 goals drawn as the rings of a tree, one ring per season
-(the thick one is 73, in 2011–12), and a tango built from his numbers.
+Too small at 10, signed on a paper napkin at 13. 931 goals drawn as the rings of a tree, one ring per season (the thick one is 73, in 2011–12), and a tango built from his numbers.
 The Bernabéu shirt, ¿Qué mirás, bobo?, Lusail. His last game for Argentina is October 6.
 Made with AI · fan-made, not affiliated with Lionel Messi, the AFA or any club · stats as of 28 Sept 2026.
 #Messi #Argentina #Shorts

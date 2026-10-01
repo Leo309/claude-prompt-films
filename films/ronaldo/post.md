@@ -31,8 +31,7 @@ I Asked AI to Sum Up Cristiano Ronaldo in 90 Seconds 🐐
 ```
 **Description**
 ```
-Every goal on one wall of 1,000 squares, coloured by club. The beat is his career: each season's goals are a note,
-in the sound of that city: fado in Lisbon, flamenco in Madrid, an oud in Riyadh.
+Every goal on one wall of 1,000 squares, coloured by club. The beat is his career: each season's goals are a note, in the sound of that city: fado in Lisbon, flamenco in Madrid, an oud in Riyadh.
 Mr. Champions League, the bicycle kick in Turin, Água, SIUUU.
 Made with AI · fan-made, not affiliated with Cristiano Ronaldo or any club · stats as of Sept 2026.
 #CristianoRonaldo #CR7 #Shorts
