@@ -1,81 +1,71 @@
-# Posting kit — LeBron · 90 SECONDS EP01
+# Posting kit — LeBron James · 90 SECONDS EP01
 
-Files: `out/lebron-9x16.mp4` (TikTok, Reels, Shorts) · `out/lebron-16x9.mp4` (X, YouTube long-form, Bilibili)
+Files: `out/lebron-9x16.mp4` (TikTok, Shorts, Reels) · `out/lebron-16x9.mp4` (YouTube) ·
+clips `out/lebron-<kareem|block|season24>-9x16.mp4`
 Cover frame: 80–81 s (the chalk toss exploding into **43,440**) · AI label: on · How to post: see `POSTING.md`.
+**News peg:** NBA opening night, Tue 20 October 2026, LeBron's first game for Philadelphia.
 
 ## The angle
 
-One goal: go viral. Lead with **"I asked AI to make a 90-second LeBron video"**, which hooks basketball fans and AI-curious
-scrollers at once. Then land a detail that makes people stop: *the music is made from his stats*.
+23 seasons in 90 seconds, and **the beat is his stats**: one note per season, higher note = more points.
 
 ## TikTok (9:16)
 
 **Caption**
 ```
-I asked AI to make a 90-second LeBron video… it turned his stats into the music 🤯🏀
-#lebronjames #nba #ai #basketball #90seconds
+23 seasons of LeBron in 90 seconds. The beat is his stats: one note per season 🏀👑
+#lebronjames #nba #basketball #kingjames #90seconds
 ```
 **Pinned comment**
 ```
-Every note is one of his seasons. Higher note = more points. Did it miss anything? 👇
-```
-
-## Instagram Reels (9:16)
-
-**Caption**
-```
-I asked AI for 90 seconds of LeBron. 🔊 Sound on: the beat is literally his career, one note per season.
-
-Down 3–1. The Block. 43,440. Season 24 in Philly.
-
-#lebronjames #nba #ai #kingjames #90seconds
+Every note is one season. Higher note = more points. Did it miss anything? 👇
 ```
 
 ## YouTube Shorts (9:16)
 
 **Title**
 ```
-I Asked AI to Make a 90-Second LeBron Video 🤯
+LeBron James in 90 Seconds: 43,440 Points 👑
 ```
 **Description**
 ```
-The AI turned 23 seasons into the music: every season's points = one note, and the sound changes with every city
-(Cleveland, Miami, LA, Philly). No game footage. Every frame is code.
-Fan-made, not affiliated with the NBA or LeBron James. Stats as of Sept 2026.
-How it's made: github.com/Leo309/claude-prompt-films
-#LeBronJames #NBA #AI #Shorts
+23 seasons in 90 seconds: the chase for Kareem, down 3–1, The Block, 43,440, and Season 24 in Philly.
+The beat is his career: every season's points are one note, and the sound changes with every city.
+Fan-made with AI · not affiliated with the NBA or LeBron James · stats as of Sept 2026.
+#LeBronJames #NBA #Shorts
 ```
 **Pinned comment**
 ```
 Is 43,440 ever getting broken? 👇
 ```
 
-## YouTube (16:9 long-form)
+## Instagram Reels (9:16)
+
+**Caption**
+```
+LeBron in 90 seconds. 🔊 Sound on: the beat is his career, one note per season.
+
+Down 3–1. The Block. 43,440. Season 24 in Philly.
+
+#lebronjames #nba #kingjames #basketball #90seconds
+```
+**Tag (optional):** @kingjames
+
+## YouTube (16:9, optional)
 
 Same title and description; add it to the "90 SECONDS" playlist and set it as the Short's related video.
 
-## X (16:9)
+## Clips (9:16, each ends on "FULL 90 SECONDS ON MY PROFILE")
 
-**Post 1** (attach the video)
-```
-I asked AI to make a 90-second LeBron video.
+| File | Length | Caption |
+|---|---|---|
+| `lebron-kareem-9x16.mp4` | 24 s | He caught Kareem on the downbeat. 23 seasons of points, one line. #lebronjames #nba |
+| `lebron-block-9x16.mp4` | 20 s | Down 3–1. Then The Block. 2016 in 20 seconds. #lebronjames #nbafinals |
+| `lebron-season24-9x16.mp4` | 18 s | 43,440 points. Season 24 starts Oct 20, in Philly. #lebronjames #sixers |
 
-It turned his 23 seasons into the music. 🤯
-```
-**Post 2** (reply)
-```
-No game footage. No video model. Every frame and every note is code, and the melody is literally his points, one note per season.
-```
-**Post 3** (reply)
-```
-Prompt + code: github.com/Leo309/claude-prompt-films
-```
-Repost on NBA opening night, Tue Oct 20 (LeBron's first game in Philadelphia).
+Post `season24` on 20 October, NBA opening night.
 
-## 中文平台（B 站 / 小红书）
+## Later
 
-- **B 站标题：** 我让AI做了一个90秒的詹姆斯，它把他23个赛季写成了BGM
-- **小红书标题：** 让AI做了个90秒詹姆斯…BGM居然是他的得分🤯
-- 简介：每个赛季的得分变成一个音符，得分越高音越高；音色跟着城市变（克利夫兰、迈阿密、洛杉矶、费城）。没有一帧比赛画面，全是代码画的。粉丝向作品，与 NBA 及詹姆斯本人无关，数据截至 2026 年 9 月。怎么做的：github.com/Leo309/claude-prompt-films
-- 标签：#詹姆斯 #NBA #AI #AI视频
-- 发布时勾选"AI 生成内容"。
+- 中文标题（B 站 / 抖音 / 小红书）：90秒看完詹姆斯：23个赛季，BGM是他的得分 · 发布时勾选"AI 生成内容"。
+- X: not yet.

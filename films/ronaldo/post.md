@@ -1,50 +1,77 @@
 # Posting kit — Cristiano Ronaldo · 90 SECONDS EP02
 
-Files: `out/ronaldo-16x9.mp4` (YouTube, Bilibili, X, Douyin) · `out/ronaldo-9x16.mp4` (Shorts, TikTok, Reels, 小红书) ·
-Watermark: haoli.ai · **Tick the platform's AI-content label.**
+Files: `out/ronaldo-9x16.mp4` (TikTok, Shorts, Reels) · `out/ronaldo-16x9.mp4` (YouTube) ·
+clips `out/ronaldo-<wall|agua|siuuu>-9x16.mp4`
+Cover frame: 81–82 s (the SIUUU landing) · AI label: on · How to post: see `POSTING.md`.
+**News peg:** goal No. 1,000 (21 to go as of 28 Sept 2026, so months away). Until then it is evergreen; it does best in
+the Messi week (his farewell is 6 October), when the GOAT debate is loudest.
 
-**When goal No. 1,000 goes in:** add the new goals to `SEASONS` (current season row) in `film.js`, then run
-`bun render/render.ts video films/ronaldo`. Both formats re-render in about 15 minutes, and "21 TO GO" becomes whatever is left.
+## The angle
 
-## Titles
+Every goal on one wall: **979 squares filled, 21 still empty**, because nobody has ever scored 1,000.
 
-- **YouTube:** Cristiano Ronaldo in 90 Seconds: 979 Goals, 21 to Go
-- **X:** 979 goals. 21 to go. Nobody has ever scored 1,000. Every one of them on one wall, and yes, it ends in SIUUU.
-- **Bilibili:** 90秒看完C罗的979球，还差21个｜一面墙装下他的每一个进球（BGM是用他每个赛季的进球数写的）
-- **Douyin / 小红书:** 90秒看完C罗｜979球，离人类第一个1000球只差21个，看到最后有SIUUU
+## TikTok (9:16)
 
-## Description (EN)
+**Caption**
+```
+Every Cristiano Ronaldo goal on one wall. 979 squares filled, 21 still empty 🐐⚽
+#cristianoronaldo #cr7 #football #siuuu #90seconds
+```
+**Pinned comment**
+```
+One square = one goal, coloured by club. When does No. 1,000 go in? 👇
+```
 
-979 goals: 833 for five clubs, 146 for Portugal. Nobody in history has scored 1,000, and he is 21 away at 41.
+## YouTube Shorts (9:16)
 
-Every goal is one square on a wall of 1,000, coloured by club. The music follows him: every season's goals become
-a note, played in the sound of that city: fado in Lisbon, an organ in Manchester, flamenco in Madrid, a mandolin
-in Turin, an oud over a darbuka in Riyadh. The crowd chanting SIUUU at the end is synthesized too.
+**Title**
+```
+Cristiano Ronaldo in 90 Seconds: 979 Goals, 21 to Go 🐐
+```
+**Description**
+```
+Every goal on one wall of 1,000 squares, coloured by club. The beat is his career: each season's goals are a note,
+in the sound of that city: fado in Lisbon, flamenco in Madrid, an oud in Riyadh.
+Mr. Champions League, the bicycle kick in Turin, Água, SIUUU.
+Fan-made with AI · not affiliated with Cristiano Ronaldo or any club · stats as of Sept 2026.
+#CristianoRonaldo #CR7 #Shorts
+```
+**Pinned comment**
+```
+Will he get to 1,000? 👇
+```
 
-Mr. Champions League (140), the bicycle kick in Turin, "Água", six World Cups, five Ballon d'Or.
+## Instagram Reels (9:16)
 
-Fan-made tribute, not affiliated with Cristiano Ronaldo or any club. Stats as of September 2026.
+**Caption**
+```
+Ronaldo in 90 seconds. 🔊 Sound on: every season's goals are a note, and it ends in a stadium SIUUU.
 
-Made with one prompt in Claude Code. Every frame and every sound is code: github.com/Leo309/claude-prompt-films
+979 goals. 21 to go. Nobody has ever scored 1,000.
 
-#CristianoRonaldo #CR7 #SIUUU #Ronaldo1000 #AlNassr #Portugal #ClaudeCode #AIVideo
+#cristianoronaldo #cr7 #siuuu #football #90seconds
+```
+**Tag (optional):** @cristiano
 
-## 简介（中文）
+## YouTube (16:9, optional)
 
-979球：俱乐部833球，葡萄牙国家队146球。足球史上还没有人进过1000球，41岁的他只差21个。
+Same title and description; add it to the "90 SECONDS" playlist and set it as the Short's related video.
 
-每一个进球都是这面"千球墙"上的一格，颜色代表当时的球队。音乐跟着他走：每个赛季的进球数变成一个音符，音色随城市变化——里斯本的法朵、曼彻斯特的风琴、马德里的弗拉门戈、都灵的曼陀林、利雅得的乌德琴和手鼓。最后那声全场"SIUUU"也是合成出来的。
+## Clips (9:16, each ends on "FULL 90 SECONDS ON MY PROFILE")
 
-欧冠先生（140球）、都灵倒钩、"Água"、6届世界杯都有进球、5座金球。
+| File | Length | Caption |
+|---|---|---|
+| `ronaldo-wall-9x16.mp4` | 24 s | 979 goals, one square each. 21 still empty. #cristianoronaldo #cr7 |
+| `ronaldo-agua-9x16.mp4` | 21 s | Mr. Champions League. The bicycle kick in Turin. Then: Água. 💧 #cr7 #championsleague |
+| `ronaldo-siuuu-9x16.mp4` | 19 s | 41 years old. 21 goals from 1,000. SIUUU. #cristianoronaldo #siuuu |
 
-粉丝向致敬作品，与C罗本人及任何俱乐部无关。数据截至2026年9月。
+## When goal No. 1,000 goes in
 
-一句提示词在 Claude Code 里生成，每一帧画面、每一个音符都是代码：github.com/Leo309/claude-prompt-films
+Add the new goals to the current season row in `SEASONS` (`film.js`), then run `bun render/render.ts video films/ronaldo`
+and `bun render/render.ts cuts films/ronaldo`. "21 TO GO" becomes whatever is left, and on 1,000 the wall is full.
+Post it the same day: that is this film's moment.
 
-#C罗 #罗纳尔多 #SIUUU #千球 #AI视频 #ClaudeCode
+## Later
 
-## Pinned comment (for the tech crowd)
-
-The whole film is a program. The wall is 1,000 canvas squares with a fill time each, the music is Web Audio
-synthesis (the crowd "SIUUU" is formant-filtered sawtooth voices), and the pixel Ronaldo comes from a 60-line rig.
-When he scores No. 1,000 I change one number and re-render. Code: github.com/Leo309/claude-prompt-films
+- 中文标题（B 站 / 抖音 / 小红书）：90秒看完C罗：979个进球铺满一面墙，还差21个 · 发布时勾选"AI 生成内容"。
+- X: not yet.

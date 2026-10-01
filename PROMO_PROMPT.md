@@ -17,8 +17,8 @@ That's the whole creative direction. Everything below is how to deliver it.
 - the numbers they quote;
 - the in-jokes and memes they'll catch on first watch (football, NFL, F1, esports, any niche).
 
-People who don't know the niche should still feel the energy. The tech story ("one prompt, Claude, code") goes
-in the caption, not in the film, so both audiences get something.
+People who don't know the niche should still feel the energy. The film and its captions are for fans: no
+"how it was made" anywhere. AI gets one line at most ("Fan-made with AI"), and the platform's AI label does the rest.
 
 ## Workflow
 
@@ -63,13 +63,17 @@ in the caption, not in the film, so both audiences get something.
    Repeat until clean.
 8. **Render.** `bun render/render.ts video films/<slug>` → `out/<slug>-16x9.mp4` and `out/<slug>-9x16.mp4`.
    Check the vertical frame first with `sheet films/<slug> --format 9x16`. Then `cuts films/<slug>` for the clips.
-9. **Package.** Write `films/<slug>/post.md`:
-   - titles for YouTube, X and Bilibili/Douyin (EN + 中文) that lead with the subject, not the tech, in the series
-     format: "{Subject} in 90 Seconds" / "90秒看完{主题}";
-   - a description ending with "Made with one prompt in Claude Code · github.com/Leo309/claude-prompt-films";
-   - hashtags;
-   - a reminder to tick the platform's AI-content label;
-   - a posting schedule: the full film first, then one clip a day, timed to the subject's next news peg.
+9. **Package.** Write `films/<slug>/post.md` in the same layout as `films/messi/post.md` (see `POSTING.md`):
+   - a header with the files, the cover-frame time and the subject's next news peg;
+   - **TikTok** caption + pinned comment, **YouTube Shorts** title ("{Subject} in 90 Seconds: …"), description and
+     pinned comment, **Instagram Reels** caption + an optional tag of the player's own account;
+   - fan-first copy: the player and the moment, never the tech. The only AI mention is the last line of the
+     YouTube description: "Fan-made with AI · not affiliated with … · stats as of …";
+   - 3–5 hashtags per post: the player, the team or league, the sport, `#90seconds`;
+   - a pinned comment that asks a question fans will argue about;
+   - a clips table (file, length, caption) and, when there is a news peg, a schedule: the full film first, then one
+     clip a day;
+   - under "Later", one Chinese title (B 站 / 抖音 / 小红书): "90秒看完{主题}：…".
 
    Add the film to the Episodes table in README.md. Report the MP4 paths, length and size.
 
