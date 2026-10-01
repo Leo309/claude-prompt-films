@@ -73,7 +73,9 @@ export function drawVertical(ctx, src, t, film, watermark, cut = null) {
   // Series tag + hook (a clip brings its own hook and has no countdown)
   const v = cut ?? film.vertical ?? {};
   const hook = v.hook ?? [String(film.title ?? "").toUpperCase()];
-  const tag = [watermark, SERIES, film.episode ? `EP${String(film.episode).padStart(2, "0")}` : null].filter(Boolean).join(" · ");
+  // No episode number on screen: feeds are shuffled, and "EP07" makes a standalone film look like it needs EP01–06.
+  // `episode` stays in the film metadata, the repo and the playlists.
+  const tag = [watermark, SERIES].filter(Boolean).join(" · ");
   if (tag) {
     ctx.fillStyle = ORANGE;
     ctx.beginPath();
