@@ -1291,7 +1291,7 @@ export default {
   duration: DURATION,
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"'],
   // Used by the 9:16 frame (render/vertical.js): a hook above the film, the current chapter below it.
-  vertical: { hook: ["23 SEASONS.", "90 SECONDS."], sub: "THE MUSIC IS MADE FROM HIS STATS" },
+  vertical: { hook: ["I ASKED AI FOR", "A LEBRON FILM."], sub: "IT TURNED HIS 23 SEASONS INTO THE MUSIC" },
   chapters: [
     [0, "AKRON, 1984"], [8, "THE CHOSEN ONE"], [12, "#1 PICK"], [16, "THE CLIMB"], [28, "CHASING KAREEM"],
     [32, "ALL-TIME"], [42, "4 RINGS"], [48, "DOWN 3–1"], [55, "THE BLOCK"], [60, "23 SEASONS"],
