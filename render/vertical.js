@@ -11,9 +11,9 @@
 //   │              │  1500+ platform captions / buttons: keep empty
 //   └──────────────┘  1920
 //
-// A film opts in to better copy with `vertical: { hook: [...lines], sub }` and `chapters: [[t, label], ...]`.
+// A film opts in to better copy with `vertical: { hook: [...lines], sub, cta }` and `chapters: [[t, label], ...]`.
 // A clip (`cuts` in the film, `?cut=<name>` here) swaps in its own hook, drops the countdown and, over its
-// last seconds, points viewers to the full film.
+// last seconds, points viewers to the full film. A full film ends by asking who's next (`cta`, two lines).
 import { text, prog, slam, scaled } from "./kit.js";
 import { SERIES, countdown } from "./brand.js";
 
@@ -22,22 +22,38 @@ const VIDEO_Y = 660;
 const INK = "#0B0B0D", BONE = "#EFE9DE", ASH = "#8C877F", ORANGE = "#FF5A1F";
 const DISPLAY = "Anton", MONO = '"IBM Plex Mono"';
 export const CLIP_CARD = 2.4; // seconds at the end of a clip that point to the full film
+export const CTA_CARD = 3; // seconds at the end of a full film that ask for a comment
+const CTA = ["WHO’S NEXT?", "COMMENT A PLAYER"];
 
-// "FULL 90 SECONDS / ON MY PROFILE" on an orange plate, slammed in over the last seconds of a clip.
-// Returns true while it is showing.
-export function drawClipCard(ctx, t, cut, cx, cy) {
-  const t0 = cut.to - CLIP_CARD;
-  if (t < t0) return false;
+// Two lines on an orange plate, slammed in at t0: the clip card and the CTA share it.
+function drawPlate(ctx, t, t0, [big, small], cx, cy) {
   const s = slam(t, t0, 0.3, 1.3);
+  const size = fitSize(ctx, big, DISPLAY, 96, 780, 3);
   scaled(ctx, cx, cy, s.s, () => {
     ctx.save();
     ctx.globalAlpha = s.a;
     ctx.fillStyle = ORANGE;
     ctx.fillRect(cx - 420, cy - 120, 840, 200);
     ctx.restore();
-    text(ctx, "FULL 90 SECONDS", cx, cy, { family: DISPLAY, size: 96, color: INK, align: "center", tracking: 3, alpha: s.a });
-    text(ctx, "ON MY PROFILE", cx, cy + 56, { family: MONO, weight: 500, size: 30, color: INK, align: "center", tracking: 8, alpha: s.a });
+    text(ctx, big, cx, cy, { family: DISPLAY, size, color: INK, align: "center", tracking: 3, alpha: s.a });
+    text(ctx, small, cx, cy + 56, { family: MONO, weight: 500, size: 30, color: INK, align: "center", tracking: 8, alpha: s.a });
   });
+}
+
+// "FULL 90 SECONDS / ON MY PROFILE", slammed in over the last seconds of a clip. Returns true while it is showing.
+export function drawClipCard(ctx, t, cut, cx, cy) {
+  const t0 = cut.to - CLIP_CARD;
+  if (t < t0) return false;
+  drawPlate(ctx, t, t0, ["FULL 90 SECONDS", "ON MY PROFILE"], cx, cy);
+  return true;
+}
+
+// "WHO'S NEXT? / COMMENT A PLAYER" over the last seconds of a full film: comments are what the feeds count,
+// and the answers are the next episodes. Returns true while it is showing.
+function drawCtaCard(ctx, t, film, cx, cy) {
+  const t0 = film.duration - CTA_CARD;
+  if (t < t0) return false;
+  drawPlate(ctx, t, t0, film.vertical?.cta ?? CTA, cx, cy);
   return true;
 }
 
@@ -53,7 +69,8 @@ function fitSize(ctx, str, family, max, width, tracking = 0) {
   return w > width ? Math.floor((max * width) / w) : max;
 }
 
-export function drawVertical(ctx, src, t, film, watermark, cut = null) {
+// t is output time; ft is the film time on screen (coldopen.js), which runs ahead of t during a cold open.
+export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t, rewind: 0, resume: 0 }) {
   const W = PORTRAIT.width, H = PORTRAIT.height;
   const videoH = (W * src.height) / src.width;
 
@@ -98,17 +115,22 @@ export function drawVertical(ctx, src, t, film, watermark, cut = null) {
   ctx.fillStyle = ORANGE;
   ctx.fillRect(0, VIDEO_Y + videoH, W * prog(t, cut ? cut.from : 0, cut ? cut.to : film.duration), 4); // progress along the bottom edge
 
-  // A clip ends by pointing to the full film, in place of the chapter
-  if (cut && drawClipCard(ctx, t, cut, W / 2, VIDEO_Y + videoH + 190)) return;
+  // A clip ends by pointing to the full film, a full film by asking who's next: both in place of the chapter.
+  // The plate's bottom edge stays above y = 1500, where TikTok and Reels lay the caption over the video.
+  const cardY = VIDEO_Y + videoH + 140;
+  if (cut ? drawClipCard(ctx, t, cut, W / 2, cardY) : drawCtaCard(ctx, t, film, W / 2, cardY)) return;
+  if (ft.rewind) return; // no label while the cold open scrubs back: it would flicker through every chapter
 
-  // Current chapter, slammed in on each change
+  // Current chapter at film time (so the cold open shows the payoff's label), slammed in on each change
   const chapters = film.chapters ?? [];
   let current = null;
-  for (const c of chapters) if (t >= c[0]) current = c;
+  for (const c of chapters) if (ft.t >= c[0]) current = c;
   if (current && current[1]) {
-    const [t0, label] = current;
+    const [c0, label] = current;
+    // When the film resumes after a cold open, its opening label slams in again
+    const t0 = ft.resume && t >= ft.resume && c0 < ft.resume ? ft.resume : c0;
     const size = fitSize(ctx, label, DISPLAY, 92, 860, 3);
-    const s = slam(t, t0, 0.25, 1.25);
+    const s = slam(ft.t, t0, 0.25, 1.25);
     scaled(ctx, 490, VIDEO_Y + videoH + 120, s.s, () =>
       text(ctx, label, 490, VIDEO_Y + videoH + 150, { family: DISPLAY, size, color: BONE, tracking: 3, align: "center", alpha: s.a }));
   }

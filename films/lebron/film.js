@@ -1291,6 +1291,8 @@ export default {
   duration: DURATION,
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"'],
   // Used by the 9:16 frame (render/vertical.js): a hook above the film, the current chapter below it.
+  // Cold open (render/coldopen.js): bar 1 shows the chalk toss exploding into 43,440, then rewinds into Akron.
+  coldOpen: { from: 79.98, length: 2 },
   vertical: { hook: ["I ASKED AI FOR", "A LEBRON FILM."], sub: "IT TURNED HIS 23 SEASONS INTO THE MUSIC" },
   chapters: [
     [0, "AKRON, 1984"], [8, "THE CHOSEN ONE"], [12, "#1 PICK"], [16, "THE CLIMB"], [28, "CHASING KAREEM"],

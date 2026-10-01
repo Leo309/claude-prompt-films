@@ -8,10 +8,12 @@
 // "full 90 seconds on my profile" card at the end (render.ts renders just that time range).
 //
 // A film module exports { width, height, duration, fonts, draw(ctx, t), score(ac) },
-// plus optional { title, episode, vertical, chapters, cuts } used by the vertical frame and clips.
+// plus optional { title, episode, vertical, chapters, cuts, coldOpen } used by the vertical frame, clips and
+// the cold open (coldopen.js: the full film starts on its payoff, then rewinds into its first bar).
 // draw() must be a pure function of t — that is what makes preview and export identical.
 import { WATERMARK, countdown } from "./brand.js";
 import { PORTRAIT, drawVertical, drawClipCard } from "./vertical.js";
+import { filmTime, spliceAudio, drawRewind } from "./coldopen.js";
 
 // The watermark is drawn into the frame itself, so a re-upload carries it and it can't be stripped from the file.
 function drawWatermark(ctx, label, w, h) {
@@ -59,10 +61,16 @@ export async function run(film) {
     c.globalCompositeOperation = "source-over";
   };
   function drawFrame(t) {
+    // t is output time (countdown, progress, end cards); ft.t is the film time to draw (they differ in the cold open)
+    const ft = filmTime(film, t, cut);
     reset(filmCtx);
-    film.draw(filmCtx, t);
+    film.draw(filmCtx, ft.t);
+    if (ft.rewind) {
+      reset(filmCtx);
+      drawRewind(filmCtx, film.width, film.height, ft.rewind);
+    }
     reset(ctx);
-    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark, cut); // the watermark becomes the series tag up top
+    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark, cut, ft); // the watermark becomes the series tag up top
     else {
       if (watermark) drawWatermark(ctx, cut ? watermark : `${watermark}  ${countdown(t, film.duration)}`, canvas.width, canvas.height);
       if (cut) drawClipCard(ctx, t, cut, canvas.width / 2, canvas.height - 200);
@@ -82,7 +90,13 @@ export async function run(film) {
   async function renderScore(sampleRate = 48000) {
     const ac = new OfflineAudioContext(2, Math.ceil(film.duration * sampleRate), sampleRate);
     await film.score(ac);
-    return ac.startRendering();
+    const audio = await ac.startRendering();
+    if (!film.coldOpen || cut) return audio;
+    // The cold open plays the payoff's own sound, then a rewind whirr, then the film from where it resumes.
+    const channels = spliceAudio([audio.getChannelData(0), audio.getChannelData(1)], audio.sampleRate, film.coldOpen);
+    const spliced = new AudioBuffer({ length: audio.length, numberOfChannels: 2, sampleRate: audio.sampleRate });
+    channels.forEach((data, c) => spliced.copyToChannel(data, c));
+    return spliced;
   }
 
   async function streamRender({ from = 0, to = film.duration, fps = 60 } = {}) {

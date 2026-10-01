@@ -1213,6 +1213,8 @@ export default {
   height: H,
   duration: DURATION,
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"', 'italic 500 20px "IBM Plex Mono"'],
+  // Cold open (render/coldopen.js): bar 1 is Lusail, WORLD CHAMPION and the stars, then it rewinds to Rosario.
+  coldOpen: { from: bar(28) - 0.02, length: BAR },
   vertical: { hook: ["TOO SMALL AT 10.", "931 GOALS LATER."], sub: "LIONEL MESSI · 6 OCT: HIS LAST GAME FOR ARGENTINA" },
   chapters: [
     [0, "ROSARIO, AGE 10"], [bar(3), "TOO SMALL"], [bar(4), "THE NAPKIN"], [bar(7), "GOAL NO. 1"],

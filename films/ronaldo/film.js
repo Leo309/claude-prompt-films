@@ -745,6 +745,8 @@ export default {
   height: H,
   duration: DURATION,
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"'],
+  // Cold open (render/coldopen.js): bar 1 lands the SIUUU, then rewinds to the free kick.
+  coldOpen: { from: bar(43) - 0.02, length: BAR },
   vertical: { hook: ["979 GOALS.", `${TO_GO} TO GO.`], sub: "NOBODY HAS EVER SCORED 1,000" },
   chapters: [
     [0, "THE FREE KICK"], [bar(4), `${TOTAL} GOALS`], [bar(8), "THE WALL OF 1,000"], [bar(PORTUGAL_IN), "PORTUGAL · 146"],
