@@ -49,6 +49,10 @@ Per-film copy lives in `films/<slug>/post.md` and the dates in `plan/CALENDAR.md
   scheduled since February 2026.
 - **Collab posts:** invite a big fan page as a collaborator so the Reel shows on both profiles. DM them first. This works
   far better than @-ing the star.
+- **The owner's own main account:** on the first one or two Reels, invite it as a collaborator (Tag people → Invite
+  collaborator, then accept from the main account). Its followers become the new account's first audience, and the post
+  shows both names. After that, repost from the main account now and then (share → Repost) or share to its Story.
+  Never re-upload the file there: the duplicate gets both posts down-ranked and splits the views.
 - **Facebook:** switch on "Also share to Facebook".
 - **Post from the phone app** (AI label, cover and Facebook sharing are most complete there). Move the MP4 by AirDrop;
   WeChat and email recompress it.
