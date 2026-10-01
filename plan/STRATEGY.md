@@ -1,0 +1,96 @@
+# 90 SECONDS 运营策略
+
+> 最后更新：2026-09-30。综合了三个会话的讨论（「EP01 LeBron · 管线搭建」「新内容讨论」和这次整理）。
+> 怎么发看 [`POSTING.md`](../POSTING.md)，哪天发什么看 [`CALENDAR.md`](CALENDAR.md)，做哪集看 [`BACKLOG.md`](BACKLOG.md)。
+
+## 一句话
+
+用一句 prompt 做出一集：**90 秒正片（横版和竖版）当落地页，3–4 条 18–25 秒的切片当广告。**
+题材是体育明星，什么火就做什么。先连续发 4–6 周，再看数据调整。
+
+## 账号和定位
+
+- **只开一个号：haoli.ai**，用户名统一用 `haoliai`。定位是「我让 AI 去做各种事」，体育是第一个系列「90 SECONDS」。
+  将来"让 AI 做 App、做网店"之类的内容也发在这个号上，用系列来区分。
+- **什么时候拆子号**：发满 20–30 条之后，如果同时满足三条——体育数据远好于其他内容、评论区几乎全是球迷、AI 类内容被球迷拖了后腿——就把体育拆成子号。
+  反过来，一开始就做成"体育号"、以后再转去做 AI 才是真麻烦：那时粉丝画像已经定型了。
+
+## 正片和切片
+
+- **刷到切片的人几乎都是陌生人**，他们会马上点进主页，不会"明天再来看"。所以正片要先发并置顶，切片之后每天发一条，把人往主页引。
+- 切片完播率高，负责拉新；正片负责把人转成粉丝。
+- **"预热"的对象是现实中的比赛，不是正片**：比赛前几天每天发一条切片，比赛当天再发一条。
+- 先发正片并不是为了分成。TikTok 分成要 1 万粉，外加 30 天内 10 万播放，而且加拿大有没有开通，各家说法不一致。
+
+## AI 放在哪里（2026-09-30 定）
+
+**AI 是钩子，不是内容。** 文案不讲"怎么做出来的"，不放代码，不放链接。
+
+- **画面**：竖版大字只写球员和数字。例外是 EP01 LeBron：保留 "I ASKED AI FOR / A LEBRON FILM." 作为对照组，用来比较"前 2 秒留存"。
+- **文案里 AI 的分量按平台调**：
+
+| 平台 | AI 的分量 | 写法 | 原因 |
+|---|---|---|---|
+| TikTok | 少 | 第一句写 "I asked AI to sum up {球员}'s career in 90 seconds."，后面只讲球员 | 2025 年 11 月起，用户可以把"AI 生成内容"调成少看，带 AI 标签的视频会少推给这部分人 |
+| YouTube Shorts | 中 | 标题写 "I Asked AI to Sum Up {球员} in 90 Seconds" | YouTube 官方说 AI 标签不影响推荐 |
+| Instagram Reels | 不提 | 只讲球员和那个瞬间 | Mosseri 2025 年底说会更看重"真实、人做的"内容；私信转发是推给非粉丝的最强信号 |
+| B 站 / X（以后） | 多 | "一句话让 AI 做了…" | B 站上"一句话生成"本身就是热门题材 |
+
+- **置顶评论**：TikTok 和 Shorts 都用 "What did the AI miss? 👇"。球迷爱挑错，挑错就会留评论。
+- **点名循环**：正片结尾是 "WHO'S NEXT? / COMMENT A PLAYER" 卡片。评论区谁被点名最多就做谁，
+  做好以后用 TikTok 的"用视频回复评论"发出来。AI 真正的卖点是**快**：点名后 2–3 天就能出片。
+- **写 "AI"，不写 "Claude"**。有人问"是哪个 AI"，再在评论区回答 Claude，这样又多一轮互动。
+- **AI 标签照开**，这是平台规则，也是诚实的做法。不想看 AI 的人本来就不是这个号的观众。
+
+## 画面原则
+
+- **冷开场**：第 1 小节先放全片最炸的一刻，再倒带回开头（`render/coldopen.js`）。在信息流里，观众一两秒内就决定划不划走。
+- **结尾 3 秒**放 WHO'S NEXT? 卡片（只在竖版），接上点名循环。
+- **字号**：凡是要让人看清的字，在 16:9 画布上至少 72px。竖版里片子会缩到 56%，更小的字在手机上看不清。
+- **安全区**：竖版画面最底下 420px（y > 1500）会被 TikTok / Reels 的文案盖住，重要内容别放在那里。
+- **下一个实验**：做一集原生竖屏构图，和现在"横版装进竖框"的做法比较完播率（见 BACKLOG）。
+
+## 选题
+
+- **什么火做什么，但不离开体育**。足球、篮球、棒球、F1 的观众是重叠的；跳出体育，受众就散了。
+- **怎么排优先级**：热度（粉丝量、搜索量）× 时效（近期有没有比赛或新闻）× 成本（有没有现成的 facts.md）。
+- **单人为主，VS 为辅**：大约 3 集单人配 1 集 VS。VS 直接拼两集单人的 facts.md，只摆数据、不下结论，结尾问 "WHO'S YOUR GOAT?"。
+- **有截止日的先做**：赛前 3–5 天发正片，比赛当天发切片。大新闻出来时（第 1000 球、告别战进球），
+  改 `film.js` 里的数字，重新渲染（约 20 分钟），当天就发。
+
+## 节奏和产能
+
+- **每个平台每天发 1–2 条**：一条新正片，加一条旧集的切片。一集大约 5 条内容，够发 3 天。超过 3 条，每条的互动率反而会下降。
+- **产能**：一集大约用掉周额度的 6%、一个 5 小时窗口的 40%。2–3 天出一集就供得上，每集开一个新会话做。
+- **发布时间**：太平洋时间下午 3–7 点，也就是美东晚上 6–10 点。梅西相关的内容还能同时赶上阿根廷的晚上。
+- **先手动发两周**，摸清每个平台的标签、封面和时间，再用平台自带的定时发布。量起来以后再考虑接 API。
+
+## 看哪些数据
+
+每条视频在发布后 24 小时和 72 小时各记一次，写进 [`LOG.md`](LOG.md)，直接把数字告诉 Claude 就行。
+
+- **先看留存**：前 2 秒留存、平均观看时长、完播率（TikTok Studio 和 YouTube Studio 里都有）。
+- **再看传播**：分享数 ÷ 播放数，涨粉数 ÷ 千次播放。
+- **每满 5 集复盘一次**，回答三个问题：
+  - 哪个运动、哪种钩子（AI 钩子还是球员钩子）、哪种切片表现最好？表现好的就加码。
+  - LeBron（画面上是 AI 钩子）和其他集（画面上是球员钩子）比，前 2 秒留存谁高？
+  - 评论区点名最多的是谁？
+- 如果某个平台连续 3 集 24 小时播放都低于 500，先查钩子和发布时间，不要靠多发来解决。
+
+## 风险
+
+- **YouTube 的 "inauthentic content" 规则**（2025 年 7 月起）：模板化的内容拿不到广告分成。所以每集的叙事主线、节奏和音乐风格都要换，`PROMO_PROMPT.md` 里已经要求了。
+- **版权**：不用真实歌曲、比赛画面、照片，也不编造名人说过的话。
+- **光敏**：全屏闪烁每秒不超过 3 次。倒带帧做了压暗和去色处理。
+- **会被限流的做法**：
+  - 不要把别的平台下载、带水印的视频再传上去；
+  - 不要批量 @；
+  - 不要在评论区刷链接。
+
+## 来源
+
+- TikTok "少看 AI 内容"开关：[eWeek](https://www.eweek.com/news/tiktok-ai-transparency/) · [Music Business Worldwide](https://www.musicbusinessworldwide.com/tiktok-is-testing-limiting-ai-generated-content-in-user-feeds/)
+- TikTok 只强制标注写实类 AI 内容：[Creator Handbook](https://www.creatorhandbook.net/tiktok-demands-you-label-any-realistic-ai-content/)
+- Reels 算法、Trial Reels、私信转发权重：[SocialPilot](https://www.socialpilot.co/de/blog/instagram-reels-algorithm) · [go-viral](https://www.go-viral.app/blog/instagram-reels-algorithm-2026/)
+- YouTube AI 标签和 inauthentic content：[AIR Media-Tech](https://air.io/en/monetization/youtube-monetization-policy-changes-2026-a-complete-dated-timeline) · [OutlierKit（2026 年 7 月更新）](https://outlierkit.com/blog/youtube-updates-july-2026)
+- TikTok 分成的国家范围（各家说法不一）：[ttcalculator](https://ttcalculator.net/learn/creator-fund-countries/)

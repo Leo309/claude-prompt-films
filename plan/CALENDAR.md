@@ -1,0 +1,84 @@
+# 发布日历
+
+> 时间都是**太平洋时间（PT）**，最后更新 2026-09-30。
+> 文件在 `out/<集>/`，文案在 `films/<集>/post.md`。做法见 [`STRATEGY.md`](STRATEGY.md)，平台细节见 [`POSTING.md`](../POSTING.md)。
+> **"三平台"** 指 TikTok、YouTube Shorts、Instagram Reels，同一天发同一个竖版文件。
+> 每发一条：勾掉这里的方框，再在 [`LOG.md`](LOG.md) 里记一行。
+
+## 热点（2026-09-30 核实）
+
+| 日期 | 热点 | 对应内容 |
+|---|---|---|
+| 10/1–10/6 | **梅西告别周**：10/6（周二）对贝宁，纪念碑球场，是他在阿根廷队的最后一场；门票两小时卖光 | EP03 梅西 + 切片，EP04 梅西 vs C 罗 |
+| 10/4–10/11 | MLB 分区系列赛（道奇外卡赛横扫晋级） | EP05 大谷翔平 |
+| 10/11–10/20 | MLB 联赛冠军系列赛 | 道奇如果还在，发大谷 |
+| 10/13–14 | 欧冠第 2 轮 | 用切片补位 |
+| **10/20（周二）** | **NBA 揭幕夜**：76 人 @ 尼克斯（LeBron 在费城的首秀，对手是卫冕冠军）；雷霆 @ 马刺（MVP SGA 对全票最佳防守球员文班亚马） | LeBron season24 切片 + EP06 文班 |
+| 10/20–21 | 欧冠第 3 轮 | |
+| 10/23（周五）–10/31 | 世界大赛，第 7 场在 10/31 万圣节 | 大谷第二波 |
+| 10/23–25 | F1 美国站：20 岁的安东内利领跑 | 可选：安东内利 |
+| 10/25（周日） | **国家德比**；NFL 巴黎赛（钢人 vs 圣徒） | EP07 亚马尔 |
+| **10/26（周一）** | **金球奖**：亚马尔、凯恩、姆巴佩是热门 | 亚马尔第二波 |
+| 10/30 | 马拉多纳生日 | 可选：马拉多纳（常青题材） |
+| 11/3–4 | 欧冠第 4 轮 | |
+| 11/8 | NFL 马德里赛，在伯纳乌：猛虎 vs 猎鹰 | 足球 × NFL 跨界 |
+| 11/15 · 11/22 | NFL 慕尼黑赛（爱国者 vs 雄狮）、墨西哥城赛（维京人 vs 49 人） | |
+| 11/24–25 | 欧冠第 5 轮 | |
+| **11/26（感恩节）** | 夜场：酋长 @ 比尔，马霍姆斯 vs 乔什·艾伦 | VS 集 |
+| 随时 | C 罗第 1000 球（9/28 时还差 21 个，大约要几个月） | 进球当天：改 EP02 的数字，重新渲染后发 |
+
+梅西告别战的开球时间还没有确认。有一个来源写的是 16:00，如果指阿根廷时间，就是太平洋时间中午 12 点。
+所以 goodbye 切片定在当天上午 9 点发。
+
+## 前两周排期
+
+两个固定时段：**15:00**（美东 18:00、阿根廷 19:00）和 **18:00**（美东 21:00）。
+
+| 日期 | 时间 | 发什么 | 文件 | 状态 |
+|---|---|---|---|---|
+| 10/1 周四 | 15:00 | **EP03 梅西正片**（三平台，TikTok 上置顶） | `out/messi/full-9x16.mp4` | [ ] |
+| | 可选 | YouTube 横版，设成梅西 Short 的关联视频 | `out/messi/full-16x9.mp4` | [ ] |
+| 10/2 周五 | 15:00 | 梅西切片 napkin | `out/messi/clip-napkin-9x16.mp4` | [ ] |
+| | 18:00 | **EP02 C 罗正片**（三平台，TikTok 上置顶） | `out/ronaldo/full-9x16.mp4` | [ ] |
+| 10/3 周六 | 15:00 | 梅西切片 rings | `out/messi/clip-rings-9x16.mp4` | [ ] |
+| | 18:00 | C 罗切片 wall | `out/ronaldo/clip-wall-9x16.mp4` | [ ] |
+| 10/4 周日 | 15:00 | 梅西切片 comeback | `out/messi/clip-comeback-9x16.mp4` | [ ] |
+| | 18:00 | C 罗切片 agua | `out/ronaldo/clip-agua-9x16.mp4` | [ ] |
+| 10/5 周一 | 15:00 | **EP04 梅西 vs C 罗正片**（待做；没做出来就发 C 罗切片 siuuu） | `out/messi-vs-ronaldo/full-9x16.mp4` | [ ] |
+| 10/6 周二 | **09:00** | 梅西切片 goodbye（赶在告别战开球前） | `out/messi/clip-goodbye-9x16.mp4` | [ ] |
+| | 赛后 | 如果他进球或有大新闻：开新会话改数字，goodbye 的大字改成过去时，重新渲染，10/7 发 | | [ ] |
+| 10/7 周三 | 15:00 | EP04 切片 1 | | [ ] |
+| | 18:00 | C 罗切片 siuuu | `out/ronaldo/clip-siuuu-9x16.mp4` | [ ] |
+| 10/8 周四 | 15:00 | **EP05 大谷正片**（待做） | | [ ] |
+| | 18:00 | EP04 切片 2 | | [ ] |
+| 10/9 周五 | 15:00 | 大谷切片 1 | | [ ] |
+| | 18:00 | EP04 切片 3 | | [ ] |
+| 10/10 周六 | 15:00 | 大谷切片 2 | | [ ] |
+| 10/11 周日 | 15:00 | 大谷切片 3（联赛冠军系列赛开打） | | [ ] |
+| 10/12–13 | | 缓冲：补发没发完的切片，或者处理评论区点名 | | |
+| 10/14 周三 | 15:00 | **EP01 LeBron 正片**，给 10/20 揭幕夜预热 | `out/lebron/full-9x16.mp4` | [ ] |
+
+**如果 EP05 来不及做**：LeBron 正片提前到 10/8，切片 kareem、block 依次往前挪，season24 还是留到 10/20 当天发。
+
+## 之后（粗排，每周日更新）
+
+| 日期 | 发什么 |
+|---|---|
+| 10/15–10/19 | LeBron 切片 kareem → block；**EP06 文班亚马**正片（10/16）和切片 |
+| **10/20** | 15:00 LeBron 切片 season24（揭幕夜）；18:00 文班切片 |
+| 10/21–10/24 | **EP07 亚马尔**正片（10/21）和切片；道奇进了世界大赛的话，发大谷第二波 |
+| 10/25–10/26 | 国家德比当天发亚马尔切片；金球奖结果出来后，按新闻补一条 |
+| 10/27–11/30 | 常青题材补位；**EP08 马霍姆斯 / 乔什·艾伦**，感恩节（11/26）发 VS |
+
+## 来源
+
+[MLB 季后赛赛程](https://mlb.com/news/2026-mlb-playoff-and-world-series-schedule) ·
+[欧冠 2026-27 赛程](https://www.flashscore.com/news/soccer-uefa-champions-league-26-27-draws-dates-schedule-teams/Mu8AFjAM/) ·
+[NFL 2026 赛程](https://www.topendsports.com/events/nfl-season-2026.htm) ·
+[NFL 感恩节和国际赛](https://newsroom.stubhub.com/2026/05/18/the-2026-nfl-schedule-is-here-and-its-the-biggest-one-yet/) ·
+[梅西告别战](https://www.batimes.com.ar/news/sports/messi-set-for-one-last-dance-with-argentina-in-international-friendly-match.phtml) ·
+[NBA 揭幕夜](https://www.foxsports.com/stories/nba/when-does-2026-27-nba-season-start-opening-night-schedule) ·
+[LeBron 费城首秀](https://www.fantasynerds.com/news/story/2026/08/12/nba-2026-27-schedule-key-dates-including-knicks-title-defense,-lebrons-philly-debut-1594459) ·
+[金球奖日期](https://www.beinsports.com/en-us/soccer/articles/ballon-d-or-2026-nominees-announcement-date-revealed-2026-09-01) ·
+[2026 赛事日历（国家德比等）](https://www.techradar.com/sporting-calendar-2026-your-guide-to-the-biggest-events) ·
+[F1 积分榜](https://racingnews365.com/f1/standings/2026)

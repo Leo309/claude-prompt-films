@@ -31,7 +31,8 @@ Shorts, TikTok and Reels (a hook on top, the film in the middle, the current cha
 
 | Time | Chapter |
 |---|---|
-| 0–8 s | Akron, 1984: a ball dribbling faster and faster, then launching into the lens |
+| 0–2 s | Cold open: the chalk toss explodes into 43,440, then the tape rewinds to the start |
+| 2–8 s | Akron, 1984: a ball dribbling faster and faster, then launching into the lens |
 | 8–16 s | THE CHOSEN ONE → #1 pick, 2003 → an "AGE 18" stamp |
 | 16–42 s | 23 seasons rise one per beat; the scoring line creeps up to Kareem's 38,387, ties it, and breaks it on the downbeat |
 | 42–60 s | The line curls into four rings → 2016, down 3–1 → Game 7 on a top-down court → THE BLOCK |
@@ -71,17 +72,25 @@ Needs Bun, Google Chrome and ffmpeg.
 ```bash
 bun install
 bun render/render.ts serve                          # preview → http://localhost:5173/films/lebron/
-bun render/render.ts video films/lebron             # → out/lebron-16x9.mp4 + out/lebron-9x16.mp4 (~7 min each on an M1 Pro)
+bun render/render.ts video films/lebron             # → out/lebron/full-16x9.mp4 + full-9x16.mp4 (~7 min each on an M1 Pro)
 bun render/render.ts video films/lebron --format 9x16   # just one format
-bun render/render.ts sheet films/lebron --count 36  # contact sheet → out/lebron/sheet.png
+bun render/render.ts sheet films/lebron --count 36  # contact sheet → out/lebron/work/sheet.png
 bun render/render.ts stills films/lebron --at 12,32,55 [--format 9x16]
 bun render/render.ts video films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
-bun render/render.ts cuts films/messi               # the film's short clips → out/messi-<cut>-9x16.mp4
+bun render/render.ts cuts films/messi               # the film's short clips → out/messi/clip-<cut>-9x16.mp4
+bun test                                            # unit tests (the cold open's timing and audio splice)
 ```
+
+`out/<film>/` holds only what gets posted (`full-*`, `clip-*`); scratch files (stills, sheets) go to `out/<film>/work/`.
 
 **Clips.** A film can export `cuts`: 18–25 s ranges, each with its own phone headline. `cuts` renders them for
 Shorts, TikTok and Reels with no countdown and a "FULL 90 SECONDS / ON MY PROFILE" card over the last 2.4 s, so every
 clip sends viewers to the full film. Post the full film first, then the clips over the next few days.
+
+**Cold open and end card.** Feeds decide in a second or two, so a film can export `coldOpen: { from, length }`: its first
+bar plays the payoff (the 43,440 explosion, the SIUUU, WORLD CHAMPION) and then scrubs backwards into the start like a
+rewinding tape, with the sound spliced to match (`render/coldopen.js`). The film stays exactly 90 s. The 9:16 version
+ends on a "WHO’S NEXT? / COMMENT A PLAYER" card.
 
 Add `--no-watermark` to any render. Preview keys: `space` play/pause · `←/→` ±1 s (shift ±5 s) ·
 `,`/`.` one frame · `h` hide the HUD.
@@ -116,7 +125,8 @@ When done, report the MP4 path, its length and size, and the insider references 
 render/
   kit.js        easing, typography, grain, camera shake, pixel sprites + figure rig, synth instruments
   player.js     one page, three modes: preview · still · render (streams frames over WebSocket)
-  vertical.js   the 9:16 frame around any 16:9 film (hook · film · chapter)
+  vertical.js   the 9:16 frame around any 16:9 film (hook · film · chapter · end card)
+  coldopen.js   the cold open: payoff first, then a rewind into the film (+ coldopen.test.js)
   player.css    fonts + preview layout
   brand.js      the watermark (haoli.ai), the series name and the countdown
   render.ts     CLI: serve / stills / sheet / video
@@ -127,6 +137,9 @@ films/<slug>/
   post.md       titles, descriptions and hashtags for each platform
   index.html    loads player + film
 PROMO_PROMPT.md the recipe
+POSTING.md      how to post, platform by platform
+plan/           strategy, calendar, backlog and posting log (in Chinese)
+CLAUDE.md       rules every Claude Code session in this repo follows
 ```
 
 ## Notes

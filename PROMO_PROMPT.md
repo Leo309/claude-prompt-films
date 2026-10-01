@@ -17,8 +17,9 @@ That's the whole creative direction. Everything below is how to deliver it.
 - the numbers they quote;
 - the in-jokes and memes they'll catch on first watch (football, NFL, F1, esports, any niche).
 
-People who don't know the niche should still feel the energy. The film and its captions are for fans: no
-"how it was made" anywhere. AI gets one line at most ("Fan-made with AI"), and the platform's AI label does the rest.
+People who don't know the niche should still feel the energy. Nothing on screen is about how the film was made.
+The captions carry one AI line, adjusted per platform: the TikTok first line and the Shorts title say "I asked AI to
+sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`).
 
 ## Workflow
 
@@ -48,6 +49,14 @@ People who don't know the niche should still feel the energy. The film and its c
    - Export `cuts: [{ name, from, to, hook: [2 lines], sub }, ...]`: 3–4 clips of 18–25 s, each a complete moment
      with its own headline. `bun render/render.ts cuts films/<slug>` renders them for Shorts, TikTok and Reels,
      ending on a card that points to the full film.
+   - Export `coldOpen: { from, length }`. Feeds decide in a second or two, so bar 1 of the full film plays the
+     payoff: set `from` 0.02 s before the film's biggest hit, so the first sound is that hit, and set `length` to one bar.
+     The player rewinds it into the film (`render/coldopen.js`), and the film stays exactly 90 s.
+   - Optionally export `vertical.cta: [big, small]` to replace the 9:16 end card's "WHO’S NEXT?" / "COMMENT A PLAYER".
+     For VS episodes, use "WHO’S YOUR GOAT?" / "COMMENT BELOW".
+   - **Phone-legible text:** anything meant to be read must be at least 72 px on the 1920×1080 canvas, because the 9:16
+     frame shows the film at 56 %. Smaller text is texture.
+   - Headlines go in the 9:16 top band and are about the player and the number, never the AI.
 5. **Make the music theirs**, not a generic beat (see `films/lebron/film.js` → score):
    - **Data melody**: turn the subject's key series (points per season, goals per year…) into notes,
      and play each one the moment its data point appears on screen.
@@ -58,24 +67,28 @@ People who don't know the niche should still feel the energy. The film and its c
 6. **Pixel sprites**: the subject as a stylised pixel figure. `figure(pose, look)` in the kit builds one from
    joint positions and a look (hair, beard, headband, number), and `drawSprite` draws it. Aim for signature traits
    and the iconic pose or celebration. Draw them from scratch; don't trace a photo.
-7. **Self-review loop.** `bun render/render.ts sheet films/<slug> --count 36`, then look at the sheet.
-   Fix overlaps, overflow, empty frames and unreadable text. Zoom in with `stills --at ...` on busy moments.
+7. **Self-review loop.** `bun render/render.ts sheet films/<slug> --count 36`, then look at the sheet
+   (`out/<slug>/work/sheet.png`). Fix overlaps, overflow, empty frames and unreadable text. Zoom in with
+   `stills --at ...` on busy moments. In the 9:16 frame, check the cold open (0 s to one bar) and the end card (last 3 s).
    Repeat until clean.
-8. **Render.** `bun render/render.ts video films/<slug>` → `out/<slug>-16x9.mp4` and `out/<slug>-9x16.mp4`.
-   Check the vertical frame first with `sheet films/<slug> --format 9x16`. Then `cuts films/<slug>` for the clips.
-9. **Package.** Write `films/<slug>/post.md` in the same layout as `films/messi/post.md` (see `POSTING.md`):
-   - a header with the files, the cover-frame time and the subject's next news peg;
-   - **TikTok** caption + pinned comment, **YouTube Shorts** title ("{Subject} in 90 Seconds: …"), description and
-     pinned comment, **Instagram Reels** caption + an optional tag of the player's own account;
-   - fan-first copy: the player and the moment, never the tech. The only AI mention is the last line of the
-     YouTube description: "Fan-made with AI · not affiliated with … · stats as of …";
-   - 3–5 hashtags per post: the player, the team or league, the sport, `#90seconds`;
-   - a pinned comment that asks a question fans will argue about;
-   - a clips table (file, length, caption) and, when there is a news peg, a schedule: the full film first, then one
-     clip a day;
-   - under "Later", one Chinese title (B 站 / 抖音 / 小红书): "90秒看完{主题}：…".
+8. **Render.** `bun render/render.ts video films/<slug>` → `out/<slug>/full-16x9.mp4` and `out/<slug>/full-9x16.mp4`.
+   Check the vertical frame first with `sheet films/<slug> --format 9x16`. Then `cuts films/<slug>` for the clips
+   (`out/<slug>/clip-<name>-9x16.mp4`).
+9. **Package.** Write `films/<slug>/post.md` in the same layout as `films/messi/post.md` (rules in `POSTING.md`):
+   - a header with the files, the cover-frame time (usually inside the cold open) and the subject's next news peg;
+   - **TikTok:** the caption opens with "I asked AI to sum up {player}'s career in 90 seconds." and continues about
+     the player, including a phrase people search for. Hashtags: the player, the team or league, the sport,
+     `#90seconds`, `#ai`. Pinned comment: "What did the AI miss? 👇";
+   - **YouTube Shorts:** the title "I Asked AI to Sum Up {Player} in 90 Seconds {emoji}", then a fan-detail description
+     ending "Made with AI · fan-made, not affiliated with … · stats as of …". Pin the same comment;
+   - **Instagram Reels:** the player and the moment only, with no AI, an optional tag of the player's own account,
+     and a pinned question fans will argue about;
+   - a clips table (file, length, caption). Clip captions are about the moment; on TikTok and Shorts the pinned
+     comment points to the full film;
+   - under "Later", one Chinese title for Bilibili: "我让AI用90秒总结了{主题}：…".
 
-   Add the film to the Episodes table in README.md. Report the MP4 paths, length and size.
+   Dates don't go in `post.md`: add the posts to `plan/CALENDAR.md`, and add the episode to `plan/BACKLOG.md` and
+   the Episodes table in README.md. Report the MP4 paths, length and size.
 
 ## Hard rules: platform upload limits
 
