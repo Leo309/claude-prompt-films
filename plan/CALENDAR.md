@@ -36,7 +36,7 @@
 
 | 日期 | 时间 | 发什么 | 文件 | 状态 |
 |---|---|---|---|---|
-| 10/1 周四 | 15:00 | **EP03 梅西正片**（三平台，TikTok 上置顶） | `out/messi/full-9x16.mp4` | [ ] |
+| 10/1 周四 | 15:00 | **EP03 梅西正片**（三平台，TikTok 上置顶） | `out/messi/full-9x16.mp4` | [x] |
 | | 可选 | YouTube 横版，设成梅西 Short 的关联视频 | `out/messi/full-16x9.mp4` | [ ] |
 | 10/2 周五 | 15:00 | 梅西切片 napkin | `out/messi/clip-napkin-9x16.mp4` | [ ] |
 | | 18:00 | **EP02 C 罗正片**（三平台，TikTok 上置顶） | `out/ronaldo/full-9x16.mp4` | [ ] |
