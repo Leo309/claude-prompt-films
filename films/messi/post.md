@@ -62,13 +62,14 @@ Same title and description; add it to the "90 SECONDS" playlist and set it as th
 
 ## Clips (9:16, each ends on "FULL 90 SECONDS / ON MY PROFILE")
 
-| File | Length | Caption |
-|---|---|---|
-| `clip-napkin-9x16.mp4` | 19 s | Too small at 10. Signed on a napkin at 13. #messi #barcelona |
-| `clip-rings-9x16.mp4` | 24 s | Every ring is one season of Messi goals. The thick one is 73, in 2011–12. #messi #fcbarcelona |
-| `clip-comeback-9x16.mp4` | 19 s | Three finals lost. He quit in 2016. Then: 2021, 2022, 2024. #messi #argentina |
-| `clip-goodbye-9x16.mp4` | 24 s | 6 October, Monumental. One last time. 🇦🇷 #messi #argentina |
+| File | Length | Caption (TikTok, Reels) | Shorts title |
+|---|---|---|---|
+| `clip-napkin-9x16.mp4` | 19 s | Too small at 10. Signed on a napkin at 13. #messi #barcelona | Messi: Too Small at 10, Signed on a Napkin at 13 🐐 |
+| `clip-rings-9x16.mp4` | 24 s | Every ring is one season of Messi goals. The thick one is 73, in 2011–12. #messi #fcbarcelona | Every Ring Is a Season of Messi Goals 🐐 |
+| `clip-comeback-9x16.mp4` | 19 s | Three finals lost. He quit in 2016. Then: 2021, 2022, 2024. #messi #argentina | Messi Quit in 2016. Then He Won It All 🇦🇷 |
+| `clip-goodbye-9x16.mp4` | 24 s | 6 October, Monumental. One last time. 🇦🇷 #messi #argentina | Messi's Last Game for Argentina: Oct 6 🇦🇷 |
 
+Shorts description for a clip: its caption, then `Full 90 seconds on my channel · Made with AI · fan-made, not affiliated with Lionel Messi, the AFA or any club · stats as of 28 Sept 2026`. In YouTube Studio, set the full film's Short as the clip's related video.
 Pinned comment on every clip: TikTok and Shorts `Full 90 seconds on my profile 👆 What did the AI miss?` ·
 Reels `Full 90 seconds on my profile 👆`.
 `goodbye` goes out on the morning of 6 October, before kick-off.
