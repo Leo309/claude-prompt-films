@@ -1215,7 +1215,9 @@ export default {
   fonts: ['400 100px Anton', '500 20px "IBM Plex Mono"', 'italic 500 20px "IBM Plex Mono"'],
   // Cold open (render/coldopen.js): bar 1 is Lusail, WORLD CHAMPION and the stars, then it rewinds to Rosario.
   coldOpen: { from: bar(28) - 0.02, length: BAR },
-  vertical: { hook: ["TOO SMALL AT 10.", "931 GOALS LATER."], sub: "LIONEL MESSI · 6 OCT: HIS LAST GAME FOR ARGENTINA" },
+  // `wide`: the trophy tower stays at full width in 9:16, because "TOO SMALL?" lands on its left at bar 38.5, after
+  // the last moment `reframe` measures, and a zoomed-in frame would crop it to "SMALL?".
+  vertical: { hook: ["TOO SMALL AT 10.", "931 GOALS LATER."], sub: "LIONEL MESSI · 6 OCT: HIS LAST GAME FOR ARGENTINA", wide: [bar(36)] },
   chapters: [
     [0, "ROSARIO, AGE 10"], [bar(3), "TOO SMALL"], [bar(4), "THE NAPKIN"], [bar(7), "GOAL NO. 1"],
     [bar(9), "931 GOALS, RING BY RING"], [RING_T[17], "PARIS"], [RING_T[19], "MIAMI"], [BARK_T, "ARGENTINA · 125"],
