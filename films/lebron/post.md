@@ -66,9 +66,9 @@ Same title and description; add it to the "90 SECONDS" playlist and set it as th
 
 | File | Length | Caption (TikTok, Reels) | Shorts title |
 |---|---|---|---|
-| `clip-kareem-9x16.mp4` | 18 s | He caught Kareem on the downbeat. 23 seasons of points, one line. #lebronjames #nba | LeBron Caught Kareem on the Downbeat 👑 |
+| `clip-kareem-9x16.mp4` | 14 s | He caught Kareem on the downbeat. 23 seasons of points, one line. #lebronjames #nba | LeBron Caught Kareem on the Downbeat 👑 |
 | `clip-block-9x16.mp4` | 14 s | Down 3–1. Then The Block. 2016 in 14 seconds. #lebronjames #nbafinals | Down 3–1. Then The Block 👑 |
-| `clip-season24-9x16.mp4` | 20 s | 43,440 points. Season 24 starts Oct 20, in Philly. #lebronjames #sixers | LeBron: 43,440 Points, Season 24 Starts Oct 20 👑 |
+| `clip-season24-9x16.mp4` | 18 s | 43,440 points. Season 24 starts Oct 20, in Philly. #lebronjames #sixers | LeBron: 43,440 Points, Season 24 Starts Oct 20 👑 |
 
 Cover for every clip: the frame at 0.3 s, its cold open's payoff. The profile grid then reads as a row of payoffs.
 

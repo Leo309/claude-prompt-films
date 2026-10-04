@@ -124,7 +124,8 @@ function ffmpegArgs(v: { width: number; height: number; fps: number; frames: num
     "-c:v", "libx264", "-preset", opt("preset", "slow")!, "-crf", opt("crf", "18")!,
     "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv",
     // A clip starts and stops mid-song: fade the sound in and out so it doesn't click. A clip that opens on a
-    // cold open passes a shorter fade-in (--fade-in): the splice already eases in, and the payoff should hit.
+    // cold open passes a shorter fade-in (--fade-in): its payoff starts 20 ms before the hit, so the hit lands at full
+    // level. Not shorter than that: from silence straight into a loud bar, AAC overshoots past 0 dBFS (Messi goodbye).
     // The fade-out is short too: the clip loops straight back into its cold open, and a long fade says "the end".
     ...(opt("cut") ? ["-af", `afade=t=in:st=0:d=${opt("fade-in", "0.12")},afade=t=out:st=${(v.frames / v.fps - 0.25).toFixed(3)}:d=0.25`] : []),
     "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", "-shortest",
@@ -287,7 +288,7 @@ async function renderCuts() {
       console.log(`\n${c.name} · ${f} · ${from.toFixed(2)}–${c.to.toFixed(2)} s`);
       const p = Bun.spawnSync([process.execPath, import.meta.path, "video", filmDir, "--format", f,
         "--from", String(from), "--to", String(c.to), "--cut", c.name, "--out", out,
-        ...(c.coldOpen ? ["--fade-in", "0.01"] : []), ...rest], { stdout: "inherit", stderr: "inherit" });
+        ...(c.coldOpen ? ["--fade-in", "0.02"] : []), ...rest], { stdout: "inherit", stderr: "inherit" });
       if (p.exitCode !== 0) process.exit(p.exitCode ?? 1);
     }
   }
