@@ -755,10 +755,13 @@ export default {
     [bar(42), "…"], [bar(43), "SIUUU"], [bar(44), "CRISTIANO RONALDO"], [bar(46), `${TO_GO} TO GO`],
   ],
   // Short clips for Reels / Shorts / TikTok, each pointing back to the full film (render/render.ts cuts).
+  // Each opens on its own best moment, then rewinds into the clip (`coldOpen`, render/coldopen.js). A clip starts
+  // on a strong beat (big type, a running count: never a dark chapter opening) and ends on its payoff, not on credits
+  // or the next chapter. The sub line starts with the player's name.
   cuts: [
-    { name: "wall", from: bar(11), to: bar(24), hook: [`${TOTAL} GOALS.`, "ONE SQUARE EACH."], sub: `CRISTIANO RONALDO · ${TO_GO} TO GO` },
-    { name: "agua", from: bar(24), to: bar(35), hook: ["MR. CHAMPIONS LEAGUE.", "THEN: ÁGUA."], sub: "CRISTIANO RONALDO" },
-    { name: "siuuu", from: bar(38), to: bar(48), hook: ["41 YEARS OLD.", `${TO_GO} GOALS FROM 1,000.`], sub: "CRISTIANO RONALDO · SIUUU" },
+    { name: "wall", from: bar(13), to: bar(24), coldOpen: { from: bar(23) - 0.02, length: BAR }, hook: [`${TOTAL} GOALS.`, "ONE SQUARE EACH."], sub: `CRISTIANO RONALDO · ${TO_GO} TO GO` },
+    { name: "agua", from: bar(24), to: bar(35), coldOpen: { from: bar(34) - 0.02, length: BAR }, hook: ["MR. CHAMPIONS LEAGUE.", "THEN: ÁGUA."], sub: "CRISTIANO RONALDO" },
+    { name: "siuuu", from: bar(38), to: bar(48), coldOpen: { from: bar(43) - 0.02, length: BAR }, hook: ["41 YEARS OLD.", `${TO_GO} GOALS FROM 1,000.`], sub: "CRISTIANO RONALDO · SIUUU" },
   ],
   draw,
   score,

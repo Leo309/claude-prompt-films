@@ -1303,10 +1303,13 @@ export default {
     [79, "THE CHALK TOSS"], [80, "43,440"], [86, "SEASON 24"], [88, ""],
   ],
   // Short clips for Reels / Shorts / TikTok, each pointing back to the full film (render/render.ts cuts).
+  // Each opens on its own best moment, then rewinds into the clip (`coldOpen`, render/coldopen.js). A clip starts
+  // on a strong beat (big type, a running count: never a dark chapter opening) and ends on its payoff, not on credits
+  // or the next chapter. The sub line starts with the player's name.
   cuts: [
-    { name: "kareem", from: 16, to: 40, hook: ["HE CAUGHT KAREEM", "ON THE DOWNBEAT."], sub: "LEBRON JAMES · 23 SEASONS" },
-    { name: "block", from: 42, to: 62, hook: ["DOWN 3–1.", "THEN THE BLOCK."], sub: "2016 FINALS · LEBRON JAMES" },
-    { name: "season24", from: 72, to: 90, hook: ["43,440 POINTS.", "SEASON 24: OCT 20."], sub: "LEBRON JAMES · PHILADELPHIA" },
+    { name: "kareem", from: 24, to: 40, coldOpen: { from: 31.98, length: 2 }, hook: ["HE CAUGHT KAREEM", "ON THE DOWNBEAT."], sub: "LEBRON JAMES · 23 SEASONS" },
+    { name: "block", from: 48, to: 60, coldOpen: { from: 54.98, length: 2 }, hook: ["DOWN 3–1.", "THEN THE BLOCK."], sub: "LEBRON JAMES · 2016 FINALS" },
+    { name: "season24", from: 72, to: 90, coldOpen: { from: 79.98, length: 2 }, hook: ["43,440 POINTS.", "SEASON 24: OCT 20."], sub: "LEBRON JAMES · PHILADELPHIA" },
   ],
   draw,
   score,

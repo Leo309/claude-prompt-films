@@ -26,6 +26,7 @@ import { once } from "node:events";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import type { Server, ServerWebSocket } from "bun";
+import { clipStart } from "./coldopen.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const args = process.argv.slice(2);
@@ -122,8 +123,10 @@ function ffmpegArgs(v: { width: number; height: number; fps: number; frames: num
     "-vf", "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p",
     "-c:v", "libx264", "-preset", opt("preset", "slow")!, "-crf", opt("crf", "18")!,
     "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv",
-    // A clip starts and stops mid-song: fade the sound in and out so it doesn't click.
-    ...(opt("cut") ? ["-af", `afade=t=in:st=0:d=0.12,afade=t=out:st=${(v.frames / v.fps - 0.6).toFixed(3)}:d=0.6`] : []),
+    // A clip starts and stops mid-song: fade the sound in and out so it doesn't click. A clip that opens on a
+    // cold open passes a shorter fade-in (--fade-in): the splice already eases in, and the payoff should hit.
+    // The fade-out is short too: the clip loops straight back into its cold open, and a long fade says "the end".
+    ...(opt("cut") ? ["-af", `afade=t=in:st=0:d=${opt("fade-in", "0.12")},afade=t=out:st=${(v.frames / v.fps - 0.25).toFixed(3)}:d=0.25`] : []),
     "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", "-shortest",
     out,
   ];
@@ -280,9 +283,11 @@ async function renderCuts() {
   for (const c of cuts) {
     for (const f of formats) {
       const out = join(ROOT, "out", basename(filmDir), `clip-${c.name}-${f}.mp4`);
-      console.log(`\n${c.name} · ${f} · ${c.from.toFixed(2)}–${c.to.toFixed(2)} s`);
+      const from = clipStart(c); // a bar early when the clip opens on its own cold open (coldopen.js)
+      console.log(`\n${c.name} · ${f} · ${from.toFixed(2)}–${c.to.toFixed(2)} s`);
       const p = Bun.spawnSync([process.execPath, import.meta.path, "video", filmDir, "--format", f,
-        "--from", String(c.from), "--to", String(c.to), "--cut", c.name, "--out", out, ...rest], { stdout: "inherit", stderr: "inherit" });
+        "--from", String(from), "--to", String(c.to), "--cut", c.name, "--out", out,
+        ...(c.coldOpen ? ["--fade-in", "0.01"] : []), ...rest], { stdout: "inherit", stderr: "inherit" });
       if (p.exitCode !== 0) process.exit(p.exitCode ?? 1);
     }
   }

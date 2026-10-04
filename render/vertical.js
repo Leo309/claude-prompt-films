@@ -3,10 +3,10 @@
 //   ┌──────────────┐  0     platform UI (tabs, status bar): background only
 //   │ • haoli.ai   │  280   series tag
 //   │ HOOK TITLE   │        1–2 lines of big type: why you should keep watching
-//   │ sub line     │
+//   │ sub line     │        who it is: the player's name first, big enough to read on a phone
+//   │ [card]       │        over the last seconds the end card takes the hook's place
 //   │ ┌──────────┐ │  600   the film, zoomed per chapter so its content fills the safe width (reframe.json)
 //   │ │   film   │▒│        ▒ = the right-hand button column of TikTok, Reels and Shorts
-//   │ │ [card]   │▒│        end cards land over the film's lower part
 //   │ └──────────┘▒│
 //   │   CHAPTER   ▒│  1470  under the film, only when the chapter isn't zoomed in (there is room)
 //   │              │  1500
@@ -19,8 +19,10 @@
 // A film opts in to better copy with `vertical: { hook: [...lines], sub, cta }` and `chapters: [[t, label], ...]`.
 // A clip (`cuts` in the film, `?cut=<name>` here) swaps in its own hook, drops the countdown and, over its
 // last seconds, points viewers to the full film. A full film ends by asking who's next (`cta`, two lines).
+// Both end cards sit in the header, in place of the hook, so the film's ending (often its payoff) stays uncovered.
 import { text, prog, slam, scaled, clamp, lerp, smooth } from "./kit.js";
 import { SERIES, countdown } from "./brand.js";
+import { clipStart } from "./coldopen.js";
 
 export const PORTRAIT = { width: 1080, height: 1920 };
 // Overlays at 1080×1920 (2026): TikTok top 108 · bottom 320 · right 120 · left 60; Reels top 210 · bottom 310 ·
@@ -30,12 +32,12 @@ export const SAFE = { left: 60, right: 920, top: 240, bottom: 1500 };
 const BAND = { top: 600, bottom: 1500 }; // where the film sits
 const FOCUS_X = (SAFE.left + SAFE.right) / 2; // a chapter's content is centred here, left of the buttons
 const REFRAME_EASE = 0.35; // seconds the camera takes to reframe at a chapter change
-const INK = "#0B0B0D", BONE = "#EFE9DE", ASH = "#8C877F", ORANGE = "#FF5A1F";
+const INK = "#0B0B0D", BONE = "#EFE9DE", ORANGE = "#FF5A1F";
 const DISPLAY = "Anton", MONO = '"IBM Plex Mono"';
 export const CLIP_CARD = 2.4; // seconds at the end of a clip that point to the full film
 export const CTA_CARD = 3; // seconds at the end of a full film that ask for a comment
 const CTA = ["WHO’S NEXT?", "COMMENT A PLAYER"];
-const CARD = { x: FOCUS_X, y: 1300 }; // end cards: inside SAFE, clear of the buttons and the caption
+const CARD = { x: PORTRAIT.width / 2, y: 440 }; // end cards: in the header, where the hook was (no buttons up here)
 const LABEL_Y = 1470; // chapter label baseline, just above the caption zone
 
 // Two lines on an orange plate, slammed in at t0: the clip card and the CTA share it.
@@ -132,14 +134,20 @@ export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t,
     text(ctx, tag, 84, 280, { family: MONO, weight: 500, size: 28, color: BONE, tracking: 3, alpha: 0.85 });
   }
   if (!cut) text(ctx, countdown(t, film.duration), 1020, 280, { family: MONO, weight: 500, size: 28, color: ORANGE, tracking: 3, align: "right" });
-  // Hook lines stack down from y = 400; the sub line sits under the last one, clear of the film band at 600.
-  let y = 400;
-  hook.slice(0, 2).forEach((line, i) => {
-    const size = fitSize(ctx, line, DISPLAY, 112, 960, 2);
-    if (i) y += size;
-    text(ctx, line, 60, y, { family: DISPLAY, size, color: BONE, tracking: 2 });
-  });
-  if (v.sub) text(ctx, v.sub, 62, y + 56, { family: MONO, weight: 500, size: 26, color: ASH, tracking: 2 });
+  // A clip ends by pointing to the full film, a full film by asking who's next. The card takes the hook's place,
+  // so the film below plays to its last frame uncovered: the end of a clip is usually its payoff.
+  const ending = cut ? drawClipCard(ctx, t, cut, CARD.x, CARD.y) : drawCtaCard(ctx, t, film, CARD.x, CARD.y);
+  if (!ending) {
+    // Hook lines stack down from y = 400; the sub line sits under the last one, clear of the film band at 600.
+    let y = 400;
+    hook.slice(0, 2).forEach((line, i) => {
+      const size = fitSize(ctx, line, DISPLAY, 112, 960, 2);
+      if (i) y += size;
+      text(ctx, line, 60, y, { family: DISPLAY, size, color: BONE, tracking: 2 });
+    });
+    // The sub line says who it is: pixel players have no faces, so a stranger needs to read the name.
+    if (v.sub) text(ctx, v.sub, 62, y + 56, { family: MONO, weight: 500, size: fitSize(ctx, v.sub, MONO, 34, 960, 2), color: BONE, tracking: 2, alpha: 0.9 });
+  }
 
   // The film, reframed per chapter and centred vertically in its band
   const f = framing(src, reframe, ft);
@@ -148,10 +156,9 @@ export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t,
   const dy = (BAND.top + BAND.bottom) / 2 - fh / 2;
   ctx.drawImage(src, dx, dy, fw, fh);
   ctx.fillStyle = ORANGE;
-  ctx.fillRect(0, dy + fh - 4, W * prog(t, cut ? cut.from : 0, cut ? cut.to : film.duration), 4); // progress along the film's bottom edge
+  ctx.fillRect(0, dy + fh - 4, W * prog(t, cut ? clipStart(cut) : 0, cut ? cut.to : film.duration), 4); // progress along the film's bottom edge
 
-  // A clip ends by pointing to the full film, a full film by asking who's next: both over the film, inside SAFE
-  if (cut ? drawClipCard(ctx, t, cut, CARD.x, CARD.y) : drawCtaCard(ctx, t, film, CARD.x, CARD.y)) return;
+  if (ending) return; // no chapter label under the end card's moment
   if (ft.rewind) return; // no label while the cold open scrubs back: it would flicker through every chapter
   // The label sits under the film, so it only shows when the chapter's framing leaves room there. A zoomed-in
   // chapter fills the band and carries its own big type; a label over it would collide with the film's captions.

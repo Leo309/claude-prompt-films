@@ -1226,11 +1226,14 @@ export default {
     [bar(32.5), "GOODBYE"], [bar(34), "EVERYTHING"], [bar(36), "46 TROPHIES"], [bar(39), "LIONEL MESSI"],
   ],
   // Short clips for Reels / Shorts / TikTok, each pointing back to the full film (render/render.ts cuts).
+  // Each opens on its own best moment, then rewinds into the clip (`coldOpen`, render/coldopen.js). A clip starts
+  // on a strong beat (big type, a running count: never a dark chapter opening) and ends on its payoff, not on credits
+  // or the next chapter. The sub line starts with the player's name.
   cuts: [
-    { name: "napkin", from: 0, to: bar(9), hook: ["TOO SMALL AT 10.", "SIGNED ON A NAPKIN."], sub: "HOW LIONEL MESSI STARTED" },
-    { name: "rings", from: bar(9), to: bar(20), hook: ["931 GOALS.", "ONE RING PER SEASON."], sub: "LIONEL MESSI · 2004–2026" },
-    { name: "comeback", from: bar(22), to: bar(31), hook: ["HE QUIT IN 2016.", "THEN HE WON IT ALL."], sub: "LIONEL MESSI & ARGENTINA" },
-    { name: "goodbye", from: bar(31), to: bar(42), hook: ["HIS LAST GAME FOR", "ARGENTINA: OCT 6."], sub: "46 TROPHIES LATER" },
+    { name: "napkin", from: 0, to: bar(9), coldOpen: { from: bar(6) - 0.02, length: BAR }, hook: ["TOO SMALL AT 10.", "SIGNED ON A NAPKIN."], sub: "LIONEL MESSI · HOW HE STARTED" },
+    { name: "rings", from: bar(11), to: bar(20), coldOpen: { from: BARK_T - 0.02, length: BAR }, hook: ["931 GOALS.", "ONE RING PER SEASON."], sub: "LIONEL MESSI · 2004–2026" },
+    { name: "comeback", from: bar(24), to: bar(31), coldOpen: { from: bar(28) - 0.02, length: BAR }, hook: ["HE QUIT IN 2016.", "THEN HE WON IT ALL."], sub: "LIONEL MESSI & ARGENTINA" },
+    { name: "goodbye", from: bar(32), to: bar(40.75), coldOpen: { from: bar(39.5) - 0.02, length: BAR }, hook: ["HIS LAST GAME FOR", "ARGENTINA: OCT 6."], sub: "LIONEL MESSI · 46 TROPHIES LATER" },
   ],
   draw,
   score,

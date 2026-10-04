@@ -4,16 +4,16 @@
 //   render            — frames and audio are streamed to render.ts over a WebSocket, straight into ffmpeg
 //
 // ?format=9x16 wraps the 16:9 film in a phone-first vertical frame (see vertical.js).
-// ?cut=<name> frames one of the film's `cuts` as a clip: its own hook, no countdown, and a
+// ?cut=<name> frames one of the film's `cuts` as a clip: its own hook and cold open, no countdown, and a
 // "full 90 seconds on my profile" card at the end (render.ts renders just that time range).
 //
 // A film module exports { width, height, duration, fonts, draw(ctx, t), score(ac) },
 // plus optional { title, episode, vertical, chapters, cuts, coldOpen } used by the vertical frame, clips and
-// the cold open (coldopen.js: the full film starts on its payoff, then rewinds into its first bar).
+// the cold open (coldopen.js: a film or clip starts on its payoff, then rewinds into its beginning).
 // draw() must be a pure function of t — that is what makes preview and export identical.
 import { WATERMARK, countdown } from "./brand.js";
 import { PORTRAIT, drawVertical, drawClipCard } from "./vertical.js";
-import { filmTime, spliceAudio, drawRewind } from "./coldopen.js";
+import { filmTime, coldOpenFor, spliceAudio, drawRewind } from "./coldopen.js";
 
 // The watermark is drawn into the frame itself, so a re-upload carries it and it can't be stripped from the file.
 function drawWatermark(ctx, label, w, h) {
@@ -94,9 +94,10 @@ export async function run(film) {
     const ac = new OfflineAudioContext(2, Math.ceil(film.duration * sampleRate), sampleRate);
     await film.score(ac);
     const audio = await ac.startRendering();
-    if (!film.coldOpen || cut) return audio;
+    const co = coldOpenFor(film, cut);
+    if (!co) return audio;
     // The cold open plays the payoff's own sound, then a rewind whirr, then the film from where it resumes.
-    const channels = spliceAudio([audio.getChannelData(0), audio.getChannelData(1)], audio.sampleRate, film.coldOpen);
+    const channels = spliceAudio([audio.getChannelData(0), audio.getChannelData(1)], audio.sampleRate, co);
     const spliced = new AudioBuffer({ length: audio.length, numberOfChannels: 2, sampleRate: audio.sampleRate });
     channels.forEach((data, c) => spliced.copyToChannel(data, c));
     return spliced;
