@@ -46,9 +46,14 @@ sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`
    - Also export `title`, `episode` (the next number in the Episodes table), `vertical: { hook: [2 short lines], sub }`
      and `chapters: [[t, "LABEL"], ...]`. The 9:16 version is built from these (`render/vertical.js`),
      so the hook has to work as a phone headline on its own.
-   - Export `cuts: [{ name, from, to, hook: [2 lines], sub }, ...]`: 3–4 clips of 18–25 s, each a complete moment
-     with its own headline. `bun render/render.ts cuts films/<slug>` renders them for Shorts, TikTok and Reels,
-     ending on a card that points to the full film.
+   - Export `cuts: [{ name, from, to, hook: [2 lines], sub, coldOpen }, ...]`: 3–4 clips of 14–23 s, each a complete
+     moment with its own headline. `bun render/render.ts cuts films/<slug>` renders them for Shorts, TikTok and Reels,
+     ending on a card that points to the full film. Give each clip its own `coldOpen` (same shape as the film's, below)
+     on the clip's best moment: it plays in the bar before `from`, so the clip runs one bar longer. Pick big type or a
+     big hit, not a small figure, and a moment that stays on screen for the whole bar (no fade, no next chapter).
+     Start the clip on a strong beat (big type, a running count), never on a dark chapter opening: viewers decide in
+     the first 3 seconds, and the cold open only covers the first 1.4. End it on its payoff, not on credits or the
+     next chapter. Start `sub` with the player's name: pixel players have no faces.
    - Export `coldOpen: { from, length }`. Feeds decide in a second or two, so bar 1 of the full film plays the
      payoff: set `from` 0.02 s before the film's biggest hit, so the first sound is that hit, and set `length` to one bar.
      The player rewinds it into the film (`render/coldopen.js`), and the film stays exactly 90 s.
@@ -72,7 +77,8 @@ sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`
    and the iconic pose or celebration. Draw them from scratch; don't trace a photo.
 7. **Self-review loop.** `bun render/render.ts sheet films/<slug> --count 36`, then look at the sheet
    (`out/<slug>/work/sheet.png`). Fix overlaps, overflow, empty frames and unreadable text. Zoom in with
-   `stills --at ...` on busy moments. In the 9:16 frame, check the cold open (0 s to one bar) and the end card (last 3 s).
+   `stills --at ...` on busy moments. In the 9:16 frame, check the cold open (0 s to one bar) and the end card (last 3 s), and
+   each clip's first and last 3 seconds (`stills --format 9x16 --cut <name>`, from one bar before the clip's `from`).
    Repeat until clean.
 8. **Render.** First `bun render/render.ts reframe films/<slug>`: it measures each chapter and writes
    `films/<slug>/reframe.json` (commit it), which the 9:16 frame uses to zoom per chapter. Then check the vertical frame

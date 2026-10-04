@@ -12,10 +12,14 @@ Right now the goal is reach on TikTok, YouTube Shorts and Instagram Reels.
 
 ## The product
 
-- An episode is a 90.0 s film in 16:9 and 9:16 (`out/<slug>/full-*.mp4`) plus 3–4 clips of 18–25 s
+- An episode is a 90.0 s film in 16:9 and 9:16 (`out/<slug>/full-*.mp4`) plus 3–4 clips of 14–23 s
   (`out/<slug>/clip-*.mp4`). `out/` is not in git.
 - Every full film has a `coldOpen`: bar 1 plays the payoff, then rewinds into the film (`render/coldopen.js`).
-  The 9:16 version ends on a "WHO’S NEXT? / COMMENT A PLAYER" card.
+  The 9:16 version ends on a "WHO’S NEXT? / COMMENT A PLAYER" card in the header, in place of the hook.
+- Every clip opens on its own `coldOpen` too (since 4 October): the clip's best moment plays in the bar before the
+  clip, then rewinds into it, so a clip runs one bar longer than its `from`–`to`. Check the first and last 3 seconds
+  of every clip: after the rewind it lands on big type or a running count, never a dark chapter opening, and it ends
+  on its payoff, not on credits or the next chapter.
 - One 9:16 layout serves TikTok, Reels and Shorts. Anything that must be read stays inside `SAFE` in
   `render/vertical.js` (x 60–920, y 240–1500). Run `bun render/render.ts reframe films/<slug>` before any 9:16 render.
 - On-screen copy is about the player. The captions carry one AI line: the TikTok first line and the Shorts title

@@ -85,14 +85,17 @@ bun test                                            # unit tests (the cold open'
 
 `out/<film>/` holds only what gets posted (`full-*`, `clip-*`); scratch files (stills, sheets) go to `out/<film>/work/`.
 
-**Clips.** A film can export `cuts`: 18–25 s ranges, each with its own phone headline. `cuts` renders them for
-Shorts, TikTok and Reels with no countdown and a "FULL 90 SECONDS / ON MY PROFILE" card over the last 2.4 s, so every
-clip sends viewers to the full film. Post the full film first, then the clips over the next few days.
+**Clips.** A film can export `cuts`: 14–23 s ranges, each with its own phone headline. `cuts` renders them for
+Shorts, TikTok and Reels with no countdown and a "FULL 90 SECONDS / ON MY PROFILE" card in the header over the last 2.4 s (in place of the
+hook, so the clip's ending stays uncovered), so every
+clip sends viewers to the full film. Each clip also opens on its own cold open (below). Post the full film first,
+then the clips over the next few days.
 
 **Cold open and end card.** Feeds decide in a second or two, so a film can export `coldOpen: { from, length }`: its first
 bar plays the payoff (the 43,440 explosion, the SIUUU, WORLD CHAMPION) and then scrubs backwards into the start like a
 rewinding tape, with the sound spliced to match (`render/coldopen.js`). The film stays exactly 90 s. The 9:16 version
-ends on a "WHO’S NEXT? / COMMENT A PLAYER" card.
+ends on a "WHO’S NEXT? / COMMENT A PLAYER" card in the header. A clip's own `coldOpen` does the same with the clip's best moment
+(ÁGUA, THE BLOCK, the napkin), played in the bar before the clip, so the clip itself stays whole.
 
 Add `--no-watermark` to any render. Preview keys: `space` play/pause · `←/→` ±1 s (shift ±5 s) ·
 `,`/`.` one frame · `h` hide the HUD.
@@ -128,7 +131,7 @@ render/
   kit.js        easing, typography, grain, camera shake, pixel sprites + figure rig, synth instruments
   player.js     one page, three modes: preview · still · render (streams frames over WebSocket)
   vertical.js   the 9:16 frame around any 16:9 film (hook · film reframed per chapter · chapter · end card)
-  coldopen.js   the cold open: payoff first, then a rewind into the film (+ coldopen.test.js)
+  coldopen.js   the cold open: payoff first, then a rewind into the film or clip (+ coldopen.test.js)
   player.css    fonts + preview layout
   brand.js      the watermark (haoli.ai), the series name and the countdown
   render.ts     CLI: serve / stills / sheet / video

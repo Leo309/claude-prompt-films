@@ -61,13 +61,15 @@ Will he get to 1,000? 👇
 
 Same title and description; add it to the "90 SECONDS" playlist and set it as the Short's related video.
 
-## Clips (9:16, each ends on "FULL 90 SECONDS / ON MY PROFILE")
+## Clips (9:16, each opens on its best moment and ends on "FULL 90 SECONDS / ON MY PROFILE")
 
 | File | Length | Caption (TikTok, Reels) | Shorts title |
 |---|---|---|---|
-| `clip-wall-9x16.mp4` | 24 s | 979 goals, one square each. 21 still empty. #cristianoronaldo #cr7 | 979 Ronaldo Goals, One Square Each ⚽ |
-| `clip-agua-9x16.mp4` | 21 s | Mr. Champions League. The bicycle kick in Turin. Then: Água. 💧 #cr7 #championsleague | Ronaldo: Mr. Champions League, Then Água 💧 |
-| `clip-siuuu-9x16.mp4` | 19 s | 41 years old. 21 goals from 1,000. SIUUU. #cristianoronaldo #siuuu | 41 Years Old, 21 Goals From 1,000: SIUUU 🐐 |
+| `clip-wall-9x16.mp4` | 22.5 s | 979 goals, one square each. 21 still empty. #cristianoronaldo #cr7 | 979 Ronaldo Goals, One Square Each ⚽ |
+| `clip-agua-9x16.mp4` | 22.5 s | Mr. Champions League. The bicycle kick in Turin. Then: Água. 💧 #cr7 #championsleague | Ronaldo: Mr. Champions League, Then Água 💧 |
+| `clip-siuuu-9x16.mp4` | 21 s | 41 years old. 21 goals from 1,000. SIUUU. #cristianoronaldo #siuuu | 41 Years Old, 21 Goals From 1,000: SIUUU 🐐 |
+
+Cover for every clip: the frame at 0.3 s, its cold open's payoff. The profile grid then reads as a row of payoffs.
 
 Shorts description for a clip: its caption, then `Full 90 seconds on my channel · Made with AI · fan-made, not affiliated with Cristiano Ronaldo or any club · stats as of Sept 2026`. In YouTube Studio, set the full film's Short as the clip's related video.
 Pinned comment on every clip: TikTok and Shorts `Full 90 seconds on my profile 👆 What did the AI miss?` ·
