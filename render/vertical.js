@@ -6,8 +6,10 @@
 //   │ sub line     │
 //   │ ┌──────────┐ │  600   the film, zoomed per chapter so its content fills the safe width (reframe.json)
 //   │ │   film   │▒│        ▒ = the right-hand button column of TikTok, Reels and Shorts
-//   │ │ CHAPTER  │▒│        what's on screen now; end cards land here too
-//   │ └──────────┘▒│  1500
+//   │ │ [card]   │▒│        end cards land over the film's lower part
+//   │ └──────────┘▒│
+//   │   CHAPTER   ▒│  1470  under the film, only when the chapter isn't zoomed in (there is room)
+//   │              │  1500
 //   │              │  1500+ captions, names, subscribe buttons: background only
 //   └──────────────┘  1920
 //
@@ -84,18 +86,19 @@ function fitSize(ctx, str, family, max, width, tracking = 0) {
 // `reframe` comes from `bun render/render.ts reframe` (films/<slug>/reframe.json): one [t, contentCentreX, contentWidth]
 // per chapter, in film pixels. Each chapter is zoomed until its content fills the safe width, between "whole film
 // width visible" and "film fills the band's height". Without it, or while the cold open rewinds, the whole width shows.
+// → { zoom, cx } on screen now (eased between chapters) and `settled`, the current chapter's own zoom.
 export function framing(src, reframe, ft) {
   const min = PORTRAIT.width / src.width, max = (BAND.bottom - BAND.top) / src.height;
-  const wide = { zoom: min, cx: src.width / 2 };
+  const wide = { zoom: min, cx: src.width / 2, settled: min };
   if (!reframe?.length || ft.rewind) return wide;
   const at = (i) => ({ zoom: clamp((SAFE.right - SAFE.left) / reframe[i][2], min, max), cx: reframe[i][1] });
   let i = -1;
   for (let k = 0; k < reframe.length; k++) if (ft.t >= reframe[k][0]) i = k;
   if (i < 0) return wide;
-  const u = (ft.t - reframe[i][0]) / REFRAME_EASE;
-  if (i === 0 || u >= 1) return at(i);
-  const a = at(i - 1), b = at(i), e = smooth(clamp(u));
-  return { zoom: lerp(a.zoom, b.zoom, e), cx: lerp(a.cx, b.cx, e) };
+  const b = at(i), u = (ft.t - reframe[i][0]) / REFRAME_EASE;
+  if (i === 0 || u >= 1) return { ...b, settled: b.zoom };
+  const a = at(i - 1), e = smooth(clamp(u));
+  return { zoom: lerp(a.zoom, b.zoom, e), cx: lerp(a.cx, b.cx, e), settled: b.zoom };
 }
 
 // t is output time; ft is the film time on screen (coldopen.js), which runs ahead of t during a cold open.
@@ -150,18 +153,15 @@ export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t,
   // A clip ends by pointing to the full film, a full film by asking who's next: both over the film, inside SAFE
   if (cut ? drawClipCard(ctx, t, cut, CARD.x, CARD.y) : drawCtaCard(ctx, t, film, CARD.x, CARD.y)) return;
   if (ft.rewind) return; // no label while the cold open scrubs back: it would flicker through every chapter
+  // The label sits under the film, so it only shows when the chapter's framing leaves room there. A zoomed-in
+  // chapter fills the band and carries its own big type; a label over it would collide with the film's captions.
+  if ((BAND.top + BAND.bottom) / 2 + (src.height * f.settled) / 2 > LABEL_Y - 90) return;
 
-  // Current chapter at film time (so the cold open shows the payoff's label), slammed in on each change,
-  // over a soft shade so it reads on top of the film when the film is zoomed in
+  // Current chapter at film time (so the cold open shows the payoff's label), slammed in on each change
   const chapters = film.chapters ?? [];
   let current = null;
   for (const c of chapters) if (ft.t >= c[0]) current = c;
   if (current && current[1]) {
-    const shade = ctx.createLinearGradient(0, LABEL_Y - 110, 0, BAND.bottom);
-    shade.addColorStop(0, "rgba(11,11,13,0)");
-    shade.addColorStop(1, "rgba(11,11,13,0.85)");
-    ctx.fillStyle = shade;
-    ctx.fillRect(0, LABEL_Y - 110, W, BAND.bottom - (LABEL_Y - 110));
     const [c0, label] = current;
     // When the film resumes after a cold open, its opening label slams in again
     const t0 = ft.resume && t >= ft.resume && c0 < ft.resume ? ft.resume : c0;
