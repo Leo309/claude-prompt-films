@@ -19,7 +19,8 @@ own contact sheets until the frames were clean.
 
 The series is **90 SECONDS**: every film runs exactly 90 s, with a countdown to 00:00 in the corner.
 Every episode renders in two formats from the same code: 16:9 for YouTube, Bilibili and X, and 9:16 for
-Shorts, TikTok and Reels (a hook on top, the film in the middle, the current chapter underneath).
+Shorts, TikTok and Reels: a hook on top, then the film, zoomed chapter by chapter inside the area that all three apps
+leave uncovered by their buttons and captions.
 
 | EP | Film | Length | The idea |
 |---|---|---|---|
@@ -78,6 +79,7 @@ bun render/render.ts sheet films/lebron --count 36  # contact sheet → out/lebr
 bun render/render.ts stills films/lebron --at 12,32,55 [--format 9x16]
 bun render/render.ts video films/lebron --from 30 --to 40 --fps 30 --out out/draft.mp4
 bun render/render.ts cuts films/messi               # the film's short clips → out/messi/clip-<cut>-9x16.mp4
+bun render/render.ts reframe films/messi            # 9:16 framing per chapter → films/messi/reframe.json
 bun test                                            # unit tests (the cold open's timing and audio splice)
 ```
 
@@ -125,13 +127,14 @@ When done, report the MP4 path, its length and size, and the insider references 
 render/
   kit.js        easing, typography, grain, camera shake, pixel sprites + figure rig, synth instruments
   player.js     one page, three modes: preview · still · render (streams frames over WebSocket)
-  vertical.js   the 9:16 frame around any 16:9 film (hook · film · chapter · end card)
+  vertical.js   the 9:16 frame around any 16:9 film (hook · film reframed per chapter · chapter · end card)
   coldopen.js   the cold open: payoff first, then a rewind into the film (+ coldopen.test.js)
   player.css    fonts + preview layout
   brand.js      the watermark (haoli.ai), the series name and the countdown
   render.ts     CLI: serve / stills / sheet / video
 films/<slug>/
   facts.md      every on-screen number with its source, plus insider references
+  reframe.json  9:16 framing per chapter (written by `render.ts reframe`)
   film.js       the film: draw(ctx, t) + score(ac)
   sprites.js    pixel-art sprites, drawn from scratch
   post.md       titles, descriptions and hashtags for each platform

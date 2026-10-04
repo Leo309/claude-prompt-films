@@ -27,6 +27,12 @@
 按 PROMO_PROMPT.md 做 EP[编号]：[主角]。热点是 [日期 + 事件]，[最晚渲染完的日期] 前要渲染完：90 秒正片（横版和竖版，带 coldOpen）、3–4 条切片、post.md。做完更新 plan/BACKLOG.md 和 plan/CALENDAR.md。
 ```
 
+## 马上要做：再切几条
+
+切片为主之后，现成的 9 条切片到 10/7 就发完了。最省事的办法是从三部片子里再各切 2 条：在 `cuts` 里加时间范围和一句大字，
+再跑一次 `cuts`。候选：梅西的 "¿QUÉ MIRÁS, BOBO?" 和 46 座奖杯，C 罗的 6 届世界杯和 5 座金球，LeBron 的 THE CHOSEN ONE 和
+father & son。
+
 ## 常青备选（没有热点时补位）
 
 Jordan（做完可以拼 Jordan vs LeBron）· Kobe（单场 81 分）· Curry（三分纪录）· Brunson（尼克斯 53 年来首冠）·

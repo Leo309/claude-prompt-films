@@ -54,8 +54,11 @@ sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`
      The player rewinds it into the film (`render/coldopen.js`), and the film stays exactly 90 s.
    - Optionally export `vertical.cta: [big, small]` to replace the 9:16 end card's "WHO’S NEXT?" / "COMMENT A PLAYER".
      For VS episodes, use "WHO’S YOUR GOAT?" / "COMMENT BELOW".
-   - **Phone-legible text:** anything meant to be read must be at least 72 px on the 1920×1080 canvas, because the 9:16
-     frame shows the film at 56 %. Smaller text is texture.
+   - **Phone-legible text:** anything meant to be read must be at least 72 px on the 1920×1080 canvas. The 9:16
+     frame shows a wide chapter at 56 % (a zoomed one at up to 83 %), so smaller text is texture.
+   - Compose each chapter so that its key content fits in about two thirds of the width: the 9:16 reframe then zooms
+     it in. A chapter whose content has to span the frame (a chart that grows across it) goes in
+     `vertical.wide: [chapter start, ...]` and stays at full width.
    - Headlines go in the 9:16 top band and are about the player and the number, never the AI.
 5. **Make the music theirs**, not a generic beat (see `films/lebron/film.js` → score):
    - **Data melody**: turn the subject's key series (points per season, goals per year…) into notes,
@@ -71,9 +74,12 @@ sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`
    (`out/<slug>/work/sheet.png`). Fix overlaps, overflow, empty frames and unreadable text. Zoom in with
    `stills --at ...` on busy moments. In the 9:16 frame, check the cold open (0 s to one bar) and the end card (last 3 s).
    Repeat until clean.
-8. **Render.** `bun render/render.ts video films/<slug>` → `out/<slug>/full-16x9.mp4` and `out/<slug>/full-9x16.mp4`.
-   Check the vertical frame first with `sheet films/<slug> --format 9x16`. Then `cuts films/<slug>` for the clips
-   (`out/<slug>/clip-<name>-9x16.mp4`).
+8. **Render.** First `bun render/render.ts reframe films/<slug>`: it measures each chapter and writes
+   `films/<slug>/reframe.json` (commit it), which the 9:16 frame uses to zoom per chapter. Then check the vertical frame
+   with `sheet films/<slug> --format 9x16`, with one still per chapter. Nothing that must be read may leave the safe zone
+   (x 60–920, y 240–1500); if a chapter crops something important, add it to `vertical.wide` and reframe again.
+   Then `bun render/render.ts video films/<slug>` → `out/<slug>/full-16x9.mp4` and `out/<slug>/full-9x16.mp4`, and
+   `cuts films/<slug>` for the clips (`out/<slug>/clip-<name>-9x16.mp4`).
 9. **Package.** Write `films/<slug>/post.md` in the same layout as `films/messi/post.md` (rules in `POSTING.md`):
    - a header with the files, the cover-frame time (usually inside the cold open) and the subject's next news peg;
    - **TikTok:** the caption opens with "I asked AI to sum up {player}'s career in 90 seconds." and continues about

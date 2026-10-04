@@ -16,9 +16,12 @@ Right now the goal is reach on TikTok, YouTube Shorts and Instagram Reels.
   (`out/<slug>/clip-*.mp4`). `out/` is not in git.
 - Every full film has a `coldOpen`: bar 1 plays the payoff, then rewinds into the film (`render/coldopen.js`).
   The 9:16 version ends on a "WHO’S NEXT? / COMMENT A PLAYER" card.
+- One 9:16 layout serves TikTok, Reels and Shorts. Anything that must be read stays inside `SAFE` in
+  `render/vertical.js` (x 60–920, y 240–1500). Run `bun render/render.ts reframe films/<slug>` before any 9:16 render.
 - On-screen copy is about the player. The captions carry one AI line: the TikTok first line and the Shorts title
   say "I asked AI to sum up … in 90 seconds", and Reels captions don't mention AI. Never "how it's made".
-- Post the full film first and pin it, then one clip a day. A news peg beats the queue.
+- Clip-first since 4 October: the full film goes up once and is pinned as the landing page, then two clips a day.
+  A news peg beats the queue.
 - When a new episode is done: add it to README.md (Episodes), `plan/BACKLOG.md` and `plan/CALENDAR.md`.
 
 ## Git (several sessions share this repo)

@@ -78,11 +78,19 @@ Per-film copy lives in `films/<slug>/post.md` and the dates in `plan/CALENDAR.md
 6. **Reply to comments in the first hour.**
 7. **Log it** in `plan/LOG.md`: the link right away, the numbers at 24 h and 72 h.
 
-## Cadence
+## One file for all three apps
 
-- **Day 0:** the full film on TikTok, Shorts and Reels, using the same 9:16 file. Pin it on the TikTok profile.
-- **Following days:** one clip a day. Each clip ends on "FULL 90 SECONDS / ON MY PROFILE".
-- **Volume:** 1–2 posts per platform per day. Beyond 3 a day, each post does worse.
+The 9:16 layout keeps everything that must be read inside the area that TikTok, Reels and Shorts all leave
+uncovered: x 60–920, y 240–1500 on the 1080×1920 frame (`SAFE` in `render/vertical.js`). Post the same file
+everywhere. Don't add the apps' own text stickers near the bottom or the right edge.
+
+## Cadence (clip-first since 4 October)
+
+- **The full film** goes up once, before its clips, on TikTok, Shorts and Reels. Pin it on the TikTok profile:
+  it is the landing page. The first three posts showed that a 90 s film doesn't travel on its own (2.1 s average
+  watch on TikTok), while a 19 s clip did (636 views on Shorts).
+- **Clips carry the account:** two a day. Each one ends on "FULL 90 SECONDS / ON MY PROFILE".
+- **Volume:** 2 posts per platform per day. Beyond 3 a day, each post does worse.
 - **Time:** 3–7 pm Pacific (6–10 pm Eastern).
 - **News beats the queue.** Before a game, post the full film 3–5 days ahead and a clip on game day. After big news,
   change the number in `film.js`, re-render (about 20 minutes) and post the same day.
