@@ -50,6 +50,9 @@ export async function run(film) {
 
   await Promise.all((film.fonts ?? []).map((f) => document.fonts.load(f)));
   await document.fonts.ready;
+  // 9:16 framing per chapter, written by `bun render/render.ts reframe` next to the film; without it the
+  // vertical frame shows the whole film width.
+  const reframe = portrait ? await fetch("reframe.json").then((r) => (r.ok ? r.json() : null)).catch(() => null) : null;
 
   const showLabel = params.has("label");
   const watermark = params.has("nowm") || film.watermark === false ? null : film.watermark ?? WATERMARK;
@@ -70,7 +73,7 @@ export async function run(film) {
       drawRewind(filmCtx, film.width, film.height, ft.rewind);
     }
     reset(ctx);
-    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark, cut, ft); // the watermark becomes the series tag up top
+    if (portrait) drawVertical(ctx, filmCanvas, t, film, watermark, cut, ft, reframe); // the watermark becomes the series tag up top
     else {
       if (watermark) drawWatermark(ctx, cut ? watermark : `${watermark}  ${countdown(t, film.duration)}`, canvas.width, canvas.height);
       if (cut) drawClipCard(ctx, t, cut, canvas.width / 2, canvas.height - 200);

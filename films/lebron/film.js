@@ -1293,7 +1293,9 @@ export default {
   // Used by the 9:16 frame (render/vertical.js): a hook above the film, the current chapter below it.
   // Cold open (render/coldopen.js): bar 1 shows the chalk toss exploding into 43,440, then rewinds into Akron.
   coldOpen: { from: 79.98, length: 2 },
-  vertical: { hook: ["I ASKED AI FOR", "A LEBRON FILM."], sub: "IT TURNED HIS 23 SEASONS INTO THE MUSIC" },
+  // `wide`: chapters the 9:16 reframe keeps at full width: the ball crosses the frame in Akron, and the scoring
+  // line climbs from left to right until it passes Kareem's line on the right.
+  vertical: { hook: ["I ASKED AI FOR", "A LEBRON FILM."], sub: "IT TURNED HIS 23 SEASONS INTO THE MUSIC", wide: [0, 16, 28, 32] },
   chapters: [
     [0, "AKRON, 1984"], [8, "THE CHOSEN ONE"], [12, "#1 PICK"], [16, "THE CLIMB"], [28, "CHASING KAREEM"],
     [32, "ALL-TIME"], [42, "4 RINGS"], [48, "DOWN 3–1"], [55, "THE BLOCK"], [60, "23 SEASONS"],

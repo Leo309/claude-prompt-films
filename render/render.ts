@@ -10,6 +10,8 @@
  *   bun render/render.ts sheet  films/lebron [--count 24]   contact sheet → out/lebron/work/sheet.png
  *   bun render/render.ts cuts   films/messi [--name rings] [--format 9x16|16x9|all]
  *                                                           the film's short clips → out/messi/clip-<cut>-9x16.mp4
+ *   bun render/render.ts reframe films/messi                9:16 framing per chapter → films/messi/reframe.json
+ *                                                           (run it after changing a film, before rendering 9:16)
  *
  * out/<film>/ holds only what gets posted (full-*, clip-*); scratch files go to out/<film>/work/.
  *   add --no-watermark to any of them to leave out the watermark (render/brand.js);
@@ -286,6 +288,84 @@ async function renderCuts() {
   }
 }
 
+// ---------------------------------------------------------------- reframe (9:16 framing per chapter)
+
+// For each chapter, find where the film's content sits (bright pixels at three moments of the chapter) and write
+// films/<slug>/reframe.json: [[chapterStart, contentCentreX, contentWidth], ...] in film pixels. vertical.js then
+// zooms each chapter until that content fills the width that TikTok, Reels and Shorts all leave uncovered.
+async function renderReframe() {
+  const server = startServer();
+  const { browser, page } = await openFilm(server, "mode=still&nowm");
+  const rows: number[][] = await page.evaluate(() => {
+    const p = (window as any).__player, film = p.film, cv = p.canvas as HTMLCanvasElement;
+    const ctx = cv.getContext("2d")!;
+    const S = 10, cols = Math.round(cv.width / S), rowsN = Math.round(cv.height / S);
+    const small = Object.assign(document.createElement("canvas"), { width: cols, height: rowsN });
+    const sctx = small.getContext("2d", { willReadFrequently: true })!;
+    const chapters: [number, string][] = film.chapters?.length ? film.chapters : [[0, ""]];
+    // Chapters a film keeps at full width (`vertical.wide`: their start times), e.g. a chart that grows across the frame
+    const wide: number[] = film.vertical?.wide ?? [];
+    return chapters.map(([a], i) => {
+      if (wide.some((w) => Math.abs(w - a) < 0.01)) return [a, cv.width / 2, cv.width];
+      const b = i + 1 < chapters.length ? chapters[i + 1][0] : film.duration;
+      // Weight each column by how much of it is bright, and only count columns with real mass (big type, sprites,
+      // bars): corner labels, hairlines and particles are texture and must not widen the frame.
+      const mass = new Array(cols).fill(0);
+      let lo = cols, hi = -1;
+      // Skip the first 30% of a chapter: its opening hit flashes the whole frame.
+      for (const f of [0.3, 0.55, 0.8]) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
+        film.draw(ctx, a + (b - a) * f); // raw film time: the cold open doesn't apply here
+        sctx.drawImage(cv, 0, 0, cols, rowsN);
+        const d = sctx.getImageData(0, 0, cols, rowsN).data;
+        const count = new Array(cols).fill(0);
+        let bright = 0;
+        for (let y = 0; y < rowsN; y++)
+          for (let x = 0; x < cols; x++) {
+            const k = (y * cols + x) * 4;
+            if (0.2126 * d[k] + 0.7152 * d[k + 1] + 0.0722 * d[k + 2] > 50) {
+              count[x]++;
+              bright++;
+            }
+          }
+        if (bright > 0.6 * cols * rowsN) continue; // a flash or a bright full-frame scene says nothing about framing
+        for (let x = 0; x < cols; x++) {
+          if (count[x] >= 6) mass[x] += count[x];
+          if (count[x] >= 2) {
+            lo = Math.min(lo, x);
+            hi = Math.max(hi, x);
+          }
+        }
+      }
+      const total = mass.reduce((s, m) => s + m, 0);
+      if (total > 0) {
+        // the columns holding the middle 98% of the mass
+        let acc = 0;
+        lo = -1;
+        for (let x = 0; x < cols; x++) {
+          acc += mass[x];
+          if (lo < 0 && acc >= 0.01 * total) lo = x;
+          if (acc >= 0.99 * total) {
+            hi = x;
+            break;
+          }
+        }
+      }
+      if (hi < lo || lo < 0) return [a, cv.width / 2, cv.width]; // nothing found: show the whole width
+      const pad = 90;
+      return [a, ((lo + hi + 1) / 2) * S, Math.min(cv.width, (hi - lo + 1) * S + 2 * pad)];
+    });
+  });
+  await browser.close();
+  server.stop(true);
+  const out = join(ROOT, filmDir, "reframe.json");
+  writeFileSync(out, JSON.stringify(rows.map((r) => r.map((n) => Math.round(n * 100) / 100))) + "\n");
+  console.log(out);
+  for (const [t, cx, w] of rows) console.log(`  ${t.toFixed(2).padStart(6)} s   centre ${String(Math.round(cx)).padStart(4)}   width ${Math.round(w)}`);
+}
+
 // ---------------------------------------------------------------- main
 
 if (mode === "serve") {
@@ -306,7 +386,8 @@ if (mode === "serve") {
 else if (mode === "stills") await renderStills();
 else if (mode === "sheet") await renderSheet();
 else if (mode === "cuts") await renderCuts();
+else if (mode === "reframe") await renderReframe();
 else {
-  console.log("Usage: bun render/render.ts <serve|video|stills|sheet|cuts> [films/<name>] [options]");
+  console.log("Usage: bun render/render.ts <serve|video|stills|sheet|cuts|reframe> [films/<name>] [options]");
   process.exit(1);
 }
