@@ -100,3 +100,30 @@ everywhere. Don't add the apps' own text stickers near the bottom or the right e
 - **Time:** 3–7 pm Pacific (6–10 pm Eastern).
 - **News beats the queue.** Before a game, post the full film 3–5 days ahead and a clip on game day. After big news,
   change the number in `film.js`, re-render (about 20 minutes) and post the same day.
+
+## Scheduling from Claude in Chrome (6 October)
+
+Claude can schedule on all three sites from the owner's Chrome (the Claude in Chrome extension, already signed in).
+Do one platform at a time: every site has its own quirks, and switching back and forth costs more than it saves.
+
+- **Keep that Chrome window on screen.** When it is minimized or completely covered, Chrome treats the page as
+  hidden: it doesn't load video there, doesn't run animation frames, and screenshots show stale frames. Instagram then
+  can't read the video and spins forever; TikTok's caption editor and date/time pickers don't commit. YouTube Studio
+  works either way. Check with `document.visibilityState`, and trust what the page reports over a screenshot.
+- **If the window has to stay hidden:** play a 2-pixel silent stream in the page first (a canvas `captureStream()` in a
+  muted video). Chrome then loads media in that page, and Instagram's uploader works. TikTok still needs the window
+  on screen.
+- **Files over 10 MB** (the full films): the upload tool takes at most 10 MB per call. Split the MP4 into three parts,
+  load them into helper file inputs on the page, join them there (`new File([a, b, c])`), check the size and SHA-256
+  against the original, then hand the file to the site's own file input with a `change` event. Done for LeBron's full
+  film on YouTube and Instagram.
+- **YouTube Studio:** pick the schedule date on the calendar (a typed date doesn't stick); the time field takes typing
+  ("3:00 PM", then Return). Read times with a regex: the page puts a narrow no-break space before "PM".
+- **Instagram web:** Create → Post → Crop: Original (it defaults to a square crop) → Next → Cover photo: Select from
+  computer → Next → caption, Add AI label, Schedule content → date on the calendar, then the Hours, Minutes and AM/PM
+  boxes (focus each one, then type).
+- **TikTok Studio:** up to 10 days ahead, and a scheduled post's caption can't be fixed afterwards, so type the caption
+  in a visible window. Writing the editor's state from a script changes what the box shows, not what gets posted
+  (kareem went in as "clip-kareem-9x16" that way).
+- **Pinned comments** are posted and pinned the same way once a post is live: on YouTube from the Short's comment panel
+  (⋮ → Pin), on TikTok from the video page.

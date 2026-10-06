@@ -66,8 +66,10 @@ Same title and description; add it to the "90 SECONDS" playlist and set it as th
 
 | File | Length | Caption (TikTok, Reels) | Shorts title |
 |---|---|---|---|
+| `clip-chosen-9x16.mp4` | 9.5 s | The Chosen One at 17. The #1 pick at 18. #lebronjames #nba | LeBron: The Chosen One, #1 Pick at 18 👑 |
 | `clip-kareem-9x16.mp4` | 14 s | He caught Kareem on the downbeat. 23 seasons of points, one line. #lebronjames #nba | LeBron Caught Kareem on the Downbeat 👑 |
 | `clip-block-9x16.mp4` | 14 s | Down 3–1. Then The Block. 2016 in 14 seconds. #lebronjames #nbafinals | Down 3–1. Then The Block 👑 |
+| `clip-father-9x16.mp4` | 10.5 s | #23 and #9: the first father and son to play together in an NBA game. #lebronjames #bronny | LeBron and Bronny: A First in NBA History 👑 |
 | `clip-season24-9x16.mp4` | 18 s | 43,440 points. Season 24 starts Oct 20, in Philly. #lebronjames #sixers | LeBron: 43,440 Points, Season 24 Starts Oct 20 👑 |
 
 Cover for every clip: `out/lebron/cover-<clip>.jpg`, its cold open's payoff at 0.3 s. The profile grid then

@@ -761,6 +761,7 @@ export default {
   cuts: [
     { name: "wall", from: bar(13), to: bar(24), coldOpen: { from: bar(23) - 0.02, length: BAR }, hook: [`${TOTAL} GOALS.`, "ONE SQUARE EACH."], sub: `CRISTIANO RONALDO · ${TO_GO} TO GO` },
     { name: "agua", from: bar(24), to: bar(35), coldOpen: { from: bar(34) - 0.02, length: BAR }, hook: ["MR. CHAMPIONS LEAGUE.", "THEN: ÁGUA."], sub: "CRISTIANO RONALDO" },
+    { name: "worldcups", from: bar(35), to: bar(43.9), coldOpen: { from: bar(36.5) - 0.02, length: BAR }, hook: ["6 WORLD CUPS.", "THE FIRST EVER."], sub: "CRISTIANO RONALDO · 146 FOR PORTUGAL" },
     { name: "siuuu", from: bar(38), to: bar(48), coldOpen: { from: bar(43) - 0.02, length: BAR }, hook: ["41 YEARS OLD.", `${TO_GO} GOALS FROM 1,000.`], sub: "CRISTIANO RONALDO · SIUUU" },
   ],
   draw,

@@ -41,10 +41,21 @@ const SEASONS = [
   ["2021–22", "psg", 11], ["2022–23", "psg", 21],
   ["2023", "miami", 11], ["2024", "miami", 23], ["2025", "miami", 43], ["2026", "miami", 25],
 ];
-const ARGENTINA = 125;
+// His farewell match: 6 Oct 2026 v Benin at the Monumental. After the final whistle, fill this in (source it in
+// facts.md) and re-render the goodbye clip: `bun render/render.ts cuts films/messi --name goodbye`.
+// null is the pre-match film ("HIS LAST GAME FOR ARGENTINA: OCT 6.").
+const FAREWELL = null; // e.g. { goals: 1, score: "ARGENTINA 3–0 BENIN" }
+const FAREWELL_GOALS = FAREWELL?.goals ?? 0;
+const GOALS_WORD = ["", "ONE", "TWO", "THREE", "FOUR"][FAREWELL_GOALS] ?? String(FAREWELL_GOALS);
+// The goodbye chapter's last line, and the goodbye clip's hook: before the match, then after it, with or without a goal.
+const LAST_LINE = FAREWELL_GOALS === 1 ? "ONE LAST GOAL." : FAREWELL_GOALS > 1 ? `${GOALS_WORD} LAST GOALS.` : "ONE LAST TIME.";
+const GOODBYE_HOOK = !FAREWELL ? ["HIS LAST GAME FOR", "ARGENTINA: OCT 6."]
+  : FAREWELL_GOALS ? ["HIS LAST GAME.", FAREWELL_GOALS === 1 ? "HE SCORED." : `HE SCORED ${GOALS_WORD}.`]
+  : ["HIS LAST GAME", "FOR ARGENTINA."];
+const ARGENTINA = 125 + FAREWELL_GOALS;
 const CLUB_GOALS = SEASONS.reduce((s, r) => s + r[2], 0);
 const TOTAL = CLUB_GOALS + ARGENTINA;
-console.assert(CLUB_GOALS === 806 && TOTAL === 931, `club ${CLUB_GOALS}, total ${TOTAL}`);
+console.assert(CLUB_GOALS === 806 && TOTAL === 931 + FAREWELL_GOALS, `club ${CLUB_GOALS}, total ${TOTAL}`);
 const CUM = [];
 {
   let s = 0;
@@ -116,9 +127,9 @@ const FINALS = [
 ];
 
 const RAPID = [
-  [34, "931", "GOALS"], [34.25, "420+", "ASSISTS · THE MOST EVER"], [34.5, "46", "TROPHIES · THE MOST EVER"],
+  [34, fmt(TOTAL), "GOALS"], [34.25, "420+", "ASSISTS · THE MOST EVER"], [34.5, "46", "TROPHIES · THE MOST EVER"],
   [34.75, "8", "BALLON D'OR"], [35, "672", "FOR BARCELONA"], [35.125, "474", "IN LA LIGA"], [35.25, "91", "IN ONE YEAR"],
-  [35.375, "73", "IN ONE SEASON"], [35.5, "125", "FOR ARGENTINA"], [35.625, "21", "AT WORLD CUPS"], [35.75, "10", ""],
+  [35.375, "73", "IN ONE SEASON"], [35.5, String(ARGENTINA), "FOR ARGENTINA"], [35.625, "21", "AT WORLD CUPS"], [35.75, "10", ""],
 ];
 
 const DROP0 = bar(36.4), DROP1 = bar(38.2);
@@ -473,7 +484,7 @@ function sceneFirstGoal(ctx, t) {
   const s = slam(t, bar(8.25), 0.3, 1.4);
   scaled(ctx, 140, 300, s.s, () => disp(ctx, "ASSIST:", 136, 340, { size: 110, color: C.ash, alpha: s.a * a, tracking: 3 }));
   scaled(ctx, 140, 440, s.s, () => disp(ctx, "RONALDINHO.", 136, 480, { size: 130, alpha: s.a * a, tracking: 3 }));
-  mono(ctx, typed("AGE 17. THE FIRST OF 931.", t, bar(8.45), 40), 142, 560, { size: 24, color: C.celeste, tracking: 5, alpha: a });
+  mono(ctx, typed(`AGE 17. THE FIRST OF ${fmt(TOTAL)}.`, t, bar(8.45), 40), 142, 560, { size: 24, color: C.celeste, tracking: 5, alpha: a });
 }
 
 // ---------------------------------------------------------------- bars 9–20 · 931 goals, ring by ring
@@ -851,9 +862,10 @@ function sceneGoodbye(ctx, t) {
     const s = slam(t, bar(32.6), 0.35, 1.2);
     scaled(ctx, 960, 380, s.s, () => disp(ctx, "HE SAID GOODBYE.", 960, 440, { size: 140, align: "center", alpha: s.a * a, tracking: 4 }));
   } else {
-    mono(ctx, typed("6 OCTOBER 2026 · ESTADIO MONUMENTAL", t, bar(33.25), 40), 960, 280, { size: 22, align: "center", tracking: 6, color: C.ash, alpha: out });
+    const where = FAREWELL ? `6 OCTOBER 2026 · ${FAREWELL.score}` : "6 OCTOBER 2026 · ESTADIO MONUMENTAL";
+    mono(ctx, typed(where, t, bar(33.25), 40), 960, 280, { size: 22, align: "center", tracking: 6, color: C.ash, alpha: out });
     const s = slam(t, bar(33.3), 0.3, 1.5);
-    scaled(ctx, 960, 380, s.s, () => disp(ctx, "ONE LAST TIME.", 960, 450, { size: 170, align: "center", color: C.celeste, alpha: s.a * out, tracking: 4 }));
+    scaled(ctx, 960, 380, s.s, () => disp(ctx, LAST_LINE, 960, 450, { size: 170, align: "center", color: C.celeste, alpha: s.a * out, tracking: 4 }));
   }
 }
 
@@ -1217,10 +1229,10 @@ export default {
   coldOpen: { from: bar(28) - 0.02, length: BAR },
   // `wide`: the trophy tower stays at full width in 9:16, because "TOO SMALL?" lands on its left at bar 38.5, after
   // the last moment `reframe` measures, and a zoomed-in frame would crop it to "SMALL?".
-  vertical: { hook: ["TOO SMALL AT 10.", "931 GOALS LATER."], sub: "LIONEL MESSI · 6 OCT: HIS LAST GAME FOR ARGENTINA", wide: [bar(36)] },
+  vertical: { hook: ["TOO SMALL AT 10.", `${fmt(TOTAL)} GOALS LATER.`], sub: "LIONEL MESSI · 6 OCT: HIS LAST GAME FOR ARGENTINA", wide: [bar(36)] },
   chapters: [
     [0, "ROSARIO, AGE 10"], [bar(3), "TOO SMALL"], [bar(4), "THE NAPKIN"], [bar(7), "GOAL NO. 1"],
-    [bar(9), "931 GOALS, RING BY RING"], [RING_T[17], "PARIS"], [RING_T[19], "MIAMI"], [BARK_T, "ARGENTINA · 125"],
+    [bar(9), `${fmt(TOTAL)} GOALS, RING BY RING`], [RING_T[17], "PARIS"], [RING_T[19], "MIAMI"], [BARK_T, `ARGENTINA · ${ARGENTINA}`],
     [bar(20), "THE BERNABÉU, 2017"], [bar(22), "THREE FINALS LOST"], [bar(24), "HE QUIT"], [bar(24.5), "HE CAME BACK"],
     [bar(25), "2021"], [bar(26), "¿QUÉ MIRÁS, BOBO?"], [bar(27), "LUSAIL, 2022"], [bar(30), "2024"], [bar(31), "2026"],
     [bar(32.5), "GOODBYE"], [bar(34), "EVERYTHING"], [bar(36), "46 TROPHIES"], [bar(39), "LIONEL MESSI"],
@@ -1231,9 +1243,11 @@ export default {
   // or the next chapter. The sub line starts with the player's name.
   cuts: [
     { name: "napkin", from: 0, to: bar(9), coldOpen: { from: bar(6) - 0.02, length: BAR }, hook: ["TOO SMALL AT 10.", "SIGNED ON A NAPKIN."], sub: "LIONEL MESSI · HOW HE STARTED" },
-    { name: "rings", from: bar(11), to: bar(20), coldOpen: { from: BARK_T - 0.02, length: BAR }, hook: ["931 GOALS.", "ONE RING PER SEASON."], sub: "LIONEL MESSI · 2004–2026" },
+    { name: "rings", from: bar(11), to: bar(20), coldOpen: { from: BARK_T - 0.02, length: BAR }, hook: [`${fmt(TOTAL)} GOALS.`, "ONE RING PER SEASON."], sub: "LIONEL MESSI · 2004–2026" },
     { name: "comeback", from: bar(24), to: bar(31), coldOpen: { from: bar(28) - 0.02, length: BAR }, hook: ["HE QUIT IN 2016.", "THEN HE WON IT ALL."], sub: "LIONEL MESSI & ARGENTINA" },
-    { name: "goodbye", from: bar(32), to: bar(40.75), coldOpen: { from: bar(39.5) - 0.02, length: BAR }, hook: ["HIS LAST GAME FOR", "ARGENTINA: OCT 6."], sub: "LIONEL MESSI · 46 TROPHIES LATER" },
+    { name: "bobo", from: bar(20.15), to: bar(26.88), coldOpen: { from: bar(26) - 0.02, length: BAR }, hook: ["THE BERNABÉU SHIRT.", "¿QUÉ MIRÁS, BOBO?"], sub: "LIONEL MESSI · 2017–2022" },
+    // After the match the cold open is the result itself (ONE LAST GOAL. / ONE LAST TIME. at bar 33.3), not the name card.
+    { name: "goodbye", from: bar(32), to: bar(40.75), coldOpen: { from: (FAREWELL ? bar(33.3) : bar(39.5)) - 0.02, length: BAR }, hook: GOODBYE_HOOK, sub: FAREWELL ? `LIONEL MESSI · ${FAREWELL.score}` : "LIONEL MESSI · 46 TROPHIES LATER" },
   ],
   draw,
   score,
