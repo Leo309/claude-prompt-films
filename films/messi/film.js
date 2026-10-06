@@ -46,13 +46,14 @@ const SEASONS = [
 // null is the pre-match film ("HIS LAST GAME FOR ARGENTINA: OCT 6.").
 const FAREWELL = null; // e.g. { goals: 1, score: "ARGENTINA 3–0 BENIN" }
 const FAREWELL_GOALS = FAREWELL?.goals ?? 0;
+const ARGENTINA = 125 + FAREWELL_GOALS;
+const CAPS = 207 + (FAREWELL ? 1 : 0); // games for Argentina (facts.md)
 const GOALS_WORD = ["", "ONE", "TWO", "THREE", "FOUR"][FAREWELL_GOALS] ?? String(FAREWELL_GOALS);
 // The goodbye chapter's last line, and the goodbye clip's hook: before the match, then after it, with or without a goal.
 const LAST_LINE = FAREWELL_GOALS === 1 ? "ONE LAST GOAL." : FAREWELL_GOALS > 1 ? `${GOALS_WORD} LAST GOALS.` : "ONE LAST TIME.";
 const GOODBYE_HOOK = !FAREWELL ? ["HIS LAST GAME FOR", "ARGENTINA: OCT 6."]
   : FAREWELL_GOALS ? ["HIS LAST GAME.", FAREWELL_GOALS === 1 ? "HE SCORED." : `HE SCORED ${GOALS_WORD}.`]
-  : ["HIS LAST GAME", "FOR ARGENTINA."];
-const ARGENTINA = 125 + FAREWELL_GOALS;
+  : ["HIS LAST GAME.", `${CAPS} GAMES. ${ARGENTINA} GOALS.`];
 const CLUB_GOALS = SEASONS.reduce((s, r) => s + r[2], 0);
 const TOTAL = CLUB_GOALS + ARGENTINA;
 console.assert(CLUB_GOALS === 806 && TOTAL === 931 + FAREWELL_GOALS, `club ${CLUB_GOALS}, total ${TOTAL}`);
