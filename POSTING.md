@@ -111,8 +111,9 @@ Do one platform at a time: every site has its own quirks, and switching back and
   can't read the video and spins forever; TikTok's caption editor and date/time pickers don't commit. YouTube Studio
   works either way. Check with `document.visibilityState`, and trust what the page reports over a screenshot.
 - **If the window has to stay hidden:** play a 2-pixel silent stream in the page first (a canvas `captureStream()` in a
-  muted video). Chrome then loads media in that page, and Instagram's uploader works. TikTok still needs the window
-  on screen.
+  muted video). Chrome then loads media in that page, and Instagram's uploader works. A screenshot makes the page draw
+  one frame, which lets dialogs finish opening or closing (YouTube's upload dialog stays `display: none` until then):
+  take one after every step that opens or closes something. TikTok still needs the window on screen.
 - **Files over 10 MB** (the full films): the upload tool takes at most 10 MB per call. Split the MP4 into three parts,
   load them into helper file inputs on the page, join them there (`new File([a, b, c])`), check the size and SHA-256
   against the original, then hand the file to the site's own file input with a `change` event. Done for LeBron's full
@@ -125,5 +126,9 @@ Do one platform at a time: every site has its own quirks, and switching back and
 - **TikTok Studio:** up to 10 days ahead, and a scheduled post's caption can't be fixed afterwards, so type the caption
   in a visible window. Writing the editor's state from a script changes what the box shows, not what gets posted
   (kareem went in as "clip-kareem-9x16" that way).
-- **Pinned comments** are posted and pinned the same way once a post is live: on YouTube from the Short's comment panel
-  (⋮ → Pin), on TikTok from the video page.
+- **Pinned comments** are posted once a post is live. YouTube: the Short's comment panel, ⋮ → Pin. Instagram web can
+  post a comment but has no Pin (only Delete), so pin it from the phone app. TikTok: from the video page, but the
+  video page threw a slider captcha after a day of automated uploads; Claude stops there and leaves it for the owner.
+- **Reels AI label on scheduled posts:** the web "edit scheduled content" dialog always shows Add AI label switched off,
+  even right after saving it on. A Reel posted straight away does show "AI content". Check a scheduled Reel once it is
+  live and add the label in the app if it is missing.
