@@ -2,7 +2,7 @@
 
 Files: `out/lebron/full-9x16.mp4` (TikTok, Shorts, Reels) · `out/lebron/full-16x9.mp4` (YouTube) ·
 clips `out/lebron/clip-<kareem|block|season24>-9x16.mp4`
-Cover frame: 0.3 s (the cold open: the chalk toss exploding into **43,440**) · AI label: on · How to post: `POSTING.md` ·
+Cover frame: 0.3 s, `out/lebron/cover-full.jpg` (the cold open: the chalk toss exploding into **43,440**) · AI label: on · How to post: `POSTING.md` ·
 Dates: `plan/CALENDAR.md`
 **News peg:** NBA opening night, Tue 20 October 2026: LeBron's first game for Philadelphia, at the champion Knicks.
 **On screen:** "I ASKED AI FOR / A LEBRON FILM." This is the AI-hook control; the other episodes lead with the player.
@@ -34,7 +34,7 @@ I Asked AI to Sum Up LeBron James in 90 Seconds 👑
 ```
 23 seasons in 90 seconds: the chase for Kareem, down 3–1, The Block, 43,440, and Season 24 in Philly.
 The beat is his career: every season's points are one note, and the sound changes with every city.
-Made with AI · fan-made, not affiliated with the NBA or LeBron James · stats as of Sept 2026.
+Made with AI · fan-made.
 #LeBronJames #NBA #Shorts
 ```
 **Pinned comment**
@@ -70,9 +70,10 @@ Same title and description; add it to the "90 SECONDS" playlist and set it as th
 | `clip-block-9x16.mp4` | 14 s | Down 3–1. Then The Block. 2016 in 14 seconds. #lebronjames #nbafinals | Down 3–1. Then The Block 👑 |
 | `clip-season24-9x16.mp4` | 18 s | 43,440 points. Season 24 starts Oct 20, in Philly. #lebronjames #sixers | LeBron: 43,440 Points, Season 24 Starts Oct 20 👑 |
 
-Cover for every clip: the frame at 0.3 s, its cold open's payoff. The profile grid then reads as a row of payoffs.
+Cover for every clip: `out/lebron/cover-<clip>.jpg`, its cold open's payoff at 0.3 s. The profile grid then
+reads as a row of payoffs.
 
-Shorts description for a clip: its caption, then `Full 90 seconds on my channel · Made with AI · fan-made, not affiliated with the NBA or LeBron James · stats as of Sept 2026`. In YouTube Studio, set the full film's Short as the clip's related video.
+Shorts description for a clip: its caption, then `Full 90 seconds on my channel · Made with AI · fan-made`. In YouTube Studio, set the full film's Short as the clip's related video.
 Pinned comment on every clip: TikTok and Shorts `Full 90 seconds on my profile 👆 What did the AI miss?` ·
 Reels `Full 90 seconds on my profile 👆`. Post `season24` on 20 October, NBA opening night.
 

@@ -36,10 +36,13 @@ Per-film copy lives in `films/<slug>/post.md` and the dates in `plan/CALENDAR.md
 ## YouTube Shorts
 
 - **The algorithm rewards** watch time. Shorts keep collecting views for weeks, unlike TikTok's first 48 hours.
-- **Title:** the formula above. The description is fan detail, and its last line reads:
-  `Made with AI · fan-made, not affiliated with … · stats as of …`
+- **Title:** the formula above. The description is fan detail, and its last line reads `Made with AI · fan-made`
+  (a clip's: `Full 90 seconds on my channel · Made with AI · fan-made`). No list of who it isn't affiliated with and
+  no stats date: viewers don't open Shorts descriptions, a disclaimer carries little weight, and a clip whose numbers
+  change gets re-rendered anyway.
 - **The 16:9 upload** goes in as the Short's *related video*, and both go in the "90 SECONDS" playlist.
-- **Cover:** custom Shorts thumbnails need the Partner Program (since July 2026). Until then, pick the frame in the mobile app.
+- **Cover:** in YouTube Studio on desktop, Thumbnail → Upload file → `out/<slug>/cover-<name>.jpg`. "Select from
+  video" only offers three frames YouTube picks itself, usually not the payoff.
 
 ## Instagram Reels (+ Facebook)
 
@@ -69,10 +72,13 @@ Per-film copy lives in `films/<slug>/post.md` and the dates in `plan/CALENDAR.md
 
 1. **Upload the original MP4** from `out/<slug>/`. Never re-upload a file downloaded from another platform, because the
    other app's watermark gets it down-ranked.
-2. **AI label:** TikTok "AI-generated content" on; Instagram "AI info" on. YouTube's "altered or synthetic content"
-   question is about *realistic* footage, and these films are animation, so answer No: the description already says
-   "Made with AI".
-3. **Cover:** the frame named in `post.md`. Since the cold open, the strongest frames are in the first second.
+2. **AI label:** TikTok "AI-generated content" on; Instagram "AI info" on. YouTube asks "AI use" (2026): was AI used to
+   make a real person say or do something they didn't, alter footage of a real event or place, generate a realistic
+   scene that didn't happen, or create music that is the main focus of the video? A clip is none of these (pixel
+   animation of real events, music under the picture), so answer No; the description says "Made with AI". A film whose
+   music is its point (LeBron's: the beat is his career) is the fourth case: decide before posting it.
+3. **Cover:** `out/<slug>/cover-<name>.jpg`, the cold open's payoff (`post.md` names the moment). On YouTube upload it
+   as the thumbnail; on TikTok and Reels pick the same frame.
 4. **Hashtags:** 3–5.
 5. **Pin the comment** from `post.md`.
 6. **Reply to comments in the first hour.**

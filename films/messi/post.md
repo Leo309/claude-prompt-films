@@ -32,7 +32,7 @@ I Asked AI to Sum Up Lionel Messi in 90 Seconds 🐐
 ```
 Too small at 10, signed on a paper napkin at 13. 931 goals drawn as the rings of a tree, one ring per season (the thick one is 73, in 2011–12), and a tango built from his numbers.
 The Bernabéu shirt, ¿Qué mirás, bobo?, Lusail. His last game for Argentina is October 6.
-Made with AI · fan-made, not affiliated with Lionel Messi, the AFA or any club · stats as of 28 Sept 2026.
+Made with AI · fan-made.
 #Messi #Argentina #Shorts
 ```
 **Pinned comment**
@@ -69,9 +69,10 @@ Same title and description; add it to the "90 SECONDS" playlist and set it as th
 | `clip-comeback-9x16.mp4` | 17 s | Three finals lost. He quit in 2016. Then: 2021, 2022, 2024. #messi #argentina | Messi Quit in 2016. Then He Won It All 🇦🇷 |
 | `clip-goodbye-9x16.mp4` | 21 s | 6 October, Monumental. One last time. 🇦🇷 #messi #argentina | Messi's Last Game for Argentina: Oct 6 🇦🇷 |
 
-Cover for every clip: the frame at 0.3 s, its cold open's payoff. The profile grid then reads as a row of payoffs.
+Cover for every clip: `out/messi/cover-<clip>.jpg`, its cold open's payoff (0.3 s; napkin and comeback 1.0 s,
+rings 1.3 s, once the payoff is fully on screen). The profile grid then reads as a row of payoffs.
 
-Shorts description for a clip: its caption, then `Full 90 seconds on my channel · Made with AI · fan-made, not affiliated with Lionel Messi, the AFA or any club · stats as of 28 Sept 2026`. In YouTube Studio, set the full film's Short as the clip's related video.
+Shorts description for a clip: its caption, then `Full 90 seconds on my channel · Made with AI · fan-made`. In YouTube Studio, set the full film's Short as the clip's related video.
 Pinned comment on every clip: TikTok and Shorts `Full 90 seconds on my profile 👆 What did the AI miss?` ·
 Reels `Full 90 seconds on my profile 👆`.
 `goodbye` goes out on the morning of 6 October, before kick-off.
