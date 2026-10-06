@@ -44,6 +44,9 @@
 
 状态一栏：**已发**或**已排**（定时），按 TikTok · Shorts · Reels 的顺序写；`待排` 是还没上传的。10/6 起由 Claude 在 Chrome 里排，做法见 `POSTING.md` 的 "Scheduling from Claude in Chrome"。
 
+**TikTok 卡在验证码上**（10/6 16:45）：Claude 不能替人过验证码。TikTok 上待排的都标了“待排”，kareem 的文案是文件名，要删掉重排或手动改。
+**Reels 的 AI 标签**：网页版“编辑定时帖子”窗口里总显示关闭，存不存得住不确定。wall 10/7 发出后到 Reel 上看有没有“AI info”，没有就补。
+
 | 日期 | 时间 | 发什么 | 文件 | 状态（TikTok · Shorts · Reels） |
 |---|---|---|---|---|
 | 10/1 周四 | 9:00 | **EP03 梅西正片**（TikTok 上置顶），旧版式 | `out/messi/full-9x16.mp4` | 已发 · 已发 · 已发 |
@@ -54,17 +57,18 @@
 | 10/5 周一 | 15:00 | 梅西切片 comeback | `out/messi/clip-comeback-9x16.mp4` | 已发 · 已发 · 已发 |
 | | 18:00 | 梅西切片 rings | `out/messi/clip-rings-9x16.mp4` | 已发 · 已发 · 已发 |
 | **10/6 周二** | 09:00 | 梅西切片 goodbye（开球前） | `out/messi/clip-goodbye-9x16.mp4` | 已发 · 已发 · 已发（Reels 约 9:40） |
-| | 14:00 | **梅西告别战开球**（阿根廷时间 18:00），约 16:00 结束 | | |
+| | 16:00 | **梅西告别战开球**（阿根廷时间 20:00），约 17:55 结束 | | |
 | | 赛后 | 梅西赛后版 goodbye：填 `film.js` 的 `FAREWELL`（进球数、比分），`cuts --name goodbye` 重渲染（约 2 分钟），当晚发，算当天第 3 条 | `out/messi/clip-goodbye-9x16.mp4` | 待渲染 |
-| | 18:00 | C 罗切片 siuuu | `out/ronaldo/clip-siuuu-9x16.mp4` | 已排 · 已排 · 已排 |
+| | 18:00 | 梅西赛后版 goodbye 发在这个时段（见上一行）；C 罗 siuuu 让位，改到 10/9 | | |
 | 10/7 周三 | 15:00 | C 罗切片 wall | `out/ronaldo/clip-wall-9x16.mp4` | 已排 · 已排 · 已排 |
-| | 18:00 | **新**：梅西切片 bobo（伯纳乌球衣 → ¿QUÉ MIRÁS, BOBO?） | `out/messi/clip-bobo-9x16.mp4` |待排 · 已排 · 待排 |
-| 10/8 周四 | 15:00 | **新**：C 罗切片 worldcups（第一个在 6 届世界杯进球的人 → SIUUU） | `out/ronaldo/clip-worldcups-9x16.mp4` |待排 · 已排 · 待排 |
+| | 18:00 | **新**：梅西切片 bobo（伯纳乌球衣 → ¿QUÉ MIRÁS, BOBO?） | `out/messi/clip-bobo-9x16.mp4` | 待排 · 已排 · 已排 |
+| 10/8 周四 | 15:00 | **新**：C 罗切片 worldcups（第一个在 6 届世界杯进球的人 → SIUUU） | `out/ronaldo/clip-worldcups-9x16.mp4` | 待排 · 已排 · 已排 |
+| 10/9 周五 | 15:00 | C 罗切片 siuuu（从 10/6 18:00 挪过来，给梅西赛后版让位） | `out/ronaldo/clip-siuuu-9x16.mp4` | 仍在 10/6 18:00（TikTok 改不了） · 已排 · 已排 |
 | 10/9–10/12 | | EP04 梅西 vs C 罗（VS 集，新会话做）的正片和切片 | | |
 | 10/13 周二 | 15:00 | **EP01 LeBron 正片**（TikTok 上置顶，当落地页） | `out/lebron/full-9x16.mp4` | 待排 · 已排 · 已排 |
-| 10/14 周三 | 15:00 | **新**：LeBron 切片 chosen（THE CHOSEN ONE → 18 岁状元） | `out/lebron/clip-chosen-9x16.mp4` |待排 · 已排 · 待排 |
+| 10/14 周三 | 15:00 | **新**：LeBron 切片 chosen（THE CHOSEN ONE → 18 岁状元） | `out/lebron/clip-chosen-9x16.mp4` | 待排 · 已排 · 已排 |
 | 10/15 周四 | 15:00 | LeBron 切片 kareem | `out/lebron/clip-kareem-9x16.mp4` | 已排（**文案错成文件名，要改**） · 已排 · 已排 |
-| 10/16 周五 | 15:00 | **新**：LeBron 切片 father（#23 和 #9，父子同场） | `out/lebron/clip-father-9x16.mp4` |待排 · 已排 · 待排 |
+| 10/16 周五 | 15:00 | **新**：LeBron 切片 father（#23 和 #9，父子同场） | `out/lebron/clip-father-9x16.mp4` | 待排 · 已排 · 已排 |
 | 10/17 周六 | 15:00 | LeBron 切片 block | `out/lebron/clip-block-9x16.mp4` | 待排（10/7 起能排） · 已排 · 已排 |
 | **10/20 周二** | 15:00 | LeBron 切片 season24（NBA 揭幕夜） | `out/lebron/clip-season24-9x16.mp4` | 待排（10/10 起能排） · 已排 · 已排 |
 
