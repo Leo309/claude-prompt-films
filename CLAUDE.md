@@ -8,7 +8,8 @@ Right now the goal is reach on TikTok, YouTube Shorts and Instagram Reels.
 - `plan/STRATEGY.md`: why we work this way: positioning, where AI goes in the copy, what to measure. (Chinese)
 - `plan/CALENDAR.md`: what gets posted when, and the news pegs to ride. (Chinese)
 - `plan/BACKLOG.md`: which episode is next, and why. (Chinese)
-- `PROMO_PROMPT.md`: how to make an episode. `POSTING.md`: how to post one, platform by platform.
+- `PROMO_PROMPT.md`: how to make an episode. `PIXEL_STYLE.md`: the 16-bit game look every new episode uses from
+  EP04 on (EP05 Ohtani is the last one in the old style). `POSTING.md`: how to post one, platform by platform.
 
 ## The product
 
@@ -25,7 +26,8 @@ Right now the goal is reach on TikTok, YouTube Shorts and Instagram Reels.
 - On-screen copy is about the player. The captions carry one AI line: the TikTok first line and the Shorts title
   say "I asked AI to sum up … in 90 seconds", and Reels captions don't mention AI. Never "how it's made".
 - Clip-first since 4 October: the full film goes up once and is pinned as the landing page, then two clips a day.
-  A news peg beats the queue.
+  A news peg beats the queue. Produce a whole batch first, then upload it one platform at a time
+  (TikTok, then Instagram, then YouTube Shorts); never hop between platforms for a single clip.
 - When a new episode is done: add it to README.md (Episodes), `plan/BACKLOG.md` and `plan/CALENDAR.md`.
 
 ## Git (several sessions share this repo)
