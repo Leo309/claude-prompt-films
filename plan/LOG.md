@@ -30,6 +30,10 @@
 | 10/6 9:00 | TikTok | 梅西切片 goodbye | | | | | | | | | 9:07 前后才上线；置顶评论没发成（TikTok 弹了验证码） |
 | 10/6 | Shorts | 梅西切片 goodbye | | 105（约 8h） | | | 2 | | | | 置顶评论：Will Messi score in his last game today? 👇 |
 | 10/6 约 9:40 | Reels | 梅西切片 goodbye | | 121（约 7h） | — | 5 | 1 | 0 | 0 | | 比计划晚 40 分钟，网页版发的，显示 AI content；收藏 1，观看者 111，100% 非粉丝；评论是自己发的预测题（网页版不能置顶） |
+| 10/6 18:00 | TikTok | C 罗切片 siuuu | | | | | | | | | 按原定时发出；Shorts 和 Reels 挪到 10/9 |
+| 10/6 约 21:24 | Shorts | 梅西赛后版 | [DVj9APHWd3A](https://youtube.com/shorts/DVj9APHWd3A) | | | | | | | | 标题 Messi Scored in His Last Game for Argentina 🇦🇷；相关视频 = 梅西正片；置顶评论 Where does he rank all-time? 👇 |
+| 10/6 约 21:26 | Reels | 梅西赛后版 | [DeLfzBOvsvp](https://www.instagram.com/haoli.ai/reel/DeLfzBOvsvp/) | | — | | | | | | 当场发，显示 AI content；评论已发，网页版不能置顶 |
+| 10/6 约 21:28 | TikTok | 梅西赛后版 | [7693777939967642881](https://www.tiktok.com/@haoli.ai/video/7693777939967642881) | | | | | | | | 当场发，AI 标签开；评论已发，网页版不能置顶 |
 
 ## 复盘
 

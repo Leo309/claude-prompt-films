@@ -45,6 +45,7 @@
 状态一栏：**已发**或**已排**（定时），按 TikTok · Shorts · Reels 的顺序写；`待排` 是还没上传的。10/6 起由 Claude 在 Chrome 里排，做法见 `POSTING.md` 的 "Scheduling from Claude in Chrome"。
 
 **TikTok**（10/6 17:35）：验证码由本人过了之后，Claude 在 TikTok 上排完了新切片和 LeBron 正片。TikTok 已排的帖子不能改，只能删；删除由本人来做。
+**梅西赛后版**（10/6 晚）：三个平台都是当场发的，评论都是 “Where does he rank all-time? 👇”。YouTube 已置顶，相关视频挂了梅西正片；TikTok 和 Instagram 网页版不能置顶，要在 App 里置顶。
 **Reels 的 AI 标签**：网页版“编辑定时帖子”窗口里总显示关闭，存不存得住不确定。wall 10/7 发出后到 Reel 上看有没有“AI info”，没有就补。
 
 | 日期 | 时间 | 发什么 | 文件 | 状态（TikTok · Shorts · Reels） |
@@ -58,12 +59,12 @@
 | | 18:00 | 梅西切片 rings | `out/messi/clip-rings-9x16.mp4` | 已发 · 已发 · 已发 |
 | **10/6 周二** | 09:00 | 梅西切片 goodbye（开球前） | `out/messi/clip-goodbye-9x16.mp4` | 已发 · 已发 · 已发（Reels 约 9:40） |
 | | 16:00 | **梅西告别战开球**（阿根廷时间 20:00）；第 10 分钟停赛致敬，半场 17:35 时 0:0，约 18:45 完场 | | |
-| | 赛后 | 梅西赛后版 goodbye：填 `film.js` 的 `FAREWELL`（进球数、比分），`cuts --name goodbye` 重渲染（约 2 分钟），当晚发，算当天第 3 条 | `out/messi/clip-goodbye-9x16.mp4` | 待渲染 |
-| | 18:00 | 梅西赛后版 goodbye 发在这个时段（见上一行）；C 罗 siuuu 让位，改到 10/9 | | |
+| | 18:00 | C 罗切片 siuuu：TikTok 上按原定时发出（已排的改不了）；Shorts 和 Reels 挪到 10/9 | `out/ronaldo/clip-siuuu-9x16.mp4` | 已发 · — · — |
+| | 约 21:25 | **梅西赛后版**（阿根廷 3–0 贝宁，他罚进点球）：`FAREWELL = { goals: 1 }`，顶部标题 “HIS LAST GAME. / HE SCORED.”，冷开场是 “ONE LAST GOAL.”，`film.js` 里的总进球数随之变成 932。渲染卡住三次，完场后约 2 小时 40 分才发出 | `out/messi/clip-farewell-9x16.mp4` | 已发 · 已发 · 已发 |
 | 10/7 周三 | 15:00 | C 罗切片 wall | `out/ronaldo/clip-wall-9x16.mp4` | 已排 · 已排 · 已排 |
 | | 18:00 | **新**：梅西切片 bobo（伯纳乌球衣 → ¿QUÉ MIRÁS, BOBO?） | `out/messi/clip-bobo-9x16.mp4` | 已排 · 已排 · 已排 |
 | 10/8 周四 | 15:00 | **新**：C 罗切片 worldcups（第一个在 6 届世界杯进球的人 → SIUUU） | `out/ronaldo/clip-worldcups-9x16.mp4` | 已排 · 已排 · 已排 |
-| 10/9 周五 | 15:00 | C 罗切片 siuuu（从 10/6 18:00 挪过来，给梅西赛后版让位） | `out/ronaldo/clip-siuuu-9x16.mp4` | 仍在 10/6 18:00（TikTok 改不了） · 已排 · 已排 |
+| 10/9 周五 | 15:00 | C 罗切片 siuuu（从 10/6 18:00 挪过来，给梅西赛后版让位） | `out/ronaldo/clip-siuuu-9x16.mp4` | 10/6 18:00 已发 · 已排 · 已排 |
 | 10/9–10/12 | | EP04 梅西 vs C 罗（VS 集，新会话做）的正片和切片 | | |
 | 10/13 周二 | 15:00 | **EP01 LeBron 正片**（TikTok 上置顶，当落地页） | `out/lebron/full-9x16.mp4` | 已排 · 已排 · 已排 |
 | 10/14 周三 | 15:00 | **新**：LeBron 切片 chosen（THE CHOSEN ONE → 18 岁状元） | `out/lebron/clip-chosen-9x16.mp4` | 已排 · 已排 · 已排 |
