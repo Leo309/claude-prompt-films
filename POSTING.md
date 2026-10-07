@@ -104,7 +104,9 @@ everywhere. Don't add the apps' own text stickers near the bottom or the right e
 ## Scheduling from Claude in Chrome (6 October)
 
 Claude can schedule on all three sites from the owner's Chrome (the Claude in Chrome extension, already signed in).
-Do one platform at a time: every site has its own quirks, and switching back and forth costs more than it saves.
+Finish producing the whole batch first (files, covers, `post.md` copy), then do one platform at a time: TikTok,
+then Instagram, then YouTube Shorts. Every site has its own quirks, and switching back and forth costs more than
+it saves.
 
 - **Keep that Chrome window on screen.** When it is minimized or completely covered, Chrome treats the page as
   hidden: it doesn't load video there, doesn't run animation frames, and screenshots show stale frames. Instagram then
