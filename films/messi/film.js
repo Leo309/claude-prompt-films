@@ -44,7 +44,7 @@ const SEASONS = [
 // His farewell match: 6 Oct 2026 v Benin at the Monumental. After the final whistle, fill this in (source it in
 // facts.md) and re-render the goodbye clip: `bun render/render.ts cuts films/messi --name goodbye`.
 // null is the pre-match film ("HIS LAST GAME FOR ARGENTINA: OCT 6.").
-const FAREWELL = null; // e.g. { goals: 1, score: "ARGENTINA 3–0 BENIN" }
+const FAREWELL = { goals: 1, score: "ARGENTINA 3–0 BENIN" }; // 6 Oct 2026: Messi scored a penalty (71')
 const FAREWELL_GOALS = FAREWELL?.goals ?? 0;
 const ARGENTINA = 125 + FAREWELL_GOALS;
 const CAPS = 207 + (FAREWELL ? 1 : 0); // games for Argentina (facts.md)
