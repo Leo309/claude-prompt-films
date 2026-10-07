@@ -27,6 +27,7 @@ leave uncovered by their buttons and captions.
 | 01 | [LeBron James: 43,440](films/lebron) | 90 s | The scoring line chases Kareem and breaks the record on the downbeat. The melody is his 23 seasons; a pixel chalk toss explodes into the drop. |
 | 02 | [Cristiano Ronaldo: 979](films/ronaldo) | 90 s | A wall of 1,000 squares, one per goal, coloured by club, with 21 still empty. City sounds from fado to oud, and a synthesized stadium chanting SIUUU. Built to re-render the day No. 1,000 goes in. |
 | 03 | [Lionel Messi: Too Small](films/messi) | 90 s | Too small at 10, signed on a napkin at 13. His 931 goals grow like tree rings, one per season, inside a bark of 125 for Argentina, and 46 trophies stack up beside a 1.70 m man. An electrotango with a bandoneón, and a crowd chanting ME-SSI. Ends on his last game for Argentina, 6 October 2026. |
+| 04 | [Messi vs Ronaldo: GOAT FIGHT ’26](films/messi-vs-ronaldo) | 90 s | The first pixel episode ([`PIXEL_STYLE.md`](PIXEL_STYLE.md)): a 16-bit fighting game drawn natively in 9:16. Select screen, VS, then six rounds with one stat each (goals, Ballon d’Or, Champions League, World Cup, goals for country, trophies). Each wins three; SIUUU, the bicycle kick and La Pulga's dash are special moves. The final round ends in a DOUBLE K.O., and the end card asks who your GOAT is. Chiptune in A minor. |
 
 ## What's in the LeBron film
 
