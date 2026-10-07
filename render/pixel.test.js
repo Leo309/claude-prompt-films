@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { bayer, textWidth, textPixels, glyph, nearest, rgb, stepped, toLow, outlineGrid, flipRows, fighterGrid, FIGHTER, POSES, slamScale, PAL } from "./pixel.js";
+import { bayer, textWidth, textPixels, glyph, nearest, rgb, stepped, toLow, outlineGrid, flipRows, fighterGrid, FIGHTER, POSES, slamScale, PAL, handAt, bustGrid, BUST } from "./pixel.js";
 
 test("bayer thresholds cover 16 distinct levels in every 4×4 tile", () => {
   const seen = new Set();
@@ -65,7 +65,7 @@ test("every pose builds a full-size fighter with an outline and a head", () => {
     expect(all.includes("o")).toBe(true);
     expect(all.includes("s")).toBe(true);
     expect(all.includes("j")).toBe(true);
-    if (!["bicycle", "down"].includes(name)) expect(all.includes("n")).toBe(true); // the number shows when upright
+    if (!["bicycle", "down", "crouch"].includes(name)) expect(all.includes("n")).toBe(true); // the number shows when upright
   }
 });
 
@@ -74,4 +74,29 @@ test("slam scale steps down to 1 and stays", () => {
   expect(slamScale(1, 1, 3)).toBe(3);
   expect(slamScale(1.05, 1, 3)).toBe(2);
   expect(slamScale(2, 1, 3)).toBe(1);
+});
+
+test("a cap and baseball pants change the right pixels", () => {
+  const plain = fighterGrid(POSES.batStance, { number: 17 }).join("");
+  const kit = fighterGrid(POSES.batStance, { number: 17, cap: true, pants: true }).join("");
+  expect(plain.includes("q")).toBe(false);
+  expect(kit.includes("q")).toBe(true);
+  // pants cover the knees, so less skin shows
+  const skin = (g) => [...g].filter((c) => c === "s" || c === "S").length;
+  expect(skin(kit)).toBeLessThan(skin(plain));
+});
+
+test("hand positions mirror with the sprite", () => {
+  expect(handAt("swing", 10, 20)).toEqual([41, 39]);
+  expect(handAt("swing", 10, 20, true)).toEqual([10 + FIGHTER.w - 1 - 31, 39]);
+});
+
+test("busts rasterise at 1x and 2x with the same features", () => {
+  for (const k of [1, 2]) {
+    const rows = bustGrid({ hair: "quiff" }, k);
+    expect(rows.length).toBe(BUST.h * k);
+    expect(rows[0].length).toBe(BUST.w * k);
+    const all = rows.join("");
+    for (const key of ["o", "s", "h", "k", "w", "m", "j"]) expect(all.includes(key)).toBe(true);
+  }
 });

@@ -245,8 +245,8 @@ export function sprite(ctx, rows, palette, x, y, o = {}) {
 // ---------------------------------------------------------------- fighter rig
 // A ~50 px tall footballer built from joints, so one rig gives every pose (stance, kick, jump, fall).
 // Palette keys: o outline · s skin · S skin shade · h hair · H hair light · k eye/brow · j jersey · J jersey shade ·
-// n number · p shorts · P shorts shade · v socks · b boots
-// look: { hair: "short"|"quiff", beard, number }
+// n number · p shorts/pants · P their shade · v socks · b boots · q cap
+// look: { hair: "short"|"quiff", beard, number, cap (a baseball cap, visor forward), pants (baseball pants to mid-shin) }
 
 export const FIGHTER = { w: 44, h: 60 };
 
@@ -264,7 +264,28 @@ export const POSES = {
   bicycle: { head: [8, 36], neck: [13, 36], hip: [25, 34], lElbow: [10, 44], lHand: [5, 48], rElbow: [16, 44], rHand: [14, 50], lKnee: [31, 25], lFoot: [37, 14], rKnee: [30, 38], rFoot: [38, 34] },
   down: { head: [2, 47], neck: [11, 50], hip: [26, 51], lElbow: [15, 46], lHand: [19, 44], rElbow: [14, 55], rHand: [19, 57], lKnee: [33, 47], lFoot: [41, 51], rKnee: [33, 54], rFoot: [41, 55] },
   lift: { head: [18, 6], neck: [21, 15], hip: [21, 31], lElbow: [25, 9], lHand: [24, 2], rElbow: [17, 9], rHand: [18, 2], lKnee: [24, 42], lFoot: [26, 54], rKnee: [18, 42], rFoot: [16, 54] },
+  // baseball: a batter loaded and through the swing, a pitcher's leg kick and release, a catcher's crouch
+  batStance: { head: [16, 5], neck: [19, 14], hip: [19, 30], lElbow: [16, 19], lHand: [13, 14], rElbow: [12, 20], rHand: [13, 15], lKnee: [24, 41], lFoot: [26, 54], rKnee: [14, 41], rFoot: [11, 54] },
+  swing: { head: [18, 5], neck: [20, 14], hip: [19, 30], lElbow: [26, 19], lHand: [31, 19], rElbow: [24, 21], rHand: [30, 20], lKnee: [26, 41], lFoot: [29, 54], rKnee: [15, 41], rFoot: [12, 53] },
+  windup: { head: [18, 4], neck: [20, 13], hip: [20, 29], lElbow: [17, 19], lHand: [20, 17], rElbow: [23, 19], rHand: [21, 17], lKnee: [27, 26], lFoot: [26, 38], rKnee: [20, 41], rFoot: [20, 54] },
+  throw: { head: [25, 9], neck: [24, 17], hip: [19, 31], lElbow: [17, 21], lHand: [12, 25], rElbow: [30, 20], rHand: [35, 24], lKnee: [29, 41], lFoot: [33, 54], rKnee: [13, 40], rFoot: [6, 47] },
+  crouch: { head: [14, 22], neck: [16, 30], hip: [14, 42], lElbow: [22, 36], lHand: [26, 32], rElbow: [18, 38], rHand: [22, 40], lKnee: [24, 46], lFoot: [20, 54], rKnee: [8, 46], rFoot: [10, 54] },
 };
+
+// Where a pose's hands are on screen, for props (a bat, a ball, a trophy): sprite position + joint, mirrored if flipped.
+export function handAt(pose, x, y, flip = false, which = "lHand") {
+  const [hx, hy] = POSES[pose][which];
+  return [x + (flip ? FIGHTER.w - 1 - hx : hx), y + hy];
+}
+
+// A bat: a 2 px line from the hands, `len` long at `angle` radians (0 = pointing right, screen y grows down).
+export function bat(ctx, [x, y], angle, len = 15) {
+  for (let i = 0; i < len; i++) {
+    const px = Math.round(x + Math.cos(angle) * i), py = Math.round(y + Math.sin(angle) * i);
+    rect(ctx, px, py, 1, 1, i < 4 ? PAL.umber : PAL.tan);
+    rect(ctx, px, py + 1, 1, 1, i < 4 ? PAL.wine : PAL.brown);
+  }
+}
 
 export function fighterGrid(pose, look = {}) {
   const { w, h } = FIGHTER;
@@ -294,8 +315,13 @@ export function fighterGrid(pose, look = {}) {
   const arms = [[P.rElbow, P.rHand, true], [P.lElbow, P.lHand, false]];
   const legDraw = ([knee, foot, back]) => {
     const top = [P.hip[0] + (back ? -2 : 2) * (horizontal ? 0 : 1), P.hip[1] + (horizontal ? (back ? 2 : -2) : 1)];
-    limb(top, knee, (u) => (u < 0.45 ? (back ? "P" : "p") : back ? "S" : "s"), 2.1);
-    limb(knee, foot, (u) => (u < 0.3 ? (back ? "S" : "s") : "v"), 1.7);
+    if (look.pants) {
+      limb(top, knee, back ? "P" : "p", 2.1);
+      limb(knee, foot, (u) => (u < 0.45 ? (back ? "P" : "p") : "v"), 1.8);
+    } else {
+      limb(top, knee, (u) => (u < 0.45 ? (back ? "P" : "p") : back ? "S" : "s"), 2.1);
+      limb(knee, foot, (u) => (u < 0.3 ? (back ? "S" : "s") : "v"), 1.7);
+    }
     limb(foot, [foot[0] + (horizontal ? 0 : 2), foot[1] + (horizontal ? -2 : 0)], "b", 1.4);
   };
   const armDraw = ([elbow, hand, back]) => {
@@ -339,7 +365,11 @@ export function fighterGrid(pose, look = {}) {
   // hair
   fill(hx, hy, hx + 7, hy + 1, "h");
   fill(hx, hy + 2, hx + 1, hy + 4, "h");
-  if (look.hair === "quiff") {
+  if (look.cap) {
+    fill(hx, hy - 2, hx + 7, hy + 1, "q");
+    fill(hx + 1, hy - 3, hx + 6, hy - 3, "q");
+    fill(hx + 6, hy + 2, hx + 10, hy + 2, "q"); // the visor, forward
+  } else if (look.hair === "quiff") {
     fill(hx + 2, hy - 2, hx + 7, hy - 1, "h");
     fill(hx + 4, hy - 3, hx + 8, hy - 3, "h");
     set(hx + 6, hy - 2, "H");
@@ -552,4 +582,60 @@ export function coin(m, out, t, freq = 988, gain = 0.07) {
 export function hitSfx(m, out, t, gain = 0.2) {
   noise(m, out, t, 0.18, gain, 700);
   pulse(m, out, t, 330, 0.18, gain * 0.6, { duty: 0.125, slide: -14 });
+}
+
+// ---------------------------------------------------------------- house text styles and transitions
+// Shared by every pixel film: outlined text in colour bands, a slam-in, and the dither fade from ink.
+
+export const BANDS = {
+  gold: [PAL.yellow, PAL.amber, PAL.orange],
+  fire: [PAL.yellow, PAL.orange, PAL.red],
+  ice: [PAL.white, PAL.celeste, PAL.sky],
+  blood: [PAL.rose, PAL.red, PAL.crimson],
+  steel: [PAL.white, PAL.mist, PAL.steel],
+  royal: [PAL.white, PAL.sky, PAL.blue],
+};
+
+// Outlined text in colour bands.
+export const bigText = (ctx, str, x, y, scale, bands = BANDS.gold, align = "center") => ptext(ctx, str, x, y, { scale, bands, outline: PAL.ink, align });
+// 1× text with a drop shadow.
+export const smallText = (ctx, str, x, y, color = PAL.white, align = "center") => ptext(ctx, str, x, y, { color, shadow: PAL.ink, align });
+
+// Slam: drawn three sizes too big for three held frames (24 fps), then settles at `scale`.
+export function slamText(ctx, str, x, y, t, t0, scale, bands) {
+  if (t < t0) return;
+  const k = Math.floor((t - t0) * 24);
+  const s = k < 3 ? scale + (3 - k) : scale;
+  bigText(ctx, str, x, y - ((s - scale) * 7) / 2, s, bands);
+}
+
+// Dither fade from ink over `dur` seconds from t0: the house transition instead of a crossfade.
+export function ditherFade(ctx, t, t0, dur, w = LOW.width, h = LOW.height) {
+  const level = 1 - clamp((t - t0) / dur);
+  if (level <= 0 || t < t0) return;
+  ctx.fillStyle = PAL.ink;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (level > bayer(x, y)) ctx.fillRect(x, y, 1, 1);
+}
+
+// Darken a band of rows with an ordered-dither veil (level 0..1): the crowd behind the numbers.
+export function veil(ctx, y0, y1, level, w = LOW.width) {
+  if (level <= 0) return;
+  ctx.fillStyle = PAL.ink;
+  for (let y = y0; y < y1; y++) for (let x = 0; x < w; x++) if (level > bayer(x, y)) ctx.fillRect(x, y, 1, 1);
+}
+
+// Fireworks: `n` bursts that bloom and fall, seeded, in the box [x0, x0 + w) × [y0, y0 + h). age in seconds.
+export function fireworks(ctx, x0, y0, w, h, age, n = 3, seed = 1) {
+  const cols = [PAL.yellow, PAL.white, PAL.rose, PAL.cyan, PAL.amber];
+  for (let b = 0; b < n; b++) {
+    const a = age - b * 0.18;
+    if (a < 0 || a > 0.9) continue;
+    const cx = x0 + Math.floor(hash(b, seed) * w), cy = y0 + Math.floor(hash(b, seed + 1) * h);
+    const r = Math.min(12, Math.floor(a * 40)), fall = Math.floor(a * a * 12);
+    const c = cols[(b + seed) % cols.length];
+    for (let d = 0; d < 12; d++) {
+      const ang = (d * Math.PI) / 6;
+      rect(ctx, Math.round(cx + Math.cos(ang) * r), Math.round(cy + Math.sin(ang) * r + fall), 1, 1, a > 0.6 && d % 2 ? PAL.slate : c);
+    }
+  }
 }
