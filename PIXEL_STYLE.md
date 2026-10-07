@@ -1,7 +1,7 @@
 # Pixel style: every career as a 16-bit sports game
 
-Approved on 6 October 2026 for new episodes. The pilot is EP04, Messi vs Ronaldo; EP05 (Ohtani) is the last episode
-in the old style. Read this together with `PROMO_PROMPT.md`: everything there still applies (research and
+Approved on 6 October 2026 for new episodes. The pilot is EP04, Messi vs Ronaldo; EP05 (Ohtani) followed in the same
+style. Read this together with `PROMO_PROMPT.md`: everything there still applies (research and
 `facts.md`, 90.0 s, cold open, 3–4 clips with their own cold opens, the music rules, `post.md`, the hard rules)
 except where this file says otherwise.
 

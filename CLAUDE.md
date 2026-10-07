@@ -9,7 +9,7 @@ Right now the goal is reach on TikTok, YouTube Shorts and Instagram Reels.
 - `plan/CALENDAR.md`: what gets posted when, and the news pegs to ride. (Chinese)
 - `plan/BACKLOG.md`: which episode is next, and why. (Chinese)
 - `PROMO_PROMPT.md`: how to make an episode. `PIXEL_STYLE.md`: the 16-bit game look every new episode uses from
-  EP04 on (EP05 Ohtani is the last one in the old style). `POSTING.md`: how to post one, platform by platform.
+  EP04 on (EP04 and EP05 so far). `POSTING.md`: how to post one, platform by platform.
 
 ## The product
 
