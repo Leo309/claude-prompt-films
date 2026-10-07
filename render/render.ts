@@ -300,6 +300,10 @@ async function renderCuts() {
 // films/<slug>/reframe.json: [[chapterStart, contentCentreX, contentWidth], ...] in film pixels. vertical.js then
 // zooms each chapter until that content fills the width that TikTok, Reels and Shorts all leave uncovered.
 async function renderReframe() {
+  if ((await import(resolve(ROOT, filmDir, "film.js"))).default.portrait) {
+    console.log("portrait film: drawn at 9:16 already, nothing to reframe");
+    return;
+  }
   const server = startServer();
   const { browser, page } = await openFilm(server, "mode=still&nowm");
   const rows: number[][] = await page.evaluate(() => {
@@ -382,8 +386,10 @@ if (mode === "serve") {
   if (format !== "all") await renderVideo(format);
   else {
     // One process per format: a fresh browser and server for each (a second render in the same process once stalled).
+    // A portrait-native film (PIXEL_STYLE.md) only has the 9:16 version.
     const rest = args.slice(2).filter((a, i, all) => a !== "--format" && all[i - 1] !== "--format");
-    for (const f of ["16x9", "9x16"]) {
+    const film = (await import(resolve(ROOT, filmDir, "film.js"))).default;
+    for (const f of film.portrait ? ["9x16"] : ["16x9", "9x16"]) {
       const p = Bun.spawnSync([process.execPath, import.meta.path, "video", filmDir, "--format", f, ...rest], { stdout: "inherit", stderr: "inherit" });
       if (p.exitCode !== 0) process.exit(p.exitCode ?? 1);
     }

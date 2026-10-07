@@ -103,23 +103,26 @@ export function framing(src, reframe, ft) {
   return { zoom: lerp(a.zoom, b.zoom, e), cx: lerp(a.cx, b.cx, e), settled: b.zoom };
 }
 
-// t is output time; ft is the film time on screen (coldopen.js), which runs ahead of t during a cold open.
-export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t, rewind: 0, resume: 0 }, reframe = null) {
-  const W = PORTRAIT.width, H = PORTRAIT.height;
+// A portrait-native film (PIXEL_STYLE.md: drawn at 1080×1920) fills the frame; only the header goes on top,
+// on a dark panel whose edges sit on the film's 6 px pixel grid. No blur, no band, no reframe, no chapter label.
+const PANEL = { top: 222, bottom: 618 };
 
-  // Background: the centre of the frame shrunk to 12×21 and stretched back up: a cheap, soft blur.
-  blurCanvas ??= Object.assign(document.createElement("canvas"), { width: 12, height: 21 });
-  const b = blurCanvas.getContext("2d");
-  const sw = (src.height * 9) / 16;
-  b.drawImage(src, (src.width - sw) / 2, 0, sw, src.height, 0, 0, 12, 21);
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(blurCanvas, 0, 0, W, H);
+function drawPortrait(ctx, src, t, film, watermark, cut) {
+  const W = PORTRAIT.width;
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(src, 0, 0, W, PORTRAIT.height);
   ctx.fillStyle = INK;
-  ctx.globalAlpha = 0.78;
-  ctx.fillRect(0, 0, W, H);
-  ctx.globalAlpha = 1;
+  ctx.fillRect(0, PANEL.top, W, PANEL.bottom - PANEL.top);
+  ctx.fillStyle = "#3a4466";
+  ctx.fillRect(0, PANEL.top, W, 6);
+  ctx.fillRect(0, PANEL.bottom - 6, W, 6);
+  drawHeader(ctx, t, film, watermark, cut);
+  ctx.fillStyle = ORANGE;
+  ctx.fillRect(0, PANEL.bottom - 6, Math.round((W * prog(t, cut ? clipStart(cut) : 0, cut ? cut.to : film.duration)) / 6) * 6, 6);
+}
 
+// Series tag, countdown, and the hook (or, at the end, the clip card / CTA in its place). → true while an end card shows.
+function drawHeader(ctx, t, film, watermark, cut) {
   // Series tag + hook (a clip brings its own hook and has no countdown)
   const v = cut ?? film.vertical ?? {};
   const hook = v.hook ?? [String(film.title ?? "").toUpperCase()];
@@ -148,6 +151,28 @@ export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t,
     // The sub line says who it is: pixel players have no faces, so a stranger needs to read the name.
     if (v.sub) text(ctx, v.sub, 62, y + 56, { family: MONO, weight: 500, size: fitSize(ctx, v.sub, MONO, 34, 960, 2), color: BONE, tracking: 2, alpha: 0.9 });
   }
+  return ending;
+}
+
+// t is output time; ft is the film time on screen (coldopen.js), which runs ahead of t during a cold open.
+export function drawVertical(ctx, src, t, film, watermark, cut = null, ft = { t, rewind: 0, resume: 0 }, reframe = null) {
+  if (src.height > src.width) return drawPortrait(ctx, src, t, film, watermark, cut);
+  const W = PORTRAIT.width, H = PORTRAIT.height;
+
+  // Background: the centre of the frame shrunk to 12×21 and stretched back up: a cheap, soft blur.
+  blurCanvas ??= Object.assign(document.createElement("canvas"), { width: 12, height: 21 });
+  const b = blurCanvas.getContext("2d");
+  const sw = (src.height * 9) / 16;
+  b.drawImage(src, (src.width - sw) / 2, 0, sw, src.height, 0, 0, 12, 21);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(blurCanvas, 0, 0, W, H);
+  ctx.fillStyle = INK;
+  ctx.globalAlpha = 0.78;
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = 1;
+
+  const ending = drawHeader(ctx, t, film, watermark, cut);
 
   // The film, reframed per chapter and centred vertically in its band
   const f = framing(src, reframe, ft);
