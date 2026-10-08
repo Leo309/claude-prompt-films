@@ -119,12 +119,17 @@ it saves.
 - **Files over 10 MB** (the full films): the upload tool takes at most 10 MB per call. Split the MP4 into three parts,
   load them into helper file inputs on the page, join them there (`new File([a, b, c])`), check the size and SHA-256
   against the original, then hand the file to the site's own file input with a `change` event. Done for LeBron's full
-  film on YouTube and Instagram.
+  film on YouTube and Instagram. Since 7 October the auto-permission check blocks this split upload as exfiltration,
+  so the owner uploads the full films; Claude uploads the clips, which are all under 10 MB.
 - **YouTube Studio:** pick the schedule date on the calendar (a typed date doesn't stick); the time field takes typing
   ("3:00 PM", then Return). Read times with a regex: the page puts a narrow no-break space before "PM".
 - **Instagram web:** Create → Post → Crop: Original (it defaults to a square crop) → Next → Cover photo: Select from
   computer → Next → caption, Add AI label, Schedule content → date on the calendar, then the Hours, Minutes and AM/PM
-  boxes (focus each one, then type).
+  boxes (focus each one, then type). End the caption with a space: while a hashtag's suggestion list is open, the next
+  click lands on a suggestion (showtime's `#mlb` became `#mlbsecond`). Read the switches back
+  (`input[type=checkbox]`) before Schedule; the first click on Add AI label is sometimes lost. Pick calendar days from
+  a fresh screenshot: a day found by accessibility ref landed one day early. The post appears in the weekly list at
+  instagram.com/scheduled_content/.
 - **TikTok Studio:** up to 10 days ahead, and a scheduled post's caption can't be fixed afterwards, so type the caption
   in a visible window. Writing the editor's state from a script changes what the box shows, not what gets posted
   (kareem went in as "clip-kareem-9x16" that way).

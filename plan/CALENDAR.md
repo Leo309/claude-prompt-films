@@ -47,7 +47,7 @@
 **TikTok**（10/6 17:35）：验证码由本人过了之后，Claude 在 TikTok 上排完了新切片和 LeBron 正片。TikTok 已排的帖子不能改，只能删；删除由本人来做。
 **梅西赛后版**（10/6 晚）：三个平台都是当场发的，评论都是 “Where does he rank all-time? 👇”。YouTube 已置顶，相关视频挂了梅西正片；TikTok 和 Instagram 网页版不能置顶，要在 App 里置顶。
 **10/6 晚核对三个平台**：和这张表一致。TikTok 上文案错的那条 kareem 已经删了。赛后版在 TikTok 上 1.5 小时 0 播放（Reels 同期 136），可能卡在审核或被限流，10/7 复查。
-**10/7 上传进度**：YouTube Shorts 上 EP04、EP05 共 15 条全部排好；Instagram 排好 8 条（EP04 的 7 条切片 + EP05 fiftyfifty），剩下 EP04 正片（10/9 18:00 前必须排上）、EP05 正片和 5 条大谷切片；TikTok 还没开始，要 Chrome 窗口在屏幕最前面。做到一半 5 小时额度用完，13:10 PT 重置后继续。
+**10/7 上传进度**：YouTube Shorts 上 EP04、EP05 共 15 条全部排好。Instagram 排好 13 条切片（17:40 核对过定时列表），只差两部正片。正片超过 10 MB，要拆开再在网页里拼，自动权限不放行，**两部正片由本人传**：EP04 在 10/9 18:00 前，EP05 在 10/11 15:00 前，三个平台里 TikTok 和 Reels 都要。TikTok 的 13 条切片加 block 还没排，要 Chrome 窗口在屏幕最前面；10-day 限制下 fiftyfive、ko、era、rookie 要等 10/8 以后。
 **10/9 起的空档**：EP04（梅西 vs C 罗，像素风试点）和 EP05（大谷）来补，见下面的粗排。按本人 10/6 的要求，先把一批素材全部做完，再一个平台一次传完：TikTok → Instagram → YouTube Shorts。
 **Reels 的 AI 标签**：网页版“编辑定时帖子”窗口里总显示关闭，存不存得住不确定。wall 10/7 发出后到 Reel 上看有没有“AI info”，没有就补。
 
@@ -68,26 +68,26 @@
 | | 18:00 | **新**：梅西切片 bobo（伯纳乌球衣 → ¿QUÉ MIRÁS, BOBO?） | `out/messi/clip-bobo-9x16.mp4` | 已排 · 已排 · 已排 |
 | 10/8 周四 | 15:00 | **新**：C 罗切片 worldcups（第一个在 6 届世界杯进球的人 → SIUUU） | `out/ronaldo/clip-worldcups-9x16.mp4` | 已排 · 已排 · 已排 |
 | 10/9 周五 | 15:00 | C 罗切片 siuuu（从 10/6 18:00 挪过来，给梅西赛后版让位） | `out/ronaldo/clip-siuuu-9x16.mp4` | 10/6 18:00 已发 · 已排 · 已排 |
-| | 18:00 | **EP04 梅西 vs C 罗正片**（像素风第一集：GOAT FIGHT ’26） | `out/messi-vs-ronaldo/full-9x16.mp4` | 待上传 · 已排 · 待上传 |
+| | 18:00 | **EP04 梅西 vs C 罗正片**（像素风第一集：GOAT FIGHT ’26） | `out/messi-vs-ronaldo/full-9x16.mp4` | 待上传（本人传） · 已排 · 待上传（本人传） |
 | 10/10 周六 | 15:00 | EP04 goals（第 1 回合：979 vs 932） | `out/messi-vs-ronaldo/clip-goals-9x16.mp4` | 待上传 · 已排 · 已排 |
 | | 18:00 | EP04 ballon（第 2 回合：金球 8 vs 5） | `out/messi-vs-ronaldo/clip-ballon-9x16.mp4` | 待上传 · 已排 · 已排 |
-| 10/11 周日 | 15:00 | **EP05 大谷正片**（像素风棒球：OHTANI VS OHTANI；NLCS 前后） | `out/ohtani/full-9x16.mp4` | 待上传 · 已排 · 待上传 |
+| 10/11 周日 | 15:00 | **EP05 大谷正片**（像素风棒球：OHTANI VS OHTANI；NLCS 前后） | `out/ohtani/full-9x16.mp4` | 待上传（本人传） · 已排 · 待上传（本人传） |
 | | 18:00 | EP04 ucl（第 3 回合：欧冠 5 vs 4） | `out/messi-vs-ronaldo/clip-ucl-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/12 周一 | 15:00 | EP05 fiftyfifty（史上第一个 50/50） | `out/ohtani/clip-fiftyfifty-9x16.mp4` | 待上传 · 已排 · 已排 |
 | | 18:00 | EP04 worldcup（第 4 回合：世界杯） | `out/messi-vs-ronaldo/clip-worldcup-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/13 周二 | 15:00 | **EP01 LeBron 正片**（TikTok 上置顶，当落地页） | `out/lebron/full-9x16.mp4` | 已排 · 已排 · 已排 |
-| | 18:00 | EP05 trout（满球数三振 Trout，WBC 最后一个出局） | `out/ohtani/clip-trout-9x16.mp4` | 待上传 · 已排 · 待上传 |
+| | 18:00 | EP05 trout（满球数三振 Trout，WBC 最后一个出局） | `out/ohtani/clip-trout-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/14 周三 | 15:00 | **新**：LeBron 切片 chosen（THE CHOSEN ONE → 18 岁状元） | `out/lebron/clip-chosen-9x16.mp4` | 已排 · 已排 · 已排 |
 | | 18:00 | EP04 intl（第 5 回合：国家队进球 146 vs 126） | `out/messi-vs-ronaldo/clip-intl-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/15 周四 | 15:00 | LeBron 切片 kareem | `out/lebron/clip-kareem-9x16.mp4` | 已排（文案错的旧条已删） · 已排 · 已排 |
-| | 18:00 | EP05 showtime（2021：46 HR + 156 K） | `out/ohtani/clip-showtime-9x16.mp4` | 待上传 · 已排 · 待上传 |
+| | 18:00 | EP05 showtime（2021：46 HR + 156 K） | `out/ohtani/clip-showtime-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/16 周五 | 15:00 | **新**：LeBron 切片 father（#23 和 #9，父子同场） | `out/lebron/clip-father-9x16.mp4` | 已排 · 已排 · 已排 |
 | | 18:00 | EP04 trophies（第 6 回合：冠军 46 vs 36） | `out/messi-vs-ronaldo/clip-trophies-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/17 周六 | 15:00 | LeBron 切片 block | `out/lebron/clip-block-9x16.mp4` | 待排（10/7 起能排） · 已排 · 已排 |
-| | 18:00 | EP05 fiftyfive（2025：55 HR，重返投手丘） | `out/ohtani/clip-fiftyfive-9x16.mp4` | 待上传 · 已排 · 待上传 |
+| | 18:00 | EP05 fiftyfive（2025：55 HR，重返投手丘） | `out/ohtani/clip-fiftyfive-9x16.mp4` | 待上传 · 已排 · 已排 |
 | 10/18 周日 | 15:00 | EP04 ko（3 比 3，DOUBLE K.O.） | `out/messi-vs-ronaldo/clip-ko-9x16.mp4` | 待上传 · 已排 · 已排 |
-| | 18:00 | EP05 era（2026：1.79 ERA + 30 HR） | `out/ohtani/clip-era-9x16.mp4` | 待上传 · 已排 · 待上传 |
-| 10/19 周一 | 15:00 | EP05 rookie（2018：最佳新秀） | `out/ohtani/clip-rookie-9x16.mp4` | 待上传 · 已排 · 待上传 |
+| | 18:00 | EP05 era（2026：1.79 ERA + 30 HR） | `out/ohtani/clip-era-9x16.mp4` | 待上传 · 已排 · 已排 |
+| 10/19 周一 | 15:00 | EP05 rookie（2018：最佳新秀） | `out/ohtani/clip-rookie-9x16.mp4` | 待上传 · 已排 · 已排 |
 | **10/20 周二** | 15:00 | LeBron 切片 season24（NBA 揭幕夜） | `out/lebron/clip-season24-9x16.mp4` | 待排（10/10 起能排） · 已排 · 已排 |
 
 ## 之后（粗排，每周日更新）
