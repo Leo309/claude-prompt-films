@@ -1,7 +1,11 @@
-# Posting playbook: 90 SECONDS
+# Posting playbook
 
 Per-film copy lives in `films/<slug>/post.md` and the dates in `plan/CALENDAR.md`. The reasoning behind both is in
 `plan/STRATEGY.md`. This file covers how to post on each platform.
+
+Every series goes on the one haoli.ai account (`plan/STRATEGY.md`, "账号和定位"). The rules below were written for
+**90 SECONDS** (this repo's renderer). Films made with the Lemo-Opuscar skill follow them too, with the differences
+in "Lemo-Opuscar films" further down.
 
 ## The rule (2026-09-30)
 
@@ -66,19 +70,20 @@ Per-film copy lives in `films/<slug>/post.md` and the dates in `plan/CALENDAR.md
   thread), and put links in replies.
 - **Bilibili:** post the 16:9 file with the title "我让AI用90秒总结了{主题}…" and declare AI-generated content.
 - **小红书:** a 3:4 cover with big Chinese text, and declare AI.
-- **抖音:** it needs Chinese on-screen text first, which means adding a CJK font to the renderer.
+- **抖音:** it needs Chinese on-screen text first. For 90 SECONDS that means adding a CJK font to the renderer; a
+  Lemo-Opuscar film only needs a second render with the Chinese line.
 
 ## Every upload
 
-1. **Upload the original MP4** from `out/<slug>/`. Never re-upload a file downloaded from another platform, because the
+1. **Upload the original MP4** from `out/<slug>/` (a Lemo-Opuscar film: its own project folder). Never re-upload a file downloaded from another platform, because the
    other app's watermark gets it down-ranked.
 2. **AI label:** TikTok "AI-generated content" on; Instagram "AI info" on. YouTube asks "AI use" (2026): was AI used to
    make a real person say or do something they didn't, alter footage of a real event or place, generate a realistic
    scene that didn't happen, or create music that is the main focus of the video? A clip is none of these (pixel
    animation of real events, music under the picture), so answer No; the description says "Made with AI". A film whose
    music is its point (LeBron's: the beat is his career) is the fourth case: decide before posting it.
-3. **Cover:** `out/<slug>/cover-<name>.jpg`, the cold open's payoff (`post.md` names the moment). On YouTube upload it
-   as the thumbnail; on TikTok and Reels pick the same frame.
+3. **Cover:** `out/<slug>/cover-<name>.jpg`, the cold open's payoff (`post.md` names the moment); a Lemo-Opuscar
+   film uses its `poster.jpg`. On YouTube upload it as the thumbnail; on TikTok and Reels pick the same frame.
 4. **Hashtags:** 3–5.
 5. **Pin the comment** from `post.md`.
 6. **Reply to comments in the first hour.**
@@ -101,6 +106,52 @@ everywhere. Don't add the apps' own text stickers near the bottom or the right e
 - **News beats the queue.** Before a game, post the full film 3–5 days ahead and a clip on game day. After big news,
   change the number in `film.js`, re-render (about 20 minutes) and post the same day.
 
+## Lemo-Opuscar films (12 November)
+
+Films made with the Lemo-Opuscar skill, in one of its library styles (Caption News, Dark Tech Keynote, Halftone
+Dossier, …). Everything above applies, except for the points below.
+
+- **Files.** Each film has its own folder, `~/Projects/<name>/`, not `films/<slug>/` or `out/<slug>/`:
+  `<name>.mp4` (the 9:16 master), `<name>-16x9.mp4` when there is one, `poster.jpg` (the cover), `<name>.srt`,
+  `CREDITS`, `FACTS.md` and `TREATMENT.md`. Put the film's `post.md` there too, and log it in this repo's
+  `plan/LOG.md` as usual. There is no `cuts` export and no `cover-<name>.jpg`.
+- **The safe zone goes into the brief.** The library's vertical layouts don't allow for the apps' UI. Caption News,
+  for example, sets its captions under a 1560 px picture band, which is where TikTok's caption and buttons sit.
+  Every Lemo film's brief says that everything that must be read, and the haoli.ai watermark, stays inside
+  x 60–920, y 240–1500 ("One file for all three apps"). Lemo adds no watermark, so the film's own code draws it,
+  small, like the 90 SECONDS series tag (28 px mono at about 85 % opacity, top left at y ≈ 280), in the style's own
+  type. Where the style has a channel bug (Caption News, Broadcast News Package), haoli.ai is the channel's name.
+  Check one frame against that box before posting.
+- **Copy.** Use the subject in place of the player and the real length in place of 90:
+  - TikTok: "I asked AI to explain {event} in {n} seconds."
+  - Shorts: "I Asked AI to Explain {Event} in {N} Seconds {emoji}"
+  - Reels: the subject only.
+  - Hashtags: the subject, the company or field, `#ai`. `#90seconds` and the "90 SECONDS" playlist belong to
+    that series only.
+  - The pinned comment and the end card ask what happens next ("What happens to Nvidia now? 👇"), not who's next.
+- **News about real people.** Traffic first: when it isn't certain that a platform penalises something, make it and
+  watch the numbers. Two hard limits stay:
+  - No made-up quotes, and no words or voice put in a real person's mouth (`plan/STRATEGY.md`, "风险").
+  - An allegation keeps its attribution ("reported by …", "alleged") in the film and in the copy. TikTok can mark
+    claims about unfolding events that it can't verify as unverified and keep them out of For You, so a bare
+    "X is a spy" costs reach.
+
+  When a fact changes after posting, pin a correction comment.
+- **Licensed material.** Lemo films use only CC0, CC BY, public-domain and OFL material, all listed in `CREDITS`. A
+  CC BY photo carries its credit on screen (the style draws it). On YouTube, also paste the `CREDITS` lines for photos
+  into the description: an exception to the "no disclaimer" rule in "YouTube Shorts", because the licence asks for
+  attribution.
+- **YouTube "AI use".** Unaltered real photos and documents plus stylised animation answer No. A film that animates a
+  real person's photo into doing something, or gives them words, would answer Yes, and the rule above already rules it
+  out.
+- **News cadence.** A news film goes up on all three platforms as soon as it passes its checks: freshness beats the
+  3–7 pm slot and the clip queue. The master is usually over 10 MB, so Claude posts an upload copy under 10 MB:
+  ffmpeg two-pass libx264 at about 1.5–1.7 Mbps plus 160k AAC, `-movflags +faststart`, SSIM ≥ 0.99 against the
+  master (Jensen Huang, 12 November: 9.2 MB, SSIM 0.993). Make clips only if the film picks up: cut them
+  from the master with ffmpeg, under 10 MB, each starting on big type or a number, never on a quiet frame.
+- **Chinese versions.** Lemo renders Chinese text (it subsets a CJK font to the characters used), so a version for
+  抖音, Bilibili or 小红书 is a second render with the Chinese line.
+
 ## Scheduling from Claude in Chrome (6 October)
 
 Claude can schedule on all three sites from the owner's Chrome (the Claude in Chrome extension, already signed in).
@@ -108,6 +159,9 @@ Finish producing the whole batch first (files, covers, `post.md` copy), then do 
 then Instagram, then YouTube Shorts. Every site has its own quirks, and switching back and forth costs more than
 it saves.
 
+- **Tabs and accounts (12 November).** Three tabs stay open in Claude's Chrome tab group: TikTok Studio, Instagram
+  signed in as haoli.ai, and YouTube Studio. Reuse them and never close them. Instagram stays on haoli.ai: haoli.leo
+  is the owner's private account, so never switch to it or post from it.
 - **Keep that Chrome window on screen.** When it is minimized or completely covered, Chrome treats the page as
   hidden: it doesn't load video there, doesn't run animation frames, and screenshots show stale frames. Instagram then
   can't read the video and spins forever; TikTok's caption editor and date/time pickers don't commit. YouTube Studio

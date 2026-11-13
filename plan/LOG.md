@@ -34,6 +34,9 @@
 | 10/6 约 21:24 | Shorts | 梅西赛后版 | [DVj9APHWd3A](https://youtube.com/shorts/DVj9APHWd3A) | 79（约 11h） | | | | | | | 标题 Messi Scored in His Last Game for Argentina 🇦🇷；相关视频 = 梅西正片；置顶评论 Where does he rank all-time? 👇 |
 | 10/6 约 21:26 | Reels | 梅西赛后版 | [DeLfzBOvsvp](https://www.instagram.com/haoli.ai/reel/DeLfzBOvsvp/) | **181**（约 11h） | — | | | | | | 当场发，显示 AI content；评论已发，网页版不能置顶 |
 | 10/6 约 21:28 | TikTok | 梅西赛后版 | [7693777939967642881](https://www.tiktok.com/@haoli.ai/video/7693777939967642881) | **0**（约 11h） | | 1 | 1 | | | | 当场发，AI 标签开；评论已发，网页版不能置顶。**一次都没推**：Studio 显示 0 播放、0 观看时长，视频页弹人机检查，要在 App 里看有没有审核或违规提示 |
+| 11/12 约 19:28 | TikTok | 黄仁勋辞职（Lemo 字幕新闻，43.5 s，AI 旁白） | [7707477247220927752](https://www.tiktok.com/@haoli.ai/video/7707477247220927752) | | | | | | | | 当场发，AI 标签开，审核几分钟后转公开；传的是 9.2 MB 压缩版（SSIM 0.993）；评论已发，网页版只有删除没有置顶，要在 App 里置顶 |
+| 11/12 约 19:31 | Reels | 黄仁勋辞职 | [Dfqj-WevO7M](https://www.instagram.com/haoli.ai/reel/Dfqj-WevO7M/) | | — | | | | | | 当场发，显示 AI content；封面 poster.jpg；没开"分享到 Facebook"（目标是 Hao Li 个人主页，待定） |
+| 11/12 约 19:33 | Shorts | 黄仁勋辞职 | [_m4YMu-TiSY](https://youtube.com/shorts/_m4YMu-TiSY) | | | | | | | | AI use 答 No；封面 poster.jpg；描述带照片署名；置顶评论 What happens to Nvidia now? 👇 |
 
 ## 复盘
 
