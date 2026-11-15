@@ -57,6 +57,61 @@ anything false is not.
   make an allegation safe: "Was Jensen Huang a spy?" still says it. Keep allegations out of titles; the film carries
   them with their attribution.
 
+## Built to travel (15 November)
+
+An audit of the first three news films (Jensen Huang, Outlook, FAA) against `plan/LOG.md`, their frames and their
+narration. TikTok: 5–7.5 % completion, about 14 s watched of 43 s, plays stopping 2–3 hours after posting (the film
+never got past the first test pool), most viewers gone at 0:01–0:02, 1 comment per film. Reels: 120–145 plays, all
+interactions 0. Every Lemo-Opuscar film follows the points below. 90 SECONDS keeps its 90 s and its clips, but
+points 2, 3, 6 and 9 apply to its clips too.
+
+1. **Length: about 30 s for news, one version.** A 43 s film loses most people before the end. When a story is
+   breaking, make that one film fast; there is no quick version plus a full one. (The 19 s napkin clip had 8–13
+   times the plays of the full 90 SECONDS films, 10/4.)
+2. **A loop, not a dead end.** The last line leads back into the first, so the autoplay replay feels continuous and
+   average watch time can pass 100 %. The end question sits over the last 1–1.5 s while the picture moves back
+   into the opening frame; no static end card.
+3. **Frame 0 says what this is about.** At 0.0 s: the subject's keyword (the word people search), a face or an
+   object people recognise, and full contrast. Text is complete on frame 0: nothing writes itself on in the first
+   second (motion comes from something else). The first spoken word carries meaning: not "Thursday.". (FAA's frame 0
+   was a date and "4h" being drawn in thin marker, with no word about planes; Outlook's was small black type on
+   beige and kept 8 % on Shorts; Jensen's was a face and a huge number and kept 51 %.)
+4. **Pace: about 170–190 words a minute.** The first three ran at 129–149 with several text-only pauses. Kokoro at
+   speed about 1.25, fewer words, and one pause only, at the turn.
+5. **Speed beats polish.** The Outlook and FAA films went up about 24 hours after the event, when most of the
+   searching was over. Post within hours. Each kind of story should have a ready template (Caption News for people
+   and companies, an explainer style for outages and "how it works") so a film is a matter of facts and a render.
+6. **Comments by design**, from topic choice on. The only viewer comments so far went to the one point that had a
+   stance (the spy suspicion), not to our question.
+   - The topic must yield a question both sides would answer; if it doesn't, it ranks lower.
+   - The middle has a split (A or B) or one labelled take from the narrator ("My take: Cook is the wrong pick.").
+     Takes are about decisions and outcomes, never allegations; no partisan politics.
+   - The end asks a concrete question, on screen and spoken, that takes one word to answer: pick one ("KRESS OR
+     COOK?"), up or down ("NVIDIA ON TUESDAY: UP OR DOWN?"), or your own experience ("WHERE WERE YOU STUCK?").
+   - A prediction gets a date, and after the date the answer goes up as a video reply to the best comment (TikTok:
+     reply with video): a second film, and people come back to the thread.
+   - The pinned comment takes a side ("Team Kress. Fight me 👇"); a neutral question gets ignored.
+   - Reels: ask the question, but never "comment YES / comment a name": Meta demotes comment bait.
+7. **One useful line.** Where the story touches people's lives, give one thing they can do or check (how to see
+   whether Outlook is down, what an airline owes you for a cancelled flight; a fact from `FACTS.md` like any other).
+   Useful films get saved and sent, and on Reels a DM send is the strongest signal.
+8. **Test openings across films, not within one.** Each new film tries a different kind of first frame (a face and
+   a number, a question, a close-up of an object, …) and logs which; the weekly review compares them across films.
+   Two versions of one film would split a few hundred plays into numbers too small to compare, cost a fifth or more
+   of a film, and change only the first 3 s when the problem may be the whole film; topics differ far more (Outlook
+   3,285 plays against Jensen's 475). A second film on the same story only when the first clearly takes off (say,
+   TikTok over 5,000 plays in 24 h), and then as a sequel with a new angle (what happened next, the prediction's
+   answer), never the same film with a new opening.
+9. **Search is more than the title.** Say the phrase people search for in the first sentence and show it on screen
+   ("Is Outlook down?"). The daily-stats task logs TikTok's search terms; the next film on a similar story uses them.
+10. **A reason to follow.** Films gain 0–2 followers each. Once the signature format is fixed (after 11/26), it gets
+   a series name, and the end points to the next episode where there is one (the prediction's answer on a date).
+
+**Later tests** (one at a time, when the points above are in place): narration against captions only (some viewers
+may swipe at a synthetic voice; Jensen kept 51 % with one, so no evidence yet), and a TikTok in-app sound at low
+volume under the film's own audio (licensed inside TikTok; check whether TikTok Studio on the web can add one, or
+post that one from the phone).
+
 ## TikTok
 
 - **The algorithm rewards** the 2-second hold, watch time, completion and comments. A large share of views comes from search.
@@ -119,8 +174,8 @@ anything false is not.
 6. **Reply to comments the same day.** Two recurring tasks read comments on every post from the last 7 days: 7:30
    (`haoli-daily-stats`) and 18:30 (`haoli-evening-comments`); see "Comments" below. Don't create a task per post or
    per film.
-7. **Log it** in `plan/LOG.md`: the link and the title formula (A, B or C, "Titles and hooks") right away, the
-   numbers at 24 h and 72 h.
+7. **Log it** in `plan/LOG.md`: the link, the title formula (A, B or C, "Titles and hooks"), the first-frame type and
+   the end question type (pick one, up or down, experience) right away; the numbers at 24 h and 72 h.
 
 ## One file for all three apps
 
@@ -163,7 +218,8 @@ Dossier, …). Everything above applies, except for the points below.
   - Reels: the subject only.
   - Hashtags: the subject, the company or field, `#ai`. `#90seconds` and the "90 SECONDS" playlist belong to
     that series only.
-  - The pinned comment and the end card ask what happens next ("What happens to Nvidia now? 👇"), not who's next.
+  - The end card and the pinned comment follow "Comments by design" in "Built to travel": a concrete question a
+    viewer answers in one word ("KRESS OR COOK?"), never a vague "What happens next?".
 - **News about real people.** Traffic first: when it isn't certain that a platform penalises something, make it and
   watch the numbers. Two hard limits stay:
   - No made-up quotes, and no words or voice put in a real person's mouth (`plan/STRATEGY.md`, "风险").
