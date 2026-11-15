@@ -9,15 +9,15 @@ in "Lemo-Opuscar films" further down.
 
 ## The rule (2026-09-30)
 
-- **The screen shows the player.** The 9:16 headline is the player and the number. EP01 LeBron keeps
-  "I ASKED AI FOR / A LEBRON FILM." as a control, so the two kinds of hook can be compared.
-- **The captions carry one AI line, adjusted per platform.** AI is the hook, never the subject: no "how it's made",
-  no code and no links.
+- **The screen shows the player.** The 9:16 headline is a number and an open question about the player ("Titles and
+  hooks" below). EP01 LeBron keeps "I ASKED AI FOR / A LEBRON FILM." as a control.
+- **The captions carry one AI line, adjusted per platform.** AI sells the film, it is never the subject: no "how it's
+  made", no code and no links. Since 15 November the AI line comes last, after the question ("Titles and hooks").
 
 | Platform | AI in the copy | How |
 |---|---|---|
-| TikTok | first line | "I asked AI to sum up {player}'s career in 90 seconds." Everything after that is about the player. |
-| YouTube Shorts | title | "I Asked AI to Sum Up {Player} in 90 Seconds {emoji}" |
+| TikTok | end of the first line | "{The question} {emoji} The smartest AI sums it up in 90 seconds." Everything after that is about the player. |
+| YouTube Shorts | end of the title | "{The Question} (Explained by the Smartest AI) {emoji}" |
 | Instagram Reels | none | Only the player and the moment. Meta favours human-made content and counts DM shares most. |
 | YouTube 16:9 (optional) | title | Same as the Short. |
 | Later: Bilibili, X | strong | "一句话让 AI 做了…" / "I gave AI one sentence…": there, the AI angle is the draw. |
@@ -28,10 +28,40 @@ in "Lemo-Opuscar films" further down.
 - **Write "AI", not "Claude".** When someone asks which AI, answer "Claude" in the comments.
 - **AI label: on** wherever the platform has one (see the upload checklist).
 
+## Titles and hooks (15 November)
+
+"I asked AI to…" put the AI first and the subject last, and gave nobody a reason to tap. The owner's direction: open
+a curiosity gap, lead with "why", and sell the AI a little ("explained by the smartest AI"). Some hype is fine;
+anything false is not.
+
+- **One promise in three places.** The title (TikTok first line, Shorts title, Reels first line), the cover and the
+  first frame ask the same question or show the same number. The film answers it, and the answer lands in the last
+  third, so the only way to get it is to keep watching.
+- **Subject first.** The words people search for (the player, the company, the event the way people type it:
+  "outlook down", "GTA 6") sit in the first five words. Most TikTok plays of the news films came from search
+  (Outlook 93.5 %, Jensen 49 %), and search results and the Shorts feed cut a title after about 40 characters.
+- **One formula per film.** Write its letter in the film's `plan/LOG.md` rows, so the weekly review can compare:
+  - **A · Why.** "Why is everyone obsessed with GTA 6?" · "Why did Nvidia's CEO quit?"
+  - **B · Number, then why.** "$500B gone in 4 days. Why did Jensen Huang quit?" · "4 hours, no takeoffs. Why?"
+  - **C · How.** "How did Ohtani break baseball?" · "How did GTA 6 get this big?"
+- **The AI line goes last, with a little swagger:** "explained by the smartest AI", "the smartest AI explains",
+  "the smartest AI broke it down in 40 seconds". Rotate them. "Smartest" is puffery and fine; a ranking, a benchmark
+  or "#1" is a claim, so leave those out. Still "AI", not "Claude".
+- **The first frame.** On screen in the first 0.15 s, and spoken in the first second when the film has a narrator:
+  two short lines, the biggest true number or the sharpest fact, then the open question ("$500B GONE IN 4 DAYS /
+  WHY DID HE QUIT?"). The Jensen frame (a number and a name) kept 51 % of Shorts viewers past the swipe; Outlook's
+  "Outlook died." kept 8 %. That is one film each, so a lead, not a law.
+- **Hype, not lies.** Fine: "smartest", "everyone", "obsessed", "insane", "the GOAT", emoji. Not fine: a number,
+  quote or event that isn't in the film's facts; "leaked", "exposed", "what they don't want you to know"; a question
+  the film doesn't answer (YouTube treats misleading titles as spam, and viewers swipe anyway). A question doesn't
+  make an allegation safe: "Was Jensen Huang a spy?" still says it. Keep allegations out of titles; the film carries
+  them with their attribution.
+
 ## TikTok
 
 - **The algorithm rewards** the 2-second hold, watch time, completion and comments. A large share of views comes from search.
-- **Caption:** the first line carries a searchable phrase as well as the AI line ("…his last game for Argentina is Oct 6").
+- **Caption:** the first line is the title ("Titles and hooks": the subject in the first words, the AI line at the
+  end). The next line adds a detail people search for ("…his last game for Argentina is Oct 6").
 - **Hashtags:** 3–5: the player, the team or league, the sport, `#90seconds`, `#ai`.
 - **First hour:** reply to comments. Answer "who's next" comments with a video reply.
 - **Account and tools:** keep a personal or creator account (Creator Rewards excludes business accounts). Post from TikTok Studio on
@@ -86,10 +116,11 @@ in "Lemo-Opuscar films" further down.
    film uses its `poster.jpg`. On YouTube upload it as the thumbnail; on TikTok and Reels pick the same frame.
 4. **Hashtags:** 3–5.
 5. **Pin the comment** from `post.md`.
-6. **Reply to comments in the first hour.** Whoever posts (Claude, or a session the owner tells "posted") creates a
-   one-time scheduled task `haoli-comments-<slug>` at post time + 60 min, with the prompt "Run the comment pass in
-   `~/Projects/claude-prompt-films/POSTING.md` § Comments for these posts: <the three links>." ("Comments" below.)
-7. **Log it** in `plan/LOG.md`: the link right away, the numbers at 24 h and 72 h.
+6. **Reply to comments the same day.** Two recurring tasks read comments on every post from the last 7 days: 7:30
+   (`haoli-daily-stats`) and 18:30 (`haoli-evening-comments`); see "Comments" below. Don't create a task per post or
+   per film.
+7. **Log it** in `plan/LOG.md`: the link and the title formula (A, B or C, "Titles and hooks") right away, the
+   numbers at 24 h and 72 h.
 
 ## One file for all three apps
 
@@ -125,8 +156,10 @@ Dossier, …). Everything above applies, except for the points below.
   type. Where the style has a channel bug (Caption News, Broadcast News Package), haoli.ai is the channel's name.
   Check one frame against that box before posting.
 - **Copy.** Use the subject in place of the player and the real length in place of 90:
-  - TikTok: "I asked AI to explain {event} in {n} seconds."
-  - Shorts: "I Asked AI to Explain {Event} in {N} Seconds {emoji}"
+  - TikTok: a formula from "Titles and hooks", with the AI line at the end and the real length: "Why did the U.S.
+    stop every takeoff for 4 hours? ✈️ The smartest AI explains in 44 seconds."
+  - Shorts: the same question in title case: "Why Did the U.S. Stop Every Takeoff for 4 Hours? (Smartest AI
+    Explains) ✈️"
   - Reels: the subject only.
   - Hashtags: the subject, the company or field, `#ai`. `#90seconds` and the "90 SECONDS" playlist belong to
     that series only.
@@ -160,8 +193,8 @@ Every comment gets an answer, even while there are few: replies count as engagem
 comments are where the next topics come from. Claude reads and drafts; **nothing is posted, liked, hidden or deleted
 without the owner's go-ahead in that session.**
 
-- **When.** Every morning in the daily-stats run (posts from the last 7 days), and once about an hour after each post
-  goes live (the one-time `haoli-comments-<slug>` task from "Every upload", step 6).
+- **When.** Twice a day, for posts from the last 7 days: every morning in the daily-stats run (7:30) and every
+  evening in `haoli-evening-comments` (18:30). No per-post tasks.
 - **Where.** The same three tabs and account rules as "Scheduling from Claude in Chrome" below: TikTok Studio →
   Comments (or the post's page), YouTube Studio → Comments, Instagram as haoli.ai → the Reel's comments. A captcha or a
   sign-in wall: stop on that platform and say so.

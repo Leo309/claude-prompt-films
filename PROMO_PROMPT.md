@@ -18,8 +18,9 @@ That's the whole creative direction. Everything below is how to deliver it.
 - the in-jokes and memes they'll catch on first watch (football, NFL, F1, esports, any niche).
 
 People who don't know the niche should still feel the energy. Nothing on screen is about how the film was made.
-The captions carry one AI line, adjusted per platform: the TikTok first line and the Shorts title say "I asked AI to
-sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`).
+The captions carry one AI line, adjusted per platform: the TikTok first line and the Shorts title open with a
+question about the player and end on the AI line ("…the smartest AI sums it up in 90 seconds"), and Reels captions
+don't mention AI (see `POSTING.md`, "Titles and hooks").
 
 ## Workflow
 
@@ -45,7 +46,8 @@ sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`
    - The haoli.ai watermark is added by the player; don't draw your own.
    - Also export `title`, `episode` (the next number in the Episodes table), `vertical: { hook: [2 short lines], sub }`
      and `chapters: [[t, "LABEL"], ...]`. The 9:16 version is built from these (`render/vertical.js`),
-     so the hook has to work as a phone headline on its own.
+     so the hook has to work as a phone headline on its own: line 1 the biggest true number or the sharpest fact,
+     line 2 the open question the film answers in its last third (`POSTING.md`, "Titles and hooks").
    - Export `cuts: [{ name, from, to, hook: [2 lines], sub, coldOpen }, ...]`: 3–4 clips of 14–23 s, each a complete
      moment with its own headline. `bun render/render.ts cuts films/<slug>` renders them for Shorts, TikTok and Reels,
      ending on a card that points to the full film. Give each clip its own `coldOpen` (same shape as the film's, below)
@@ -88,10 +90,12 @@ sum up … in 90 seconds", and Reels captions don't mention AI (see `POSTING.md`
    `cuts films/<slug>` for the clips (`out/<slug>/clip-<name>-9x16.mp4`).
 9. **Package.** Write `films/<slug>/post.md` in the same layout as `films/messi/post.md` (rules in `POSTING.md`):
    - a header with the files, the cover-frame time (usually inside the cold open) and the subject's next news peg;
-   - **TikTok:** the caption opens with "I asked AI to sum up {player}'s career in 90 seconds." and continues about
+   - **TikTok:** the caption opens with the title line (a formula from `POSTING.md`, "Titles and hooks", ending
+     "…the smartest AI sums it up in 90 seconds.") and continues about
      the player, including a phrase people search for. Hashtags: the player, the team or league, the sport,
      `#90seconds`, `#ai`. Pinned comment: "What did the AI miss? 👇";
-   - **YouTube Shorts:** the title "I Asked AI to Sum Up {Player} in 90 Seconds {emoji}", then a fan-detail description
+   - **YouTube Shorts:** the same line in title case ("Why Is … ? (Explained by the Smartest AI) {emoji}"), then a
+     fan-detail description
      ending "Made with AI · fan-made, not affiliated with … · stats as of …". Pin the same comment;
    - **Instagram Reels:** the player and the moment only, with no AI, an optional tag of the player's own account,
      and a pinned question fans will argue about;

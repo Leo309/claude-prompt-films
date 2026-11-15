@@ -28,16 +28,17 @@
 
 **AI 是钩子，不是内容。** 文案不讲"怎么做出来的"，不放代码，不放链接。
 
-- **画面**：竖版大字只写球员和数字。例外是 EP01 LeBron：保留 "I ASKED AI FOR / A LEBRON FILM." 作为对照组，用来比较"前 2 秒留存"。
+- **画面**：竖版大字两行，第一行是最大的真实数字或最狠的事实，第二行是片子会在后三分之一回答的问题（WHY? / HOW?）。2026-11-15 改，原来只写球员和数字。例外是 EP01 LeBron：保留 "I ASKED AI FOR / A LEBRON FILM." 作为对照组，用来比较"前 2 秒留存"。
 - **文案里 AI 的分量按平台调**：
 
 | 平台 | AI 的分量 | 写法 | 原因 |
 |---|---|---|---|
-| TikTok | 少 | 第一句写 "I asked AI to sum up {球员}'s career in 90 seconds."，后面只讲球员 | 2025 年 11 月起，用户可以把"AI 生成内容"调成少看，带 AI 标签的视频会少推给这部分人 |
-| YouTube Shorts | 中 | 标题写 "I Asked AI to Sum Up {球员} in 90 Seconds" | YouTube 官方说 AI 标签不影响推荐 |
+| TikTok | 少 | 第一句先抛问题、主题词在前，AI 放句尾："Why … ? The smartest AI sums it up in 90 seconds."，后面只讲球员 | 2025 年 11 月起，用户可以把"AI 生成内容"调成少看，带 AI 标签的视频会少推给这部分人 |
+| YouTube Shorts | 中 | 标题用同一句，每个词首字母大写："Why … ? (Explained by the Smartest AI)" | YouTube 官方说 AI 标签不影响推荐 |
 | Instagram Reels | 不提 | 只讲球员和那个瞬间 | Mosseri 2025 年底说会更看重"真实、人做的"内容；私信转发是推给非粉丝的最强信号 |
 | B 站 / X（以后） | 多 | "一句话让 AI 做了…" | B 站上"一句话生成"本身就是热门题材 |
 
+- **标题公式**（2026-11-15 定）：原来的 "I asked AI to…" 把 AI 放在前面、主题放在后面，没给人点开的理由。现在标题制造好奇缺口，三种公式轮换：A 问为什么、B 先给数字再问为什么、C 问怎么做到的。主题词放在前五个词里，因为新闻片在 TikTok 上的播放大半来自搜索。AI 放在句尾，可以夸一点（"the smartest AI"），但不能写假的。每条片子在 LOG.md 记下用的是哪个公式，每周复盘时比较。细则见 `POSTING.md` 的 "Titles and hooks"。
 - **置顶评论**：TikTok 和 Shorts 都用 "What did the AI miss? 👇"。球迷爱挑错，挑错就会留评论。
 - **点名循环**：正片结尾是 "WHO'S NEXT? / COMMENT A PLAYER" 卡片。评论区谁被点名最多就做谁，
   做好以后用 TikTok 的"用视频回复评论"发出来。AI 真正的卖点是**快**：点名后 2–3 天就能出片。

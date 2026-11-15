@@ -23,8 +23,10 @@ Right now the goal is reach on TikTok, YouTube Shorts and Instagram Reels.
   on its payoff, not on credits or the next chapter.
 - One 9:16 layout serves TikTok, Reels and Shorts. Anything that must be read stays inside `SAFE` in
   `render/vertical.js` (x 60–920, y 240–1500). Run `bun render/render.ts reframe films/<slug>` before any 9:16 render.
-- On-screen copy is about the player. The captions carry one AI line: the TikTok first line and the Shorts title
-  say "I asked AI to sum up … in 90 seconds", and Reels captions don't mention AI. Never "how it's made".
+- On-screen copy is about the player. Titles open a curiosity gap with the subject first ("Why …?", a number then
+  "why", "How …?") and end on the one AI line ("…explained by the smartest AI"): the TikTok first line and the Shorts
+  title; Reels captions don't mention AI. Hype is fine, false is not. Never "how it's made". See `POSTING.md`,
+  "Titles and hooks" (15 November).
 - Clip-first since 4 October: the full film goes up once and is pinned as the landing page, then two clips a day.
   A news peg beats the queue. Produce a whole batch first, then upload it one platform at a time
   (TikTok, then Instagram, then YouTube Shorts); never hop between platforms for a single clip.
