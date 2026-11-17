@@ -65,9 +65,25 @@ never got past the first test pool), most viewers gone at 0:01–0:02, 1 comment
 interactions 0. Every Lemo-Opuscar film follows the points below. 90 SECONDS keeps its 90 s and its clips, but
 points 2, 3, 6 and 9 apply to its clips too.
 
-1. **Length: about 30 s for news, one version.** A 43 s film loses most people before the end. When a story is
-   breaking, make that one film fast; there is no quick version plus a full one. (The 19 s napkin clip had 8–13
-   times the plays of the full 90 SECONDS films, 10/4.)
+1. **Length follows the kind of film, one version each** (16 November).
+   - **News: about 30 s.** A 43 s film loses most people before the end. When a story is breaking, make that one
+     film fast; there is no quick version plus a full one. (The 19 s napkin clip had 8–13 times the plays of the
+     full 90 SECONDS films, 10/4.)
+   - **Evergreen "how / why it works": 45–75 s, 1–2 a week.** An everyday thing, word, place or structure with a
+     chain inside it: each beat answers one question and opens the next (cow became beef → pig became pork → …; an
+     attack, a new defence, the next attack). The chain earns the length; count the beats, about 10–15 s each. A
+     topic with one point is 30 s, whatever its kind. A news story can be the peg, but the film explains the lasting
+     mechanism ("What is El Niño and why is it so strong?"), so it keeps finding viewers after the news fades. The
+     end question still takes a side (pick one, or "how would you get in? A, B or C"); a puzzle the viewer wants to
+     solve is the best one. Styles: Satellite Briefing or 3D Map Explainer for places, Stick-figure Explainer for
+     "what if you…", Isometric Infographic or Exploded Teardown for how a thing works.
+     (Benchmarks, Instagram 11/16: geoglobe_tales' hits run 60–100 s, cow → beef 47.5M at 63 s, El Niño 40.9M at
+     77 s; fyra417's fortress build-up 8.4M at 131 s. Their flops were lists with no chain: Asia's regions, lychee
+     incense.)
+   - **The test** (from 16 November): compare evergreen films with the 30 s news loops on TikTok average watch in
+     seconds and as a share of length, Shorts viewed-vs-swiped, and whether plays keep coming after the first
+     3 hours (news films stop at 2–3 h). After 4 evergreen films the weekly review proposes the rule. Most viewers
+     still leave at 0:01–0:02, so the opening matters more than the length either way.
 2. **A loop, not a dead end.** The last line leads back into the first, so the autoplay replay feels continuous and
    average watch time can pass 100 %. The end question sits over the last 1–1.5 s while the picture moves back
    into the opening frame; no static end card.
@@ -86,8 +102,13 @@ points 2, 3, 6 and 9 apply to its clips too.
    - The topic must yield a question both sides would answer; if it doesn't, it ranks lower.
    - The middle has a split (A or B) or one labelled take from the narrator ("My take: Cook is the wrong pick.").
      Takes are about decisions and outcomes, never allegations; no partisan politics.
-   - The end asks a concrete question, on screen and spoken, that takes one word to answer: pick one ("KRESS OR
-     COOK?"), up or down ("NVIDIA ON TUESDAY: UP OR DOWN?"), or your own experience ("WHERE WERE YOU STUCK?").
+   - The end asks a concrete question, on screen and spoken, that a viewer answers in one word by taking a side:
+     pick one ("KRESS OR COOK?", or one of three) or up or down ("NVIDIA ON TUESDAY: UP OR DOWN?"). **No "your own
+     experience" questions for now** (16 November): "Were you locked out?" (Outlook, about 3.9k plays) and "Were you
+     stuck?" (FAA, about 470) drew no viewer comments; the only viewer comments went to a point with a stance. Bring
+     it back only if a film using it gets viewer comments. **Test (from 16 November):** the next 4 films alternate,
+     odd ones pick one (GTA 6 was the first), even ones up or down; the weekly review compares viewer comments per
+     1,000 plays by type.
    - A prediction gets a date, and after the date the answer goes up as a video reply to the best comment (TikTok:
      reply with video): a second film, and people come back to the thread.
    - The pinned comment takes a side ("Team Kress. Fight me 👇"); a neutral question gets ignored.
@@ -174,8 +195,9 @@ post that one from the phone).
 6. **Reply to comments the same day.** Two recurring tasks read comments on every post from the last 7 days: 7:30
    (`haoli-daily-stats`) and 18:30 (`haoli-evening-comments`); see "Comments" below. Don't create a task per post or
    per film.
-7. **Log it** in `plan/LOG.md`: the link, the title formula (A, B or C, "Titles and hooks"), the first-frame type and
-   the end question type (pick one, up or down, experience) right away; the numbers at 24 h and 72 h.
+7. **Log it** in `plan/LOG.md`: the link, the kind (news or evergreen) with the length, the title formula (A, B or C,
+   "Titles and hooks"), the first-frame type and the end question type (pick one, or up or down) right away; the
+   numbers at 24 h and 72 h.
 
 ## One file for all three apps
 
